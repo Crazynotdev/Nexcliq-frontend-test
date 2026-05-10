@@ -1193,11 +1193,17 @@ function LoginScreen({ onBack, onSuccess, onRegister }) {
     <div className="page">
       {/* Auth Hero */}
       <div style={{
-        background: "linear-gradient(155deg, #042F2A 0%, #0B6B5C 50%, #063832 100%)",
-        backgroundSize: "200% 200%",
-        animation: "gradientShift2 10s ease infinite",
-        padding: "56px 20px 36px", position: "relative", overflow: "hidden",
-      }}>
+      minHeight: "280px",
+      background: "linear-gradient(160deg, #042F2A 0%, #06433C 30%, #0B6B5C 50%, #063832 70%, #040F0C 100%)",
+      backgroundSize: "400% 400%",
+      animation: "gradientShift2 12s ease infinite",
+      padding: "56px 20px 36px", 
+      position: "relative", 
+      overflow: "hidden",
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center",
+    }}>
         <div style={{
           position: "absolute", top: -30, right: -30,
           width: 180, height: 180, borderRadius: "50%",
