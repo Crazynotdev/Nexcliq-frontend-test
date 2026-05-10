@@ -1,24 +1,23 @@
 {
-  "name": "nexcliq - david",
+  "name": "nexcliq-david",
   "private": true,
-  "version": "1.0.0",
+  "version": "2.0.0",
   "type": "module",
-  "description": "NexCliq - Pay and Receive anywhere with ease by WEMOVE SOLUTIONS",
+  "engines": {
+    "node": "22.x"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview"
   },
-  {
   "dependencies": {
-    "framer-motion": "^11.0.0",
     "lucide-react": "^0.344.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.2.1",
-    "vite": "^5.1.0",
-    "terser": "^5.31.0"
+    "vite": "^5.1.0"
   }
 }
