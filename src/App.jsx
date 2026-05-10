@@ -1340,7 +1340,7 @@ function RegisterScreen({ onBack, onSuccess }) {
               <div className="form-group" key={k}>
                 <label className="form-label">{l}</label>
                 <input className={`form-input ${errors[k]?"error":""}`} type={t} placeholder={k==="email"?"vous@exemple.com":"@utilisateur"} value={form[k]} onChange={set(k)} />
-                {errors[k] && <span style={{ fontSize:11, color:"var(--red"), display:"flex", alignItems:"center", gap:3 }}><AlertTriangle size={10}/>{errors[k]}</span>}
+                {errors[k] && <span style={{ fontSize:11, color:"var(--red)", display:"flex", alignItems:"center", gap:3 }}><AlertTriangle size={10}/>{errors[k]}</span>}
               </div>
             ))}
             <button className="btn btn-primary" onClick={() => { if (v1()) setStep(2); }}>Continuer <ChevronRight size={16} strokeWidth={2.5}/></button>
