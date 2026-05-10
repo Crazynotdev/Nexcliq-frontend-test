@@ -19,95 +19,95 @@ import { validators } from './validators';
 // ══════════════════════════════════════════════════════════
 export function LandingScreen({ onLogin, onRegister }) {
   return (
-    <div style={{
+    <div className="page" style={{
       minHeight: '100dvh',
-      background: 'linear-gradient(160deg, #042F2A 0%, #06433C 30%, #0B6B5C 50%, #063832 70%, #040F0C 100%)',
-      backgroundSize: '300% 300%',
-      animation: 'gradient 10s ease infinite',
+      background: 'linear-gradient(180deg, #F6F9F8 0%, #EDF4F1 40%, #E8F0ED 70%, #FCFAF7 100%)',
       display: 'flex', flexDirection: 'column',
+      fontFamily: "'Inter', 'Sora', sans-serif",
       position: 'relative', overflow: 'hidden'
     }}>
-      
-      {/* Floating orbs */}
-      <div className="orb" style={{ top: -60, right: -40, width: 260, height: 260, background: 'radial-gradient(circle, rgba(16,160,132,0.3), transparent 70%)' }} />
-      <div className="orb" style={{ bottom: 120, left: -50, width: 220, height: 220, background: 'radial-gradient(circle, rgba(196,180,154,0.12), transparent 70%)', animationDelay: '2s' }} />
+
+      {/* Subtle gradient orb */}
+      <div style={{
+        position: 'absolute', top: -100, right: -80,
+        width: 350, height: 350, borderRadius: '50%',
+        background: 'radial-gradient(circle, rgba(11,107,92,0.06) 0%, transparent 70%)',
+        pointerEvents: 'none'
+      }} />
 
       {/* ═══════════════ NAVBAR ═══════════════ */}
       <nav style={{
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        padding: '16px 20px', position: 'relative', zIndex: 10,
-        borderBottom: '1px solid rgba(255,255,255,0.06)'
+        padding: '18px 20px', position: 'relative', zIndex: 10,
+        background: 'rgba(255,255,255,0.6)',
+        backdropFilter: 'blur(20px)',
+        borderBottom: '1px solid rgba(11,107,92,0.06)'
       }}>
         <div className="row gap-2">
           <img src={APP.logo} alt={APP.name} 
-            style={{ width: 32, height: 32, borderRadius: 8, objectFit: 'cover' }} />
-          <span style={{ fontSize: 18, fontWeight: 800, color: '#fff', letterSpacing: -0.5 }}>
-            nexcli<span style={{ color: 'var(--sand)' }}>q</span>
+            style={{ width: 30, height: 30, borderRadius: 8, objectFit: 'cover' }} />
+          <span style={{ fontSize: 17, fontWeight: 800, color: '#0B6B5C', letterSpacing: -0.5 }}>
+            nexcli<span style={{ color: '#C4B49A' }}>q</span>
           </span>
         </div>
         
         <div className="row gap-2">
           <button onClick={onLogin} style={{
-            padding: '8px 18px', borderRadius: 20,
-            border: '1.5px solid rgba(255,255,255,0.3)',
-            background: 'transparent', color: '#fff',
-            fontSize: 13, fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit'
+            padding: '8px 16px', borderRadius: 8,
+            border: '1.5px solid rgba(11,107,92,0.25)',
+            background: 'transparent', color: '#0B6B5C',
+            fontSize: 13, fontWeight: 600, cursor: 'pointer',
+            fontFamily: "'Inter', 'Sora', sans-serif"
           }}>Login</button>
           <button onClick={onRegister} style={{
-            padding: '8px 18px', borderRadius: 20, border: 'none',
-            background: '#fff', color: 'var(--teal)',
-            fontSize: 13, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit'
+            padding: '8px 16px', borderRadius: 8, border: 'none',
+            background: 'linear-gradient(135deg, #0B6B5C, #073D34)',
+            color: '#fff',
+            fontSize: 13, fontWeight: 600, cursor: 'pointer',
+            fontFamily: "'Inter', 'Sora', sans-serif",
+            boxShadow: '0 2px 8px rgba(11,107,92,0.2)'
           }}>Sign Up</button>
         </div>
       </nav>
 
       {/* ═══════════════ HERO ═══════════════ */}
-      <div style={{ padding: '32px 20px 0', position: 'relative', zIndex: 1, flex: 1 }}>
+      <div style={{ padding: '40px 20px 0', position: 'relative', zIndex: 1, flex: 1 }}>
         
-        {/* Trust badge */}
-        <div style={{
-          display: 'inline-flex', alignItems: 'center', gap: 8,
-          background: 'rgba(255,255,255,0.08)', borderRadius: 20,
-          padding: '6px 14px', marginBottom: 20
-        }}>
-          <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#10B981' }} />
-          <span style={{ fontSize: 11, fontWeight: 600, color: 'rgba(255,255,255,0.8)', letterSpacing: 0.5 }}>
-            TRUSTED BY 2M+ USERS
-          </span>
-        </div>
-
         {/* Headline */}
         <h1 style={{
-          fontSize: 38, fontWeight: 800, lineHeight: 1.1,
-          color: '#fff', letterSpacing: -1.5, margin: '0 0 12px 0'
+          fontSize: 40, fontWeight: 800, lineHeight: 1.12,
+          color: '#111815', letterSpacing: -1.5, margin: '0 0 14px 0'
         }}>
           Pay and Receive<br />
-          <span style={{ color: 'var(--sand)' }}>anywhere</span> with ease
+          <span style={{ color: '#0B6B5C' }}>anywhere</span> with ease
         </h1>
         
         <p style={{
-          fontSize: 14, color: 'rgba(255,255,255,0.45)', lineHeight: 1.6,
-          marginBottom: 24, maxWidth: '90%'
+          fontSize: 14, color: '#6B7B74', lineHeight: 1.65,
+          marginBottom: 28, maxWidth: '92%'
         }}>
           Transfer money, pay online and get paid without limitation.
           Fast, secure, and reconciled automatically.
         </p>
 
         {/* CTA Buttons */}
-        <div className="row gap-3" style={{ marginBottom: 28 }}>
+        <div className="row gap-3" style={{ marginBottom: 32 }}>
           <button onClick={onRegister} style={{
-            padding: '14px 26px', borderRadius: 14, border: 'none',
-            background: '#fff', color: 'var(--teal)',
-            fontSize: 14, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit',
-            boxShadow: '0 8px 24px rgba(0,0,0,0.2)'
+            padding: '15px 28px', borderRadius: 12, border: 'none',
+            background: 'linear-gradient(135deg, #0B6B5C, #073D34)',
+            color: '#fff',
+            fontSize: 14, fontWeight: 700, cursor: 'pointer',
+            fontFamily: "'Inter', 'Sora', sans-serif",
+            boxShadow: '0 4px 16px rgba(11,107,92,0.2)'
           }}>
             Get Started
           </button>
           <button style={{
-            padding: '14px 26px', borderRadius: 14,
-            border: '1.5px solid rgba(255,255,255,0.2)',
-            background: 'transparent', color: '#fff',
-            fontSize: 14, fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit'
+            padding: '15px 28px', borderRadius: 12,
+            border: '1.5px solid rgba(11,107,92,0.2)',
+            background: 'transparent', color: '#0B6B5C',
+            fontSize: 14, fontWeight: 600, cursor: 'pointer',
+            fontFamily: "'Inter', 'Sora', sans-serif"
           }}>
             Contact a Team
           </button>
@@ -115,10 +115,10 @@ export function LandingScreen({ onLogin, onRegister }) {
 
         {/* ═══════════════ IMAGE ═══════════════ */}
         <div style={{
-          width: '100%', height: 200, borderRadius: 24,
+          width: '100%', height: 180, borderRadius: 20,
           overflow: 'hidden', marginBottom: 20,
-          boxShadow: '0 16px 48px rgba(0,0,0,0.3)',
-          border: '1px solid rgba(255,255,255,0.1)'
+          boxShadow: '0 12px 40px rgba(11,107,92,0.12)',
+          border: '1px solid rgba(11,107,92,0.08)'
         }}>
           <img 
             src="https://eliteprotech-url.zone.id/1778436354039dvorw8.jpg"
@@ -127,50 +127,91 @@ export function LandingScreen({ onLogin, onRegister }) {
           />
         </div>
 
-        {/* ═══════════════ STATS 4 CARDS ═══════════════ */}
-        <div className="bento bento-2" style={{ gap: 8, marginBottom: 8 }}>
-          {[
-            ['2M+', 'Transactions'],
-            ['< 30s', 'Délai moyen'],
-            ['99.9%', 'Disponibilité'],
-            ['0 perte', 'Réconciliation'],
-          ].map(([v, l]) => (
-            <div key={l} style={{
-              padding: '14px 12px', borderRadius: 16,
-              background: 'rgba(255,255,255,0.08)',
-              backdropFilter: 'blur(8px)',
-              border: '1px solid rgba(255,255,255,0.08)',
-              textAlign: 'center'
-            }}>
-              <div style={{ fontSize: 20, fontWeight: 800, color: '#34D399' }}>{v}</div>
-              <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.4)', marginTop: 2 }}>{l}</div>
+        {/* ═══════════════ STATS ═══════════════ */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginBottom: 10 }}>
+          {/* Income Card */}
+          <div style={{
+            padding: 18, borderRadius: 18,
+            background: 'linear-gradient(135deg, #0B6B5C, #073D34)',
+            color: '#fff',
+            boxShadow: '0 8px 24px rgba(11,107,92,0.2)'
+          }}>
+            <div style={{ fontSize: 10, fontWeight: 600, opacity: 0.7, textTransform: 'uppercase', letterSpacing: 1, marginBottom: 8 }}>
+              Income
             </div>
-          ))}
+            <div style={{ fontSize: 24, fontWeight: 800, letterSpacing: -0.5 }}>
+              13,592,000 XOF
+            </div>
+            <div style={{ fontSize: 10, opacity: 0.6, marginTop: 6 }}>
+              +12.5% this month
+            </div>
+          </div>
+
+          {/* Expenses Card */}
+          <div style={{
+            padding: 18, borderRadius: 18,
+            background: '#fff',
+            border: '1px solid rgba(11,107,92,0.08)',
+            boxShadow: '0 2px 12px rgba(11,107,92,0.04)'
+          }}>
+            <div style={{ fontSize: 10, fontWeight: 600, color: '#6B7B74', textTransform: 'uppercase', letterSpacing: 1, marginBottom: 8 }}>
+              Expenses
+            </div>
+            <div style={{ fontSize: 24, fontWeight: 800, letterSpacing: -0.5 }}>
+              12,167,000 XOF
+            </div>
+            <div style={{ fontSize: 10, color: '#6B7B74', marginTop: 6 }}>
+              -3.2% this month
+            </div>
+          </div>
         </div>
 
-        {/* Providers */}
-        <div className="row gap-3" style={{ marginBottom: 24 }}>
-          {['MTN MoMo', 'Orange Money'].map(p => (
-            <div key={p} style={{
-              flex: 1, padding: '10px', borderRadius: 12,
-              background: 'rgba(255,255,255,0.06)',
-              border: '1px solid rgba(255,255,255,0.08)',
-              textAlign: 'center'
-            }}>
-              <span style={{ fontSize: 11, fontWeight: 700, color: 'rgba(255,255,255,0.7)' }}>{p}</span>
+        {/* Goal Card */}
+        <div style={{
+          padding: 18, borderRadius: 18,
+          background: '#fff',
+          border: '1px solid rgba(11,107,92,0.08)',
+          boxShadow: '0 2px 12px rgba(11,107,92,0.04)',
+          marginBottom: 32
+        }}>
+          <div className="row between" style={{ marginBottom: 12 }}>
+            <div>
+              <div style={{ fontSize: 10, fontWeight: 600, color: '#6B7B74', textTransform: 'uppercase', letterSpacing: 1, marginBottom: 4 }}>
+                Goal
+              </div>
+              <div style={{ fontSize: 22, fontWeight: 800, color: '#0B6B5C' }}>
+                56K <span style={{ fontSize: 12, color: '#6B7B74', fontWeight: 500 }}>XOF</span>
+              </div>
             </div>
-          ))}
+            <div style={{
+              width: 40, height: 40, borderRadius: '50%',
+              background: 'rgba(11,107,92,0.06)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center'
+            }}>
+              <TrendingUp size={18} color="#0B6B5C" />
+            </div>
+          </div>
+          <div style={{ height: 5, background: 'rgba(11,107,92,0.08)', borderRadius: 3, marginBottom: 8, overflow: 'hidden' }}>
+            <div style={{ height: '100%', width: '68%', background: 'linear-gradient(90deg, #0B6B5C, #0D8570)', borderRadius: 3 }} />
+          </div>
+          <div style={{ fontSize: 10, color: '#6B7B74' }}>
+            68% completed · Remuneration growth
+          </div>
+          <div style={{ fontSize: 20, fontWeight: 800, color: '#0B6B5C', marginTop: 6 }}>
+            24,345 XOF
+          </div>
         </div>
+
       </div>
 
       {/* ═══════════════ FOOTER ═══════════════ */}
       <div style={{
-        textAlign: 'center', padding: '16px',
-        borderTop: '1px solid rgba(255,255,255,0.06)',
+        textAlign: 'center', padding: '20px',
+        borderTop: '1px solid rgba(11,107,92,0.06)',
         position: 'relative', zIndex: 1
       }}>
-        <p style={{ fontSize: 10, color: 'rgba(255,255,255,0.25)', margin: 0 }}>
-          Powered by <span style={{ fontWeight: 700, color: 'rgba(255,255,255,0.4)' }}>{APP.company}</span>
+        <p style={{ fontSize: 11, color: '#A3B0AB', margin: 0 }}>
+          Powered by <span style={{ fontWeight: 700, color: '#6B7B74' }}>{APP.company}</span>
         </p>
       </div>
 
