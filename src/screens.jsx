@@ -14,137 +14,294 @@ import { useTheme } from './theme';
 import { formatAmount, formatDate, truncate } from './utils';
 
 // ═══════════════════════════════════════════════════════════
-// LANDING - Style Pesse/Elegostra
+// LANDING SCREEN - Elegostra Style + Dark Premium + Aurora + Glass
 // ═══════════════════════════════════════════════════════════
 export function LandingScreen({ onLogin, onRegister }) {
   const { theme, isDark, toggle } = useTheme();
 
   return (
-    <div style={{ minHeight: '100dvh', background: theme.bg, fontFamily: "'Inter', 'Sora', sans-serif", display: 'flex', flexDirection: 'column', transition: 'all 0.3s' }}>
+    <div style={{
+      minHeight: '100dvh',
+      background: 'linear-gradient(180deg, #060C0A 0%, #0A1814 30%, #0D201B 60%, #060C0A 100%)',
+      backgroundSize: '400% 400%',
+      animation: 'auroraShift 12s ease infinite',
+      fontFamily: "'Inter', 'Sora', sans-serif",
+      display: 'flex', flexDirection: 'column',
+      position: 'relative', overflow: 'hidden',
+    }}>
       
-      {/* Navbar */}
+      {/* Aurora orbs */}
+      <div style={{ position: 'absolute', top: '-120px', right: '-80px', width: 320, height: 320, borderRadius: '50%', background: 'radial-gradient(circle, rgba(11,107,92,0.25) 0%, transparent 70%)', filter: 'blur(40px)', animation: 'floatSlow 8s ease-in-out infinite', pointerEvents: 'none' }} />
+      <div style={{ position: 'absolute', bottom: '100px', left: '-60px', width: 240, height: 240, borderRadius: '50%', background: 'radial-gradient(circle, rgba(196,180,154,0.1) 0%, transparent 70%)', filter: 'blur(40px)', animation: 'floatSlow 10s ease-in-out infinite 2s', pointerEvents: 'none' }} />
+      <div style={{ position: 'absolute', top: '40%', left: '50%', width: 400, height: 400, borderRadius: '50%', background: 'radial-gradient(circle, rgba(16,160,132,0.08) 0%, transparent 70%)', filter: 'blur(60px)', animation: 'pulseGlow 6s ease-in-out infinite', pointerEvents: 'none', transform: 'translate(-50%, -50%)' }} />
+
+      {/* Navbar - Glass morphism */}
       <nav style={{
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        padding: '16px 20px',
-        background: theme.navBg,
-        backdropFilter: 'blur(20px)',
-        borderBottom: `1px solid ${theme.border}`,
+        padding: '14px 18px',
+        background: 'rgba(6, 12, 10, 0.75)',
+        backdropFilter: 'blur(24px) saturate(1.8)',
+        WebkitBackdropFilter: 'blur(24px) saturate(1.8)',
+        borderBottom: '1px solid rgba(255,255,255,0.06)',
         position: 'sticky', top: 0, zIndex: 100,
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          <img src={APP.logo} alt="NexCliq" style={{ width: 28, height: 28, borderRadius: 7, objectFit: 'cover' }} />
-          <span style={{ fontSize: 17, fontWeight: 800, color: theme.text, letterSpacing: -0.5 }}>
-            nexcli<span style={{ color: '#C4B49A' }}>q</span>
+          <img src={APP.logo} alt="NexCliq" style={{ width: 28, height: 28, borderRadius: 7, objectFit: 'cover', boxShadow: '0 2px 8px rgba(11,107,92,0.3)' }} />
+          <span style={{ fontSize: 17, fontWeight: 800, color: '#E8EDF2', letterSpacing: -0.5 }}>
+            nexcli<span style={{ color: '#C4B49A', fontWeight: 800 }}>q</span>
           </span>
         </div>
         
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          {/* Theme Toggle */}
+          {/* Theme Toggle - Telegram style */}
           <button onClick={toggle} style={{
-            width: 36, height: 36, borderRadius: 10,
-            background: theme.surface, border: `1px solid ${theme.border}`,
+            width: 34, height: 34, borderRadius: 10,
+            background: 'rgba(255,255,255,0.06)',
+            border: '1px solid rgba(255,255,255,0.08)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
-            cursor: 'pointer', color: theme.textSecondary,
-          }}>
-            {isDark ? <Sun size={16} /> : <Moon size={16} />}
+            cursor: 'pointer', color: 'rgba(255,255,255,0.6)',
+            transition: 'all 0.3s ease',
+            backdropFilter: 'blur(12px)',
+          }}
+          onMouseEnter={e => e.currentTarget.style.background = 'rgba(255,255,255,0.12)'}
+          onMouseLeave={e => e.currentTarget.style.background = 'rgba(255,255,255,0.06)'}
+          >
+            <Sun size={15} />
           </button>
           <button onClick={onLogin} style={{
-            padding: '8px 18px', borderRadius: 10,
-            border: `1.5px solid ${theme.border}`,
-            background: 'transparent', color: theme.text,
-            fontSize: 13, fontWeight: 600, cursor: 'pointer',
-            fontFamily: "'Inter', 'Sora', sans-serif"
-          }}>Login</button>
+            padding: '8px 16px', borderRadius: 10,
+            border: '1px solid rgba(255,255,255,0.12)',
+            background: 'rgba(255,255,255,0.04)',
+            backdropFilter: 'blur(12px)',
+            color: 'rgba(255,255,255,0.75)',
+            fontSize: 13, fontWeight: 500, cursor: 'pointer',
+            fontFamily: "'Inter', 'Sora', sans-serif",
+            transition: 'all 0.25s ease',
+            letterSpacing: -0.2,
+          }}
+          onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.1)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.25)'; }}
+          onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.04)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.12)'; }}
+          >Login</button>
           <button onClick={onRegister} style={{
-            padding: '8px 18px', borderRadius: 10, border: 'none',
-            background: theme.accent, color: '#fff',
+            padding: '8px 16px', borderRadius: 10, border: 'none',
+            background: 'linear-gradient(135deg, #0B6B5C, #0D8570)',
+            color: '#fff',
             fontSize: 13, fontWeight: 600, cursor: 'pointer',
-            fontFamily: "'Inter', 'Sora', sans-serif"
-          }}>Sign Up</button>
+            fontFamily: "'Inter', 'Sora', sans-serif",
+            boxShadow: '0 4px 16px rgba(11,107,92,0.3)',
+            transition: 'all 0.25s ease',
+            letterSpacing: -0.2,
+          }}
+          onMouseEnter={e => e.currentTarget.style.boxShadow = '0 6px 24px rgba(11,107,92,0.5)'}
+          onMouseLeave={e => e.currentTarget.style.boxShadow = '0 4px 16px rgba(11,107,92,0.3)'}
+          >Sign Up</button>
         </div>
       </nav>
 
       {/* Hero */}
-      <div style={{ flex: 1, padding: '40px 20px 0', maxWidth: 480, margin: '0 auto', width: '100%' }}>
+      <div style={{ flex: 1, padding: '36px 18px 0', maxWidth: 480, margin: '0 auto', width: '100%' }}>
         
-        <h1 style={{ fontSize: 38, fontWeight: 800, lineHeight: 1.12, color: theme.text, letterSpacing: -1.5, margin: '0 0 12px 0' }}>
+        <h1 style={{
+          fontSize: 'clamp(32px, 8vw, 40px)',
+          fontWeight: 800, lineHeight: 1.12,
+          color: '#EDF0F2', letterSpacing: -1.5,
+          margin: '0 0 14px 0'
+        }}>
           Pay and Receive<br />
-          <span style={{ color: theme.accent }}>anywhere</span> with ease
+          <span style={{
+            background: 'linear-gradient(135deg, #34D399, #0D8570, #C4B49A)',
+            backgroundSize: '200% 200%',
+            animation: 'gradientText 3s ease infinite',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            backgroundClip: 'text',
+          }}>anywhere</span> with ease
         </h1>
         
-        <p style={{ fontSize: 14, color: theme.textSecondary, lineHeight: 1.65, marginBottom: 24 }}>
-          {APP.description}
+        <p style={{
+          fontSize: 14, color: '#7B8A99', lineHeight: 1.7,
+          marginBottom: 24,
+          maxWidth: '90%',
+        }}>
+          Transfer money, pay online and get paid without limitation.
+          Fast, secure, and reconciled automatically.
         </p>
 
-        {/* CTAs */}
+        {/* CTA Buttons */}
         <div style={{ display: 'flex', gap: 10, marginBottom: 32 }}>
           <button onClick={onRegister} style={{
-            padding: '14px 26px', borderRadius: 12, border: 'none',
-            background: theme.accent, color: '#fff',
-            fontSize: 14, fontWeight: 700, cursor: 'pointer',
-            fontFamily: "'Inter', 'Sora', sans-serif"
-          }}>
+            padding: '14px 24px', borderRadius: 12, border: 'none',
+            background: 'linear-gradient(135deg, #0B6B5C, #0D8570)',
+            color: '#fff',
+            fontSize: 14, fontWeight: 600, cursor: 'pointer',
+            fontFamily: "'Inter', 'Sora', sans-serif",
+            boxShadow: '0 8px 24px rgba(11,107,92,0.3)',
+            transition: 'all 0.3s ease',
+            letterSpacing: -0.3,
+          }}
+          onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-2px)'}
+          onMouseLeave={e => e.currentTarget.style.transform = 'translateY(0)'}
+          >
             Get Started
+            <ArrowRight size={15} style={{ marginLeft: 6, display: 'inline', verticalAlign: 'middle' }} />
           </button>
           <button style={{
-            padding: '14px 26px', borderRadius: 12,
-            border: `1.5px solid ${theme.border}`,
-            background: 'transparent', color: theme.text,
-            fontSize: 14, fontWeight: 600, cursor: 'pointer',
-            fontFamily: "'Inter', 'Sora', sans-serif"
-          }}>
-            Contact
+            padding: '14px 24px', borderRadius: 12,
+            border: '1px solid rgba(255,255,255,0.12)',
+            background: 'rgba(255,255,255,0.03)',
+            backdropFilter: 'blur(12px)',
+            color: 'rgba(255,255,255,0.7)',
+            fontSize: 14, fontWeight: 500, cursor: 'pointer',
+            fontFamily: "'Inter', 'Sora', sans-serif",
+            transition: 'all 0.3s ease',
+            letterSpacing: -0.3,
+          }}
+          onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.08)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.25)'; }}
+          onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.03)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.12)'; }}
+          >
+            Contact a Team
           </button>
         </div>
 
-        {/* Image */}
-        <div style={{ width: '100%', height: 180, borderRadius: 18, overflow: 'hidden', marginBottom: 24, border: `1px solid ${theme.border}` }}>
-          <img src={APP.heroImage} alt="NexCliq" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+        {/* Image - Glass border */}
+        <div style={{
+          width: '100%', height: 180, borderRadius: 18,
+          overflow: 'hidden', marginBottom: 28,
+          border: '1px solid rgba(255,255,255,0.08)',
+          boxShadow: '0 16px 48px rgba(0,0,0,0.3)',
+          transition: 'all 0.4s ease',
+        }}
+        onMouseEnter={e => e.currentTarget.style.borderColor = 'rgba(11,107,92,0.4)'}
+        onMouseLeave={e => e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)'}
+        >
+          <img 
+            src="https://eliteprotech-url.zone.id/1778436354039dvorw8.jpg"
+            alt="NexCliq App"
+            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+          />
         </div>
 
         {/* Stats Grid */}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginBottom: 10 }}>
-          <div style={{ padding: 18, borderRadius: 16, background: theme.incomeBg, color: theme.incomeText }}>
-            <div style={{ fontSize: 10, fontWeight: 600, opacity: 0.7, textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: 6 }}>Income</div>
-            <div style={{ fontSize: 22, fontWeight: 800 }}>13,592,000 XOF</div>
-            <div style={{ fontSize: 10, opacity: 0.6, marginTop: 4 }}>+12.5% this month</div>
+          {/* Income - Solid green */}
+          <div style={{
+            padding: 18, borderRadius: 16,
+            background: 'linear-gradient(135deg, #0B6B5C, #073D34)',
+            color: '#fff',
+            boxShadow: '0 8px 24px rgba(11,107,92,0.2)',
+            transition: 'all 0.3s ease',
+          }}
+          onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-2px)'}
+          onMouseLeave={e => e.currentTarget.style.transform = 'translateY(0)'}
+          >
+            <div style={{ fontSize: 10, fontWeight: 600, opacity: 0.7, textTransform: 'uppercase', letterSpacing: 1, marginBottom: 8 }}>
+              Income
+            </div>
+            <div style={{ fontSize: 20, fontWeight: 800, letterSpacing: -0.5 }}>
+              13,592,000 XOF
+            </div>
+            <div style={{ fontSize: 10, opacity: 0.5, marginTop: 6, fontWeight: 500 }}>
+              +12.5% this month
+            </div>
           </div>
-          <div style={{ padding: 18, borderRadius: 16, background: theme.expenseBg, border: `1px solid ${theme.border}` }}>
-            <div style={{ fontSize: 10, fontWeight: 600, color: theme.textSecondary, textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: 6 }}>Expenses</div>
-            <div style={{ fontSize: 22, fontWeight: 800, color: theme.expenseText }}>12,167,000 XOF</div>
-            <div style={{ fontSize: 10, color: theme.textSecondary, marginTop: 4 }}>-3.2% this month</div>
+
+          {/* Expenses - Glass */}
+          <div style={{
+            padding: 18, borderRadius: 16,
+            background: 'rgba(255,255,255,0.03)',
+            backdropFilter: 'blur(16px)',
+            border: '1px solid rgba(255,255,255,0.06)',
+            transition: 'all 0.3s ease',
+          }}
+          onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.06)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.15)'; }}
+          onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.03)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.06)'; }}
+          >
+            <div style={{ fontSize: 10, fontWeight: 600, color: '#7B8A99', textTransform: 'uppercase', letterSpacing: 1, marginBottom: 8 }}>
+              Expenses
+            </div>
+            <div style={{ fontSize: 20, fontWeight: 800, letterSpacing: -0.5, color: '#EDF0F2' }}>
+              12,167,000 XOF
+            </div>
+            <div style={{ fontSize: 10, color: '#7B8A99', marginTop: 6, fontWeight: 500 }}>
+              -3.2% this month
+            </div>
           </div>
         </div>
 
-        {/* Goal */}
-        <div style={{ padding: 18, borderRadius: 16, background: theme.goalBg, border: `1px solid ${theme.border}`, marginBottom: 32 }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 10 }}>
+        {/* Goal Card - Glass */}
+        <div style={{
+          padding: 18, borderRadius: 16,
+          background: 'rgba(255,255,255,0.03)',
+          backdropFilter: 'blur(16px)',
+          border: '1px solid rgba(255,255,255,0.06)',
+          marginBottom: 32,
+          transition: 'all 0.3s ease',
+        }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 12 }}>
             <div>
-              <div style={{ fontSize: 10, fontWeight: 600, color: theme.textSecondary, textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: 4 }}>Goal</div>
-              <div style={{ fontSize: 20, fontWeight: 800, color: theme.accent }}>56K <span style={{ fontSize: 12, color: theme.textSecondary }}>XOF</span></div>
+              <div style={{ fontSize: 10, fontWeight: 600, color: '#7B8A99', textTransform: 'uppercase', letterSpacing: 1, marginBottom: 4 }}>
+                Goal
+              </div>
+              <div style={{ fontSize: 20, fontWeight: 800, color: '#34D399' }}>
+                56K <span style={{ fontSize: 12, color: '#7B8A99', fontWeight: 500 }}>XOF</span>
+              </div>
             </div>
-            <div style={{ width: 36, height: 36, borderRadius: '50%', background: isDark ? 'rgba(11,107,92,0.15)' : '#E8F0ED', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <TrendingUp size={16} color={theme.accent} />
+            <div style={{
+              width: 36, height: 36, borderRadius: '50%',
+              background: 'rgba(11,107,92,0.15)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              border: '1px solid rgba(11,107,92,0.2)',
+            }}>
+              <TrendingUp size={16} color="#34D399" />
             </div>
           </div>
-          <div style={{ height: 4, background: isDark ? 'rgba(255,255,255,0.08)' : '#E8ECEA', borderRadius: 2, marginBottom: 6, overflow: 'hidden' }}>
-            <div style={{ height: '100%', width: '68%', background: theme.accent, borderRadius: 2 }} />
+          <div style={{ height: 4, background: 'rgba(255,255,255,0.06)', borderRadius: 2, marginBottom: 8, overflow: 'hidden' }}>
+            <div style={{ height: '100%', width: '68%', background: 'linear-gradient(90deg, #0B6B5C, #34D399)', borderRadius: 2 }} />
           </div>
-          <div style={{ fontSize: 10, color: theme.textSecondary }}>Remuneration growth</div>
-          <div style={{ fontSize: 18, fontWeight: 800, color: theme.accent, marginTop: 4 }}>24,345 XOF</div>
+          <div style={{ fontSize: 10, color: '#7B8A99', fontWeight: 500 }}>
+            Remuneration growth
+          </div>
+          <div style={{ fontSize: 18, fontWeight: 800, color: '#34D399', marginTop: 6, letterSpacing: -0.3 }}>
+            24,345 XOF
+          </div>
         </div>
+
       </div>
 
       {/* Footer */}
-      <div style={{ textAlign: 'center', padding: '18px', borderTop: `1px solid ${theme.border}` }}>
-        <p style={{ fontSize: 11, color: theme.textSecondary, margin: 0 }}>
-          Powered by <span style={{ fontWeight: 700 }}>{APP.company}</span>
+      <div style={{
+        textAlign: 'center', padding: '18px',
+        borderTop: '1px solid rgba(255,255,255,0.05)',
+        background: 'rgba(6, 12, 10, 0.5)',
+        backdropFilter: 'blur(16px)',
+      }}>
+        <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.25)', margin: 0, fontWeight: 500 }}>
+          Powered by <span style={{ fontWeight: 700, color: 'rgba(255,255,255,0.4)' }}>{APP.company}</span>
         </p>
       </div>
+
+      {/* Keyframe animations */}
+      <style>{`
+        @keyframes auroraShift {
+          0%, 100% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+        }
+        @keyframes gradientText {
+          0%, 100% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+        }
+        @keyframes floatSlow {
+          0%, 100% { transform: translateY(0) scale(1); }
+          50% { transform: translateY(-20px) scale(1.05); }
+        }
+        @keyframes pulseGlow {
+          0%, 100% { opacity: 0.3; }
+          50% { opacity: 0.7; }
+        }
+      `}</style>
     </div>
   );
 }
-
 // ═══════════════════════════════════════════════════════════
 // HOME - Dashboard Style Pesse
 // ═══════════════════════════════════════════════════════════
