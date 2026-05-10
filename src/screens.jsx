@@ -14,7 +14,7 @@ import { useTheme } from './theme';
 import { formatAmount, formatDate, truncate } from './utils';
 
 // ═══════════════════════════════════════════════════════════
-// LANDING SCREEN - Elegostra Style + Dark Premium + Aurora + Glass
+// LANDING SCREEN - Elegostra Style avec About + Image
 // ═══════════════════════════════════════════════════════════
 export function LandingScreen({ onLogin, onRegister }) {
   const { theme, isDark, toggle } = useTheme();
@@ -33,7 +33,6 @@ export function LandingScreen({ onLogin, onRegister }) {
       {/* Aurora orbs */}
       <div style={{ position: 'absolute', top: '-120px', right: '-80px', width: 320, height: 320, borderRadius: '50%', background: 'radial-gradient(circle, rgba(11,107,92,0.25) 0%, transparent 70%)', filter: 'blur(40px)', animation: 'floatSlow 8s ease-in-out infinite', pointerEvents: 'none' }} />
       <div style={{ position: 'absolute', bottom: '100px', left: '-60px', width: 240, height: 240, borderRadius: '50%', background: 'radial-gradient(circle, rgba(196,180,154,0.1) 0%, transparent 70%)', filter: 'blur(40px)', animation: 'floatSlow 10s ease-in-out infinite 2s', pointerEvents: 'none' }} />
-      <div style={{ position: 'absolute', top: '40%', left: '50%', width: 400, height: 400, borderRadius: '50%', background: 'radial-gradient(circle, rgba(16,160,132,0.08) 0%, transparent 70%)', filter: 'blur(60px)', animation: 'pulseGlow 6s ease-in-out infinite', pointerEvents: 'none', transform: 'translate(-50%, -50%)' }} />
 
       {/* Navbar - Glass morphism */}
       <nav style={{
@@ -53,7 +52,7 @@ export function LandingScreen({ onLogin, onRegister }) {
         </div>
         
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          {/* Theme Toggle - Telegram style */}
+          {/* Theme Toggle */}
           <button onClick={toggle} style={{
             width: 34, height: 34, borderRadius: 10,
             background: 'rgba(255,255,255,0.06)',
@@ -61,40 +60,25 @@ export function LandingScreen({ onLogin, onRegister }) {
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             cursor: 'pointer', color: 'rgba(255,255,255,0.6)',
             transition: 'all 0.3s ease',
-            backdropFilter: 'blur(12px)',
-          }}
-          onMouseEnter={e => e.currentTarget.style.background = 'rgba(255,255,255,0.12)'}
-          onMouseLeave={e => e.currentTarget.style.background = 'rgba(255,255,255,0.06)'}
-          >
+          }}>
             <Sun size={15} />
           </button>
           <button onClick={onLogin} style={{
             padding: '8px 16px', borderRadius: 10,
             border: '1px solid rgba(255,255,255,0.12)',
             background: 'rgba(255,255,255,0.04)',
-            backdropFilter: 'blur(12px)',
             color: 'rgba(255,255,255,0.75)',
             fontSize: 13, fontWeight: 500, cursor: 'pointer',
-            fontFamily: "'Inter', 'Sora', sans-serif",
-            transition: 'all 0.25s ease',
-            letterSpacing: -0.2,
-          }}
-          onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.1)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.25)'; }}
-          onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.04)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.12)'; }}
-          >Login</button>
+            fontFamily: 'inherit',
+          }}>Login</button>
           <button onClick={onRegister} style={{
             padding: '8px 16px', borderRadius: 10, border: 'none',
             background: 'linear-gradient(135deg, #0B6B5C, #0D8570)',
             color: '#fff',
             fontSize: 13, fontWeight: 600, cursor: 'pointer',
-            fontFamily: "'Inter', 'Sora', sans-serif",
+            fontFamily: 'inherit',
             boxShadow: '0 4px 16px rgba(11,107,92,0.3)',
-            transition: 'all 0.25s ease',
-            letterSpacing: -0.2,
-          }}
-          onMouseEnter={e => e.currentTarget.style.boxShadow = '0 6px 24px rgba(11,107,92,0.5)'}
-          onMouseLeave={e => e.currentTarget.style.boxShadow = '0 4px 16px rgba(11,107,92,0.3)'}
-          >Sign Up</button>
+          }}>Sign Up</button>
         </div>
       </nav>
 
@@ -114,17 +98,14 @@ export function LandingScreen({ onLogin, onRegister }) {
             animation: 'gradientText 3s ease infinite',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
-            backgroundClip: 'text',
           }}>anywhere</span> with ease
         </h1>
         
         <p style={{
           fontSize: 14, color: '#7B8A99', lineHeight: 1.7,
-          marginBottom: 24,
-          maxWidth: '90%',
+          marginBottom: 24, maxWidth: '90%',
         }}>
-          Transfer money, pay online and get paid without limitation.
-          Fast, secure, and reconciled automatically.
+          {APP.description}
         </p>
 
         {/* CTA Buttons */}
@@ -134,46 +115,28 @@ export function LandingScreen({ onLogin, onRegister }) {
             background: 'linear-gradient(135deg, #0B6B5C, #0D8570)',
             color: '#fff',
             fontSize: 14, fontWeight: 600, cursor: 'pointer',
-            fontFamily: "'Inter', 'Sora', sans-serif",
+            fontFamily: 'inherit',
             boxShadow: '0 8px 24px rgba(11,107,92,0.3)',
-            transition: 'all 0.3s ease',
-            letterSpacing: -0.3,
-          }}
-          onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-2px)'}
-          onMouseLeave={e => e.currentTarget.style.transform = 'translateY(0)'}
-          >
-            Get Started
-            <ArrowRight size={15} style={{ marginLeft: 6, display: 'inline', verticalAlign: 'middle' }} />
+          }}>
+            Get Started <ArrowRight size={15} style={{ marginLeft: 6, verticalAlign: 'middle' }} />
           </button>
           <button style={{
             padding: '14px 24px', borderRadius: 12,
             border: '1px solid rgba(255,255,255,0.12)',
             background: 'rgba(255,255,255,0.03)',
-            backdropFilter: 'blur(12px)',
             color: 'rgba(255,255,255,0.7)',
             fontSize: 14, fontWeight: 500, cursor: 'pointer',
-            fontFamily: "'Inter', 'Sora', sans-serif",
-            transition: 'all 0.3s ease',
-            letterSpacing: -0.3,
-          }}
-          onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.08)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.25)'; }}
-          onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.03)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.12)'; }}
-          >
-            Contact a Team
-          </button>
+            fontFamily: 'inherit',
+          }}>Contact a Team</button>
         </div>
 
-        {/* Image - Glass border */}
+        {/* ═══════════════ IMAGE - Grand format comme Elegostra ═══════════════ */}
         <div style={{
-          width: '100%', height: 180, borderRadius: 18,
+          width: '100%', height: 200, borderRadius: 20,
           overflow: 'hidden', marginBottom: 28,
           border: '1px solid rgba(255,255,255,0.08)',
-          boxShadow: '0 16px 48px rgba(0,0,0,0.3)',
-          transition: 'all 0.4s ease',
-        }}
-        onMouseEnter={e => e.currentTarget.style.borderColor = 'rgba(11,107,92,0.4)'}
-        onMouseLeave={e => e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)'}
-        >
+          boxShadow: '0 20px 60px rgba(0,0,0,0.3)',
+        }}>
           <img 
             src="https://eliteprotech-url.zone.id/1778436354039dvorw8.jpg"
             alt="NexCliq App"
@@ -181,56 +144,38 @@ export function LandingScreen({ onLogin, onRegister }) {
           />
         </div>
 
-        {/* Stats Grid */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginBottom: 10 }}>
-          {/* Income - Solid green */}
-          <div style={{
-            padding: 18, borderRadius: 16,
-            background: 'linear-gradient(135deg, #0B6B5C, #073D34)',
-            color: '#fff',
-            boxShadow: '0 8px 24px rgba(11,107,92,0.2)',
-            transition: 'all 0.3s ease',
-          }}
-          onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-2px)'}
-          onMouseLeave={e => e.currentTarget.style.transform = 'translateY(0)'}
-          >
-            <div style={{ fontSize: 10, fontWeight: 600, opacity: 0.7, textTransform: 'uppercase', letterSpacing: 1, marginBottom: 8 }}>
-              Income
-            </div>
-            <div style={{ fontSize: 20, fontWeight: 800, letterSpacing: -0.5 }}>
-              13,592,000 XOF
-            </div>
-            <div style={{ fontSize: 10, opacity: 0.5, marginTop: 6, fontWeight: 500 }}>
-              +12.5% this month
-            </div>
-          </div>
-
-          {/* Expenses - Glass */}
-          <div style={{
-            padding: 18, borderRadius: 16,
-            background: 'rgba(255,255,255,0.03)',
-            backdropFilter: 'blur(16px)',
-            border: '1px solid rgba(255,255,255,0.06)',
-            transition: 'all 0.3s ease',
-          }}
-          onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.06)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.15)'; }}
-          onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.03)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.06)'; }}
-          >
-            <div style={{ fontSize: 10, fontWeight: 600, color: '#7B8A99', textTransform: 'uppercase', letterSpacing: 1, marginBottom: 8 }}>
-              Expenses
-            </div>
-            <div style={{ fontSize: 20, fontWeight: 800, letterSpacing: -0.5, color: '#EDF0F2' }}>
-              12,167,000 XOF
-            </div>
-            <div style={{ fontSize: 10, color: '#7B8A99', marginTop: 6, fontWeight: 500 }}>
-              -3.2% this month
-            </div>
-          </div>
+        {/* ═══════════════ ABOUT CARDS - Remplacent les prix ═══════════════ */}
+        <div className="section-header" style={{ marginBottom: 12 }}>
+          <span style={{ fontSize: 15, fontWeight: 700, color: '#E8EDF2', letterSpacing: -0.3 }}>About</span>
         </div>
 
-        {/* Goal Card - Glass */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginBottom: 10 }}>
+          {[
+            { icon: <Zap size={20} color="#34D399" />, title: 'Fast Transfer', sub: '< 30 seconds per transaction' },
+            { icon: <Shield size={20} color="#C4B49A" />, title: 'Secure', sub: 'End-to-end encrypted' },
+            { icon: <CheckCircle2 size={20} color="#34D399" />, title: 'Reconciled', sub: '0% data loss guaranteed' },
+            { icon: <Globe size={20} color="#5ED5C1" />, title: 'Multi-network', sub: 'MTN MoMo & Orange Money' },
+          ].map((item, i) => (
+            <div key={i} style={{
+              padding: 18, borderRadius: 16,
+              background: 'rgba(255,255,255,0.03)',
+              backdropFilter: 'blur(16px)',
+              border: '1px solid rgba(255,255,255,0.06)',
+              transition: 'all 0.3s ease',
+            }}
+            onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.06)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.15)'; e.currentTarget.style.transform = 'translateY(-2px)'; }}
+            onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.03)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.06)'; e.currentTarget.style.transform = 'translateY(0)'; }}
+            >
+              <div style={{ marginBottom: 10 }}>{item.icon}</div>
+              <div style={{ fontSize: 13, fontWeight: 700, color: '#E8EDF2', marginBottom: 4 }}>{item.title}</div>
+              <div style={{ fontSize: 11, color: '#7B8A99', lineHeight: 1.4 }}>{item.sub}</div>
+            </div>
+          ))}
+        </div>
+
+        {/* Goal / Mission Card */}
         <div style={{
-          padding: 18, borderRadius: 16,
+          padding: 20, borderRadius: 16,
           background: 'rgba(255,255,255,0.03)',
           backdropFilter: 'blur(16px)',
           border: '1px solid rgba(255,255,255,0.06)',
@@ -240,30 +185,27 @@ export function LandingScreen({ onLogin, onRegister }) {
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 12 }}>
             <div>
               <div style={{ fontSize: 10, fontWeight: 600, color: '#7B8A99', textTransform: 'uppercase', letterSpacing: 1, marginBottom: 4 }}>
-                Goal
+                Our Mission
               </div>
-              <div style={{ fontSize: 20, fontWeight: 800, color: '#34D399' }}>
-                56K <span style={{ fontSize: 12, color: '#7B8A99', fontWeight: 500 }}>XOF</span>
+              <div style={{ fontSize: 16, fontWeight: 700, color: '#34D399', lineHeight: 1.4 }}>
+                Resume growth
               </div>
             </div>
             <div style={{
-              width: 36, height: 36, borderRadius: '50%',
+              width: 40, height: 40, borderRadius: '50%',
               background: 'rgba(11,107,92,0.15)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               border: '1px solid rgba(11,107,92,0.2)',
             }}>
-              <TrendingUp size={16} color="#34D399" />
+              <TrendingUp size={18} color="#34D399" />
             </div>
           </div>
-          <div style={{ height: 4, background: 'rgba(255,255,255,0.06)', borderRadius: 2, marginBottom: 8, overflow: 'hidden' }}>
-            <div style={{ height: '100%', width: '68%', background: 'linear-gradient(90deg, #0B6B5C, #34D399)', borderRadius: 2 }} />
+          <div style={{ height: 4, background: 'rgba(255,255,255,0.06)', borderRadius: 2, marginBottom: 10, overflow: 'hidden' }}>
+            <div style={{ height: '100%', width: '78%', background: 'linear-gradient(90deg, #0B6B5C, #34D399)', borderRadius: 2 }} />
           </div>
-          <div style={{ fontSize: 10, color: '#7B8A99', fontWeight: 500 }}>
-            Remuneration growth
-          </div>
-          <div style={{ fontSize: 18, fontWeight: 800, color: '#34D399', marginTop: 6, letterSpacing: -0.3 }}>
-            24,345 XOF
-          </div>
+          <p style={{ fontSize: 12, color: '#7B8A99', lineHeight: 1.6, margin: 0 }}>
+            We help freelancers and businesses receive and send money across Africa — fast, secure, and reconciled.
+          </p>
         </div>
 
       </div>
@@ -291,12 +233,8 @@ export function LandingScreen({ onLogin, onRegister }) {
           50% { background-position: 100% 50%; }
         }
         @keyframes floatSlow {
-          0%, 100% { transform: translateY(0) scale(1); }
-          50% { transform: translateY(-20px) scale(1.05); }
-        }
-        @keyframes pulseGlow {
-          0%, 100% { opacity: 0.3; }
-          50% { opacity: 0.7; }
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-20px); }
         }
       `}</style>
     </div>
