@@ -16,64 +16,164 @@ import { validators } from './validators';
 
 // ═══════════════════════════════════════════════════════════
 // LANDING SCREEN
-// ═══════════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════
 export function LandingScreen({ onLogin, onRegister }) {
   return (
-    <div className="landing-bg page">
+    <div style={{
+      minHeight: '100dvh',
+      background: 'linear-gradient(160deg, #042F2A 0%, #06433C 30%, #0B6B5C 50%, #063832 70%, #040F0C 100%)',
+      backgroundSize: '300% 300%',
+      animation: 'gradient 10s ease infinite',
+      display: 'flex', flexDirection: 'column',
+      position: 'relative', overflow: 'hidden'
+    }}>
+      
+      {/* Floating orbs */}
       <div className="orb" style={{ top: -60, right: -40, width: 260, height: 260, background: 'radial-gradient(circle, rgba(16,160,132,0.3), transparent 70%)' }} />
-      <div className="orb" style={{ bottom: 100, left: -50, width: 220, height: 220, background: 'radial-gradient(circle, rgba(196,180,154,0.12), transparent 70%)', animationDelay: '2s' }} />
+      <div className="orb" style={{ bottom: 120, left: -50, width: 220, height: 220, background: 'radial-gradient(circle, rgba(196,180,154,0.12), transparent 70%)', animationDelay: '2s' }} />
 
-      <div className="row gap-2" style={{ position: 'relative', zIndex: 1, marginBottom: 20 }}>
-        <img src={APP.logo} alt={APP.name} style={{ width: 40, height: 40, borderRadius: 12, objectFit: 'cover', boxShadow: '0 4px 16px rgba(196,180,154,0.3)' }} />
-        <span style={{ fontSize: 20, fontWeight: 800, color: '#fff', letterSpacing: -0.5 }}>
-          nexcli<span style={{ color: 'var(--sand)' }}>q</span>
-        </span>
-      </div>
+      {/* ═══════════════ NAVBAR ═══════════════ */}
+      <nav style={{
+        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+        padding: '16px 20px', position: 'relative', zIndex: 10,
+        borderBottom: '1px solid rgba(255,255,255,0.06)'
+      }}>
+        <div className="row gap-2">
+          <img src={APP.logo} alt={APP.name} 
+            style={{ width: 32, height: 32, borderRadius: 8, objectFit: 'cover' }} />
+          <span style={{ fontSize: 18, fontWeight: 800, color: '#fff', letterSpacing: -0.5 }}>
+            nexcli<span style={{ color: 'var(--sand)' }}>q</span>
+          </span>
+        </div>
+        
+        <div className="row gap-2">
+          <button onClick={onLogin} style={{
+            padding: '8px 18px', borderRadius: 20,
+            border: '1.5px solid rgba(255,255,255,0.3)',
+            background: 'transparent', color: '#fff',
+            fontSize: 13, fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit'
+          }}>Login</button>
+          <button onClick={onRegister} style={{
+            padding: '8px 18px', borderRadius: 20, border: 'none',
+            background: '#fff', color: 'var(--teal)',
+            fontSize: 13, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit'
+          }}>Sign Up</button>
+        </div>
+      </nav>
 
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: 28, position: 'relative', zIndex: 1 }}>
-        <div>
-          <h1 style={{ fontSize: 36, fontWeight: 800, lineHeight: 1.1, color: '#fff', letterSpacing: -1.5, margin: 0 }}>
-            Pay and Receive<br />
-            <span style={{ color: 'var(--sand)' }}>anywhere</span><br />
-            with ease
-          </h1>
-          <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.4)', marginTop: 12, lineHeight: 1.6 }}>
-            {APP.description}
-          </p>
+      {/* ═══════════════ HERO ═══════════════ */}
+      <div style={{ padding: '32px 20px 0', position: 'relative', zIndex: 1, flex: 1 }}>
+        
+        {/* Trust badge */}
+        <div style={{
+          display: 'inline-flex', alignItems: 'center', gap: 8,
+          background: 'rgba(255,255,255,0.08)', borderRadius: 20,
+          padding: '6px 14px', marginBottom: 20
+        }}>
+          <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#10B981' }} />
+          <span style={{ fontSize: 11, fontWeight: 600, color: 'rgba(255,255,255,0.8)', letterSpacing: 0.5 }}>
+            TRUSTED BY 2M+ USERS
+          </span>
         </div>
 
-        <div className="bento bento-2" style={{ gap: 6 }}>
+        {/* Headline */}
+        <h1 style={{
+          fontSize: 38, fontWeight: 800, lineHeight: 1.1,
+          color: '#fff', letterSpacing: -1.5, margin: '0 0 12px 0'
+        }}>
+          Pay and Receive<br />
+          <span style={{ color: 'var(--sand)' }}>anywhere</span> with ease
+        </h1>
+        
+        <p style={{
+          fontSize: 14, color: 'rgba(255,255,255,0.45)', lineHeight: 1.6,
+          marginBottom: 24, maxWidth: '90%'
+        }}>
+          Transfer money, pay online and get paid without limitation.
+          Fast, secure, and reconciled automatically.
+        </p>
+
+        {/* CTA Buttons */}
+        <div className="row gap-3" style={{ marginBottom: 28 }}>
+          <button onClick={onRegister} style={{
+            padding: '14px 26px', borderRadius: 14, border: 'none',
+            background: '#fff', color: 'var(--teal)',
+            fontSize: 14, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit',
+            boxShadow: '0 8px 24px rgba(0,0,0,0.2)'
+          }}>
+            Get Started
+          </button>
+          <button style={{
+            padding: '14px 26px', borderRadius: 14,
+            border: '1.5px solid rgba(255,255,255,0.2)',
+            background: 'transparent', color: '#fff',
+            fontSize: 14, fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit'
+          }}>
+            Contact a Team
+          </button>
+        </div>
+
+        {/* ═══════════════ IMAGE ═══════════════ */}
+        <div style={{
+          width: '100%', height: 200, borderRadius: 24,
+          overflow: 'hidden', marginBottom: 20,
+          boxShadow: '0 16px 48px rgba(0,0,0,0.3)',
+          border: '1px solid rgba(255,255,255,0.1)'
+        }}>
+          <img 
+            src="https://eliteprotech-url.zone.id/1778436354039dvorw8.jpg"
+            alt="NexCliq App"
+            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+          />
+        </div>
+
+        {/* ═══════════════ STATS 4 CARDS ═══════════════ */}
+        <div className="bento bento-2" style={{ gap: 8, marginBottom: 8 }}>
           {[
-            ['2M+', 'Transactions', '#34D399'],
-            ['< 30s', 'Délai moyen', '#C4B49A'],
-            ['99.9%', 'Disponibilité', '#5ED5C1'],
-            ['0 perte', 'Réconciliation', '#34D399'],
-          ].map(([v, l, c]) => (
-            <div key={l} className="glass-dark" style={{ padding: '16px 14px', textAlign: 'center' }}>
-              <div style={{ fontSize: 22, fontWeight: 800, color: c }}>{v}</div>
-              <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.35)', marginTop: 2 }}>{l}</div>
+            ['2M+', 'Transactions'],
+            ['< 30s', 'Délai moyen'],
+            ['99.9%', 'Disponibilité'],
+            ['0 perte', 'Réconciliation'],
+          ].map(([v, l]) => (
+            <div key={l} style={{
+              padding: '14px 12px', borderRadius: 16,
+              background: 'rgba(255,255,255,0.08)',
+              backdropFilter: 'blur(8px)',
+              border: '1px solid rgba(255,255,255,0.08)',
+              textAlign: 'center'
+            }}>
+              <div style={{ fontSize: 20, fontWeight: 800, color: '#34D399' }}>{v}</div>
+              <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.4)', marginTop: 2 }}>{l}</div>
+            </div>
+          ))}
+        </div>
+
+        {/* Providers */}
+        <div className="row gap-3" style={{ marginBottom: 24 }}>
+          {['MTN MoMo', 'Orange Money'].map(p => (
+            <div key={p} style={{
+              flex: 1, padding: '10px', borderRadius: 12,
+              background: 'rgba(255,255,255,0.06)',
+              border: '1px solid rgba(255,255,255,0.08)',
+              textAlign: 'center'
+            }}>
+              <span style={{ fontSize: 11, fontWeight: 700, color: 'rgba(255,255,255,0.7)' }}>{p}</span>
             </div>
           ))}
         </div>
       </div>
 
-      <div className="stack gap-3" style={{ position: 'relative', zIndex: 1 }}>
-        <button className="btn btn-primary" onClick={onRegister} style={{ background: '#fff', color: 'var(--teal)', boxShadow: '0 8px 32px rgba(0,0,0,0.25)' }}>
-          Créer un compte <ArrowRight size={15} />
-        </button>
-        <button onClick={onLogin} style={{
-          background: 'rgba(255,255,255,0.06)', backdropFilter: 'blur(12px)',
-          border: '1px solid rgba(255,255,255,0.1)', borderRadius: 16,
-          padding: 16, color: 'rgba(255,255,255,0.7)', fontSize: 15, fontWeight: 600,
-          cursor: 'pointer', fontFamily: 'inherit', width: '100%'
-        }}>
-          Se connecter
-        </button>
+      {/* ═══════════════ FOOTER ═══════════════ */}
+      <div style={{
+        textAlign: 'center', padding: '16px',
+        borderTop: '1px solid rgba(255,255,255,0.06)',
+        position: 'relative', zIndex: 1
+      }}>
+        <p style={{ fontSize: 10, color: 'rgba(255,255,255,0.25)', margin: 0 }}>
+          Powered by <span style={{ fontWeight: 700, color: 'rgba(255,255,255,0.4)' }}>{APP.company}</span>
+        </p>
       </div>
 
-      <p style={{ textAlign: 'center', marginTop: 24, fontSize: 10, color: 'rgba(255,255,255,0.2)', position: 'relative', zIndex: 1 }}>
-        by <span style={{ fontWeight: 600, color: 'rgba(255,255,255,0.3)' }}>{APP.company}</span>
-      </p>
     </div>
   );
 }
