@@ -20,21 +20,17 @@ export const GlobalStyles = () => (
     html{font-size:16px;-webkit-font-smoothing:antialiased}
     body{font-family:'Sora',sans-serif;background:var(--cream);color:var(--text);min-height:100dvh}
 
-    /* Animations */
     @keyframes pageIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
     @keyframes spin{to{transform:rotate(360deg)}}
     @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
-    @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.5}}
     @keyframes gradient{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
 
     .app-shell{max-width:430px;min-height:100dvh;margin:0 auto;background:var(--cream);position:relative;overflow-x:hidden}
     .page{animation:pageIn 0.35s ease both}
 
-    /* Glass */
     .glass{background:var(--glass);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--glass-border);border-radius:var(--r-lg);box-shadow:var(--shadow)}
     .glass-dark{background:rgba(255,255,255,0.08);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.1);border-radius:var(--r-md)}
 
-    /* Layout */
     .screen{padding:0 16px 100px}
     .pt-4{padding-top:20px}
     .stack{display:flex;flex-direction:column}
@@ -44,14 +40,12 @@ export const GlobalStyles = () => (
     .gap-2{gap:8px}.gap-3{gap:12px}.gap-4{gap:16px}.gap-5{gap:20px}
     .w-full{width:100%}
 
-    /* Text */
     .text-sm{font-size:13px}.text-xs{font-size:11px}
     .c-muted{color:var(--muted)}.c-light{color:var(--light)}
     .c-teal{color:var(--teal)}.c-red{color:var(--red)}.c-green{color:#059669}
     .fw-600{font-weight:600}.fw-700{font-weight:700}.fw-800{font-weight:800}
     .mono{font-family:'JetBrains Mono',monospace}
 
-    /* Nav */
     .bottom-nav{
       position:fixed;bottom:12px;left:50%;transform:translateX(-50%);
       width:calc(100% - 28px);max-width:402px;
@@ -68,7 +62,6 @@ export const GlobalStyles = () => (
     .nav-label{font-size:10px;font-weight:500;color:var(--light)}
     .nav-item.active .nav-label{color:var(--teal);font-weight:700}
 
-    /* Header */
     .screen-header{
       position:sticky;top:0;z-index:50;
       background:rgba(246,243,239,0.75);backdrop-filter:blur(20px);
@@ -77,7 +70,6 @@ export const GlobalStyles = () => (
     }
     .header-title{font-size:16px;font-weight:700;letter-spacing:-0.2px}
 
-    /* Buttons */
     .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:none;cursor:pointer;font-family:inherit;font-weight:600;transition:all 0.2s;border-radius:var(--r-md);position:relative;overflow:hidden}
     .btn:active{transform:scale(0.96)}
     .btn:disabled{opacity:0.5;pointer-events:none}
@@ -88,7 +80,6 @@ export const GlobalStyles = () => (
     .btn-icon:active{transform:scale(0.9)}
     .btn-danger{background:var(--red-bg);color:var(--red);border:1px solid rgba(239,68,68,0.2);padding:15px 22px;font-size:15px;width:100%}
 
-    /* Inputs */
     .form-group{display:flex;flex-direction:column;gap:5px}
     .form-label{font-size:11px;font-weight:700;color:var(--muted);letter-spacing:0.05em;text-transform:uppercase}
     .input-wrap{position:relative}
@@ -104,21 +95,17 @@ export const GlobalStyles = () => (
     .form-input.pr-44{padding-right:44px}
     .input-icon-l{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--light)}
     .input-icon-r{position:absolute;right:14px;top:50%;transform:translateY(-50%);color:var(--light);cursor:pointer}
-    .input-icon-r:hover{color:var(--teal)}
 
-    /* Badges */
     .badge{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:20px;font-size:10px;font-weight:700}
     .badge-dot{width:4px;height:4px;border-radius:50%}
     .badge-success{background:var(--green-bg);color:#065F46}.badge-success .badge-dot{background:var(--green)}
     .badge-pending{background:var(--amber-bg);color:#92400E}.badge-pending .badge-dot{background:var(--amber)}
     .badge-failed{background:var(--red-bg);color:#991B1B}.badge-failed .badge-dot{background:var(--red)}
 
-    /* Toast */
     .toast-container{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:9999;display:flex;flex-direction:column;gap:8px;width:calc(100%-32px);max-width:398px}
     .toast{padding:13px 16px;border-radius:var(--r-md);font-size:13px;font-weight:500;background:rgba(17,24,21,0.9);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.1);color:#fff;display:flex;align-items:center;gap:8px;animation:pageIn 0.3s ease}
     .toast-success .toast-icon{color:#34D399}.toast-error .toast-icon{color:#F87171}.toast-info .toast-icon{color:var(--sand)}
 
-    /* Wallet Hero */
     .wallet-hero{
       background:linear-gradient(145deg,#06433C,#0B6B5C,#042F2A);background-size:200%200%;
       animation:gradient 8s ease infinite;border-radius:var(--r-xl);
@@ -126,7 +113,6 @@ export const GlobalStyles = () => (
       box-shadow:0 20px 48px rgba(11,107,92,0.2),0 1px 0 rgba(255,255,255,0.06) inset;
     }
 
-    /* Bento Grid */
     .bento{display:grid;gap:10px}
     .bento-2{grid-template-columns:1fr 1fr}
     .bento-4{grid-template-columns:repeat(4,1fr)}
@@ -137,30 +123,24 @@ export const GlobalStyles = () => (
     }
     .bento-card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(11,107,92,0.06)}
 
-    /* Scroll */
     .scroll-x{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
     .scroll-x::-webkit-scrollbar{display:none}
 
-    /*Progress*/
     .prog-track{height:5px;background:rgba(11,107,92,0.08);border-radius:3px;overflow:hidden}
     .prog-fill{height:100%;background:linear-gradient(90deg,var(--teal),#0D8570);border-radius:3px;transition:width 0.5s ease}
 
-    /* Empty */
     .empty{display:flex;flex-direction:column;align-items:center;padding:40px 20px;gap:10px;text-align:center}
     .empty-icon{width:56px;height:56px;border-radius:18px;background:var(--glass);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid var(--glass-border);display:flex;align-items:center;justify-content:center;color:var(--light)}
     .empty-title{font-size:15px;font-weight:700;color:var(--text2)}
     .empty-sub{font-size:13px;color:var(--muted)}
 
-    /* Section */
     .section-title{font-size:15px;font-weight:700;letter-spacing:-0.2px}
     .section-link{font-size:13px;font-weight:600;color:var(--teal);cursor:pointer}
     .section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
 
-    /* Row link */
     .row-link{display:flex;align-items:center;justify-content:space-between;padding:15px 0;cursor:pointer}
     .row-link+.row-link{border-top:1px solid rgba(11,107,92,0.05)}
 
-    /* Provider card */
     .provider-card{
       border:1.5px solid rgba(11,107,92,0.08);border-radius:var(--r-md);
       padding:14px 16px;display:flex;align-items:center;gap:12px;
@@ -169,17 +149,14 @@ export const GlobalStyles = () => (
     }
     .provider-card.selected{border-color:var(--teal);box-shadow:0 0 0 3px rgba(11,107,92,0.06);background:rgba(227,242,239,0.7)}
 
-    /* Keypad */
     .keypad{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
     .key{height:58px;border-radius:var(--r-md);background:var(--glass);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid var(--glass-border);font-size:20px;font-weight:700;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.15s;user-select:none}
     .key:active{transform:scale(0.9);background:var(--teal-pale)}
     .key-del{font-size:14px}
 
-    /* Amount display */
     .amount-display{font-size:44px;font-weight:800;letter-spacing:-2px;text-align:center}
     .amount-display sup{font-size:18px;font-weight:600;vertical-align:super;color:var(--muted)}
 
-    /* Toggle */
     .toggle{position:relative;width:44px;height:24px;flex-shrink:0;cursor:pointer}
     .toggle input{opacity:0;width:0;height:0}
     .toggle-track{position:absolute;inset:0;border-radius:12px;background:#D4DDD9;transition:background 0.3s}
@@ -187,7 +164,6 @@ export const GlobalStyles = () => (
     .toggle input:checked~.toggle-track{background:var(--teal)}
     .toggle input:checked~.toggle-thumb{transform:translateX(20px)}
 
-    /* Landing */
     .landing-bg{min-height:100dvh;background:linear-gradient(160deg,#042F2A,#06433C,#0B6B5C,#040F0C);background-size:300%300%;animation:gradient 10s ease infinite;display:flex;flex-direction:column;padding:44px 20px 36px;position:relative;overflow:hidden}
     .orb{position:absolute;border-radius:50%;pointer-events:none;animation:float 6s ease-in-out infinite}
   `}</style>
