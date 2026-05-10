@@ -971,7 +971,7 @@ export function AppRouter() {
 }
 
 // BottomNav importé dans components mais utilisé ici
-import { Home, Clock, Send, User, Shield } from 'lucide-react';
+//import { Home, Clock, Send, User, Shield } from 'lucide-react';
 
 function BottomNav({ active, onNavigate, isAdmin }) {
   const items = [
