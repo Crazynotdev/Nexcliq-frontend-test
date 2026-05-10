@@ -26,7 +26,9 @@ const ENDPOINTS = {
   resolveDiscrepancy: (id) => `${API_BASE}/admin/discrepancies/${id}/`,
   health:         `${API_BASE}/health/`,
 };
-
+// ─── CONFIG ───────────────────────────────────────────────────────────────────
+const LOGO_URL = "https://eliteprotech-url.zone.id/1778405107000vkzl8u.jpg";
+//const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:8000/api/v1";
 // ─── GLOBAL STYLES ────────────────────────────────────────────────────────────
 const GlobalStyles = () => (
   <style>{`
@@ -921,14 +923,18 @@ function AuthProvider({ children }) {
 }
 
 // ─── REUSABLE COMPONENTS ──────────────────────────────────────────────────────
-function LogoIcon() {
+function LogoIcon({ size = 24 }) {
   return (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-      <path d="M4 18 L4 6 L12 14 L20 6 L20 18" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
-    </svg>
+    <img 
+      src={LOGO_URL}
+      alt="NexCliq" 
+      width={size} 
+      height={size}
+      style={{ objectFit: "contain", borderRadius: 8 }}
+    />
   );
 }
-
+// @24165730123 
 function Avatar({ name = "U", size = 44, light = false }) {
   const initials = (name || "").split(" ").map(w => w[0]).join("").slice(0, 2).toUpperCase() || "U";
   return (
@@ -1056,20 +1062,19 @@ function LandingScreen({ onLogin, onRegister }) {
       }} />
 
       {/* Logo */}
-      <div style={{ display: "flex", alignItems: "center", gap: 10, position: "relative", zIndex: 1 }}>
-        <div style={{
-          width: 44, height: 44, borderRadius: 14,
-          background: "linear-gradient(135deg, var(--sand-500) 0%, #B09A7A 100%)",
-          display: "flex", alignItems: "center", justifyContent: "center",
-          boxShadow: "0 8px 24px rgba(196,180,154,0.35)",
-        }}>
-          <Sparkles size={22} strokeWidth={1.5} color="#fff"/>
-        </div>
-        <span style={{ fontSize: 22, fontWeight: 800, color: "#fff", letterSpacing: -0.5 }}>
-          nexcli<span style={{color: "var(--sand-500)"}}>q</span>
-        </span>
+      <div style={{
+      width: 44, height: 44, borderRadius: 14,
+      overflow: "hidden",
+      boxShadow: "0 8px 24px rgba(196,180,154,0.35)",
+    }}>
+        <img 
+          src={LOGO_URL}
+          alt="NexCliq" 
+          width={44} 
+          height={44}
+          style={{ objectFit: "cover" }}
+          />
       </div>
-
       {/* Hero */}
       <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", gap: 32, position: "relative", zIndex: 1, paddingTop: 20 }}>
         <div>
