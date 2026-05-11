@@ -22,200 +22,135 @@ import { formatAmount, formatDate, formatTime, truncate } from './utils';
 // LANDING SCREEN
 // ═══════════════════════════════════════════════════════════
 export function LandingScreen({ onLogin, onRegister }) {
-  const { theme, isDark, toggle } = useTheme();
+  const { isDark, toggle } = useTheme();
 
   return (
     <div style={{
       minHeight: '100dvh',
-      background: isDark 
-        ? '#0A0D0F' 
-        : 'linear-gradient(180deg, #FFFFFF 0%, #F8FAF9 40%, #EDF5F0 70%, #FCFAF7 100%)',
+      background: isDark ? '#0A0D0F' : '#FFFFFF',
       fontFamily: "'Inter', 'Sora', sans-serif",
       display: 'flex', flexDirection: 'column',
-      transition: 'background 0.4s ease',
-      position: 'relative', overflow: 'hidden',
     }}>
-      
-      {/* Vert qui se mélange au blanc - effet aurore */}
-      {!isDark && (
-        <>
-          <div style={{
-            position: 'absolute', top: '-80px', right: '-60px',
-            width: 280, height: 280, borderRadius: '50%',
-            background: 'radial-gradient(circle, rgba(11,107,92,0.08) 0%, rgba(16,160,132,0.04) 40%, transparent 70%)',
-            pointerEvents: 'none', filter: 'blur(20px)',
-          }} />
-          <div style={{
-            position: 'absolute', bottom: '20%', left: '-40px',
-            width: 200, height: 200, borderRadius: '50%',
-            background: 'radial-gradient(circle, rgba(196,180,154,0.06) 0%, transparent 70%)',
-            pointerEvents: 'none', filter: 'blur(20px)',
-          }} />
-        </>
-      )}
 
-      {/* ═══════════════ NAVBAR ═══════════════ */}
-      <nav style={{
+      {/* ═══════════════ NAVBAR - IDENTIQUE ELEGOSTRA ═══════════════ */}
+      <div style={{
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        padding: '14px 20px',
-        background: isDark ? 'rgba(10,13,15,0.9)' : 'rgba(255,255,255,0.8)',
-        backdropFilter: 'blur(20px)',
-        borderBottom: `1px solid ${isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.04)'}`,
-        position: 'relative', zIndex: 10,
+        padding: '16px 24px',
+        borderBottom: `1px solid ${isDark ? '#1E2429' : '#F0F0F0'}`,
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          <img src={APP.logo} alt="NexCliq" style={{ width: 24, height: 24, borderRadius: 6, objectFit: 'cover' }} />
-          <span style={{ fontSize: 16, fontWeight: 800, color: isDark ? '#EDF0F2' : '#111815', letterSpacing: -0.3 }}>
-            nexcli<span style={{ color: '#C4B49A' }}>q</span>
-          </span>
+        {/* Liens gauche */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 28 }}>
+          <span style={{ fontSize: 14, fontWeight: 600, color: isDark ? '#EDF0F2' : '#111' }}>Home</span>
+          <span style={{ fontSize: 14, fontWeight: 400, color: isDark ? '#8A949E' : '#666' }}>Platform</span>
+          <span style={{ fontSize: 14, fontWeight: 400, color: isDark ? '#8A949E' : '#666' }}>Who we are</span>
+          <span style={{ fontSize: 14, fontWeight: 400, color: isDark ? '#8A949E' : '#666' }}>Reviews</span>
+          <span style={{ fontSize: 14, fontWeight: 400, color: isDark ? '#8A949E' : '#666' }}>Contact</span>
         </div>
         
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+        {/* Boutons droite */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
           <button onClick={toggle} style={{
-            width: 36, height: 36, borderRadius: 10,
-            background: isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.04)',
-            border: 'none', cursor: 'pointer',
-            color: isDark ? 'rgba(255,255,255,0.7)' : 'rgba(0,0,0,0.5)',
+            background: 'none', border: 'none', cursor: 'pointer',
+            color: isDark ? '#8A949E' : '#666',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
+            width: 32, height: 32,
           }}>
-            {isDark ? <Sun size={18} /> : <Moon size={18} />}
+            {isDark ? <Sun size={16} /> : <Moon size={16} />}
           </button>
           <button onClick={onLogin} style={{
-            padding: '8px 18px', borderRadius: 8,
-            border: `1.5px solid ${isDark ? 'rgba(255,255,255,0.15)' : 'rgba(0,0,0,0.1)'}`,
+            padding: '8px 22px', borderRadius: 6,
+            border: `1px solid ${isDark ? '#333' : '#DDD'}`,
             background: 'transparent',
-            color: isDark ? '#ccc' : '#444',
+            color: isDark ? '#EDF0F2' : '#333',
             fontSize: 13, fontWeight: 500, cursor: 'pointer', fontFamily: 'inherit',
           }}>Login</button>
           <button onClick={onRegister} style={{
-            padding: '8px 18px', borderRadius: 8, border: 'none',
+            padding: '8px 22px', borderRadius: 6, border: 'none',
             background: '#0B6B5C', color: '#fff',
             fontSize: 13, fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit',
-          }}>Sign Up</button>
+          }}>Signup</button>
         </div>
-      </nav>
-
-      {/* ═══════════════ HERO ═══════════════ */}
-      <div style={{ flex: 1, padding: '40px 20px 0', maxWidth: 440, margin: '0 auto', width: '100%', position: 'relative', zIndex: 1 }}>
-        
-        <h1 style={{
-          fontSize: 38, fontWeight: 800, lineHeight: 1.12,
-          color: isDark ? '#EDF0F2' : '#0D1A15',
-          letterSpacing: -1.5, margin: '0 0 14px 0'
-        }}>
-          Pay and Receive<br />
-          <span style={{ color: '#0B6B5C' }}>anywhere</span> with ease
-        </h1>
-        
-        <p style={{
-          fontSize: 14, color: isDark ? '#7B8A99' : '#5D6E68',
-          lineHeight: 1.7, marginBottom: 28,
-        }}>
-          Transfer money, pay online and get paid without limitation.
-          Fast, secure, and reconciled automatically.
-        </p>
-
-        {/* CTAs */}
-        <div style={{ display: 'flex', gap: 10, marginBottom: 32 }}>
-          <button onClick={onRegister} style={{
-            padding: '14px 26px', borderRadius: 10, border: 'none',
-            background: '#0B6B5C', color: '#fff',
-            fontSize: 14, fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit',
-          }}>
-            Get Started
-          </button>
-          <button style={{
-            padding: '14px 26px', borderRadius: 10,
-            border: `1.5px solid ${isDark ? 'rgba(255,255,255,0.12)' : 'rgba(0,0,0,0.1)'}`,
-            background: 'transparent',
-            color: isDark ? 'rgba(255,255,255,0.7)' : '#444',
-            fontSize: 14, fontWeight: 500, cursor: 'pointer', fontFamily: 'inherit',
-          }}>
-            Contact a Team
-          </button>
-        </div>
-
-        {/* ═══════ IMAGE - Flyer bien visible ═══════ */}
-        <div style={{
-          width: '100%', height: 220, borderRadius: 16,
-          overflow: 'hidden', marginBottom: 28,
-          boxShadow: isDark 
-            ? '0 4px 24px rgba(0,0,0,0.3)' 
-            : '0 4px 24px rgba(11,107,92,0.08)',
-          border: `1px solid ${isDark ? 'rgba(255,255,255,0.06)' : 'rgba(11,107,92,0.06)'}`,
-        }}>
-          <img 
-            src="https://eliteprotech-url.zone.id/1778436354039dvorw8.jpg"
-            alt="NexCliq App"
-            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-          />
-        </div>
-
-        {/* ═══════ ABOUT CARDS - Remplacent les prix ═══════ */}
-        <div style={{ marginBottom: 8 }}>
-          <div style={{ fontSize: 14, fontWeight: 700, color: isDark ? '#EDF0F2' : '#0D1A15', marginBottom: 10, letterSpacing: -0.3 }}>
-            About
-          </div>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginBottom: 10 }}>
-            {[
-              { icon: <Zap size={20} color="#0B6B5C" />, title: 'Fast Transfer', sub: 'Less than 30 seconds per transaction' },
-              { icon: <Shield size={20} color="#0B6B5C" />, title: 'Secure', sub: 'End-to-end encrypted transfers' },
-              { icon: <Globe size={20} color="#0B6B5C" />, title: 'Multi-network', sub: 'MTN MoMo & Orange Money' },
-              { icon: <CheckCircle2 size={20} color="#0B6B5C" />, title: 'Reconciled', sub: '0% data loss guaranteed' },
-            ].map((item, i) => (
-              <div key={i} style={{
-                padding: 18, borderRadius: 16,
-                background: isDark ? '#14181B' : '#FFFFFF',
-                border: `1px solid ${isDark ? 'rgba(255,255,255,0.06)' : '#E8ECEA'}`,
-              }}>
-                <div style={{ marginBottom: 10 }}>{item.icon}</div>
-                <div style={{ fontSize: 13, fontWeight: 700, color: isDark ? '#EDF0F2' : '#0D1A15', marginBottom: 4 }}>{item.title}</div>
-                <div style={{ fontSize: 11, color: isDark ? '#7B8A99' : '#6B7B74', lineHeight: 1.5 }}>{item.sub}</div>
-              </div>
-            ))}
-          </div>
-
-          {/* Mission Card */}
-          <div style={{
-            padding: 20, borderRadius: 16,
-            background: isDark ? '#14181B' : '#FFFFFF',
-            border: `1px solid ${isDark ? 'rgba(255,255,255,0.06)' : '#E8ECEA'}`,
-            marginBottom: 36,
-          }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 12 }}>
-              <div>
-                <div style={{ fontSize: 10, fontWeight: 600, color: isDark ? '#7B8A99' : '#999', textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: 4 }}>
-                  Our Mission
-                </div>
-                <div style={{ fontSize: 16, fontWeight: 700, color: '#0B6B5C' }}>
-                  Resume growth
-                </div>
-              </div>
-              <div style={{
-                width: 40, height: 40, borderRadius: '50%',
-                background: isDark ? 'rgba(11,107,92,0.15)' : '#EDF5F0',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-              }}>
-                <TrendingUp size={18} color="#0B6B5C" />
-              </div>
-            </div>
-            <p style={{ fontSize: 13, color: isDark ? '#7B8A99' : '#6B7B74', lineHeight: 1.6, margin: 0 }}>
-              We help freelancers and businesses receive and send money across Africa — fast, secure, and reconciled automatically.
-            </p>
-          </div>
-        </div>
-
       </div>
 
-      {/* Footer */}
-      <div style={{
-        textAlign: 'center', padding: '20px',
-        borderTop: `1px solid ${isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.04)'}`,
-        position: 'relative', zIndex: 1,
-      }}>
-        <p style={{ fontSize: 11, color: isDark ? 'rgba(255,255,255,0.25)' : '#BBB', margin: 0 }}>
-          Powered by <span style={{ fontWeight: 700, color: isDark ? 'rgba(255,255,255,0.35)' : '#999' }}>{APP.company}</span>
-        </p>
+      {/* ═══════════════ CONTENU CENTRÉ - IDENTIQUE ═══════════════ */}
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: '60px 20px' }}>
+        
+        <div style={{ maxWidth: 480, width: '100%' }}>
+          
+          {/* Titre */}
+          <h1 style={{
+            fontSize: 46, fontWeight: 800, lineHeight: 1.08,
+            color: isDark ? '#EDF0F2' : '#111',
+            letterSpacing: -2, margin: '0 0 18px 0',
+          }}>
+            Pay and Receive<br />
+            <span style={{ color: '#0B6B5C' }}>anywhere</span> with ease
+          </h1>
+          
+          {/* Sous-titre */}
+          <p style={{
+            fontSize: 15, color: isDark ? '#8A949E' : '#666',
+            lineHeight: 1.7, marginBottom: 32,
+          }}>
+            Transfer money, pay online and get paid without limitation. 
+            Fast, secure, and reconciled automatically.
+          </p>
+
+          {/* Boutons */}
+          <div style={{ display: 'flex', gap: 10, marginBottom: 48 }}>
+            <button onClick={onRegister} style={{
+              padding: '12px 28px', borderRadius: 6, border: 'none',
+              background: '#0B6B5C', color: '#fff',
+              fontSize: 14, fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit',
+            }}>Get Started</button>
+            <button style={{
+              padding: '12px 28px', borderRadius: 6,
+              border: `1px solid ${isDark ? '#333' : '#DDD'}`,
+              background: 'transparent',
+              color: isDark ? '#EDF0F2' : '#333',
+              fontSize: 14, fontWeight: 500, cursor: 'pointer', fontFamily: 'inherit',
+            }}>Contact a Team</button>
+          </div>
+
+          {/* Image */}
+          <img 
+            src="https://eliteprotech-url.zone.id/1778436354039dvorw8.jpg"
+            alt="NexCliq"
+            style={{ width: '100%', height: 'auto', borderRadius: 12, marginBottom: 48 }}
+          />
+
+          {/* Stats - 2 colonnes */}
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 12 }}>
+            {/* Income */}
+            <div style={{ padding: '22px 20px', borderRadius: 14, background: '#0B6B5C', color: '#fff' }}>
+              <div style={{ fontSize: 12, fontWeight: 400, opacity: 0.7 }}>Income</div>
+              <div style={{ fontSize: 26, fontWeight: 700, marginTop: 4 }}>$13,592.00</div>
+            </div>
+            {/* Expenses */}
+            <div style={{ padding: '22px 20px', borderRadius: 14, background: isDark ? '#14181B' : '#F5F7F6', border: `1px solid ${isDark ? '#1E2429' : '#E8ECEA'}` }}>
+              <div style={{ fontSize: 12, fontWeight: 400, color: isDark ? '#8A949E' : '#999' }}>Expenses</div>
+              <div style={{ fontSize: 26, fontWeight: 700, color: isDark ? '#EDF0F2' : '#111', marginTop: 4 }}>$12,167.00</div>
+            </div>
+          </div>
+
+          {/* Goal */}
+          <div style={{ padding: '22px 20px', borderRadius: 14, background: isDark ? '#14181B' : '#F5F7F6', border: `1px solid ${isDark ? '#1E2429' : '#E8ECEA'}`, marginBottom: 48 }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
+              <span style={{ fontSize: 12, color: isDark ? '#8A949E' : '#999' }}>Goal</span>
+              <span style={{ fontSize: 22, fontWeight: 700, color: '#0B6B5C' }}>56K</span>
+            </div>
+            <div style={{ height: 3, background: isDark ? '#1E2429' : '#E8ECEA', borderRadius: 2, marginBottom: 8 }}>
+              <div style={{ height: '100%', width: '68%', background: '#0B6B5C', borderRadius: 2 }} />
+            </div>
+            <div style={{ fontSize: 12, color: isDark ? '#8A949E' : '#999' }}>Remuneration growth</div>
+            <div style={{ fontSize: 20, fontWeight: 700, color: '#0B6B5C', marginTop: 4 }}>$24,345.00</div>
+          </div>
+
+          <p style={{ fontSize: 12, color: isDark ? '#555' : '#CCC', textAlign: 'center' }}>
+            Powered by <span style={{ fontWeight: 600 }}>{APP.company}</span>
+          </p>
+
+        </div>
       </div>
 
     </div>
