@@ -27,64 +27,80 @@ export function LandingScreen({ onLogin, onRegister }) {
   return (
     <div style={{
       minHeight: '100dvh',
-      background: isDark ? '#0A0D0F' : '#FFFFFF',
+      background: isDark 
+        ? '#0A0D0F' 
+        : 'linear-gradient(180deg, #FFFFFF 0%, #F8FAF9 40%, #EDF5F0 70%, #FCFAF7 100%)',
       fontFamily: "'Inter', 'Sora', sans-serif",
       display: 'flex', flexDirection: 'column',
-      transition: 'background 0.3s ease',
+      transition: 'background 0.4s ease',
+      position: 'relative', overflow: 'hidden',
     }}>
+      
+      {/* Vert qui se mélange au blanc - effet aurore */}
+      {!isDark && (
+        <>
+          <div style={{
+            position: 'absolute', top: '-80px', right: '-60px',
+            width: 280, height: 280, borderRadius: '50%',
+            background: 'radial-gradient(circle, rgba(11,107,92,0.08) 0%, rgba(16,160,132,0.04) 40%, transparent 70%)',
+            pointerEvents: 'none', filter: 'blur(20px)',
+          }} />
+          <div style={{
+            position: 'absolute', bottom: '20%', left: '-40px',
+            width: 200, height: 200, borderRadius: '50%',
+            background: 'radial-gradient(circle, rgba(196,180,154,0.06) 0%, transparent 70%)',
+            pointerEvents: 'none', filter: 'blur(20px)',
+          }} />
+        </>
+      )}
 
-      {/* ═══════════════ NAVBAR - Style Telegram ═══════════════ */}
+      {/* ═══════════════ NAVBAR ═══════════════ */}
       <nav style={{
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        padding: '12px 20px',
-        background: isDark ? 'rgba(10,13,15,0.9)' : 'rgba(255,255,255,0.9)',
+        padding: '14px 20px',
+        background: isDark ? 'rgba(10,13,15,0.9)' : 'rgba(255,255,255,0.8)',
         backdropFilter: 'blur(20px)',
-        borderBottom: `1px solid ${isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)'}`,
-        position: 'sticky', top: 0, zIndex: 100,
-        transition: 'all 0.3s ease',
+        borderBottom: `1px solid ${isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.04)'}`,
+        position: 'relative', zIndex: 10,
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          <img src={APP.logo} alt="NexCliq" style={{ width: 26, height: 26, borderRadius: 6, objectFit: 'cover' }} />
+          <img src={APP.logo} alt="NexCliq" style={{ width: 24, height: 24, borderRadius: 6, objectFit: 'cover' }} />
           <span style={{ fontSize: 16, fontWeight: 800, color: isDark ? '#EDF0F2' : '#111815', letterSpacing: -0.3 }}>
             nexcli<span style={{ color: '#C4B49A' }}>q</span>
           </span>
         </div>
         
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          {/* Theme Toggle - Exactement comme Telegram */}
           <button onClick={toggle} style={{
             width: 36, height: 36, borderRadius: 10,
             background: isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.04)',
-            border: 'none',
+            border: 'none', cursor: 'pointer',
+            color: isDark ? 'rgba(255,255,255,0.7)' : 'rgba(0,0,0,0.5)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
-            cursor: 'pointer', color: isDark ? 'rgba(255,255,255,0.7)' : 'rgba(0,0,0,0.6)',
-            transition: 'all 0.25s ease',
           }}>
             {isDark ? <Sun size={18} /> : <Moon size={18} />}
           </button>
           <button onClick={onLogin} style={{
-            padding: '7px 16px', borderRadius: 8,
+            padding: '8px 18px', borderRadius: 8,
             border: `1.5px solid ${isDark ? 'rgba(255,255,255,0.15)' : 'rgba(0,0,0,0.1)'}`,
             background: 'transparent',
-            color: isDark ? 'rgba(255,255,255,0.8)' : '#333',
+            color: isDark ? '#ccc' : '#444',
             fontSize: 13, fontWeight: 500, cursor: 'pointer', fontFamily: 'inherit',
-            transition: 'all 0.2s ease',
           }}>Login</button>
           <button onClick={onRegister} style={{
-            padding: '7px 16px', borderRadius: 8, border: 'none',
+            padding: '8px 18px', borderRadius: 8, border: 'none',
             background: '#0B6B5C', color: '#fff',
             fontSize: 13, fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit',
           }}>Sign Up</button>
         </div>
       </nav>
 
-      {/* ═══════════════ HERO - Identique Elegostra ═══════════════ */}
-      <div style={{ flex: 1, padding: '44px 20px 0', maxWidth: 440, margin: '0 auto', width: '100%' }}>
+      {/* ═══════════════ HERO ═══════════════ */}
+      <div style={{ flex: 1, padding: '40px 20px 0', maxWidth: 440, margin: '0 auto', width: '100%', position: 'relative', zIndex: 1 }}>
         
-        {/* Headline */}
         <h1 style={{
           fontSize: 38, fontWeight: 800, lineHeight: 1.12,
-          color: isDark ? '#EDF0F2' : '#111815',
+          color: isDark ? '#EDF0F2' : '#0D1A15',
           letterSpacing: -1.5, margin: '0 0 14px 0'
         }}>
           Pay and Receive<br />
@@ -92,15 +108,15 @@ export function LandingScreen({ onLogin, onRegister }) {
         </h1>
         
         <p style={{
-          fontSize: 14, color: isDark ? '#7B8A99' : '#6B7B74',
+          fontSize: 14, color: isDark ? '#7B8A99' : '#5D6E68',
           lineHeight: 1.7, marginBottom: 28,
         }}>
           Transfer money, pay online and get paid without limitation.
           Fast, secure, and reconciled automatically.
         </p>
 
-        {/* CTA Buttons - Style Elegostra */}
-        <div style={{ display: 'flex', gap: 10, marginBottom: 36 }}>
+        {/* CTAs */}
+        <div style={{ display: 'flex', gap: 10, marginBottom: 32 }}>
           <button onClick={onRegister} style={{
             padding: '14px 26px', borderRadius: 10, border: 'none',
             background: '#0B6B5C', color: '#fff',
@@ -112,18 +128,21 @@ export function LandingScreen({ onLogin, onRegister }) {
             padding: '14px 26px', borderRadius: 10,
             border: `1.5px solid ${isDark ? 'rgba(255,255,255,0.12)' : 'rgba(0,0,0,0.1)'}`,
             background: 'transparent',
-            color: isDark ? 'rgba(255,255,255,0.7)' : '#333',
+            color: isDark ? 'rgba(255,255,255,0.7)' : '#444',
             fontSize: 14, fontWeight: 500, cursor: 'pointer', fontFamily: 'inherit',
           }}>
             Contact a Team
           </button>
         </div>
 
-        {/* ═══════ IMAGE - Comme sur Elegostra ═══════ */}
+        {/* ═══════ IMAGE - Flyer bien visible ═══════ */}
         <div style={{
-          width: '100%', height: 190, borderRadius: 16,
+          width: '100%', height: 220, borderRadius: 16,
           overflow: 'hidden', marginBottom: 28,
-          border: `1px solid ${isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)'}`,
+          boxShadow: isDark 
+            ? '0 4px 24px rgba(0,0,0,0.3)' 
+            : '0 4px 24px rgba(11,107,92,0.08)',
+          border: `1px solid ${isDark ? 'rgba(255,255,255,0.06)' : 'rgba(11,107,92,0.06)'}`,
         }}>
           <img 
             src="https://eliteprotech-url.zone.id/1778436354039dvorw8.jpg"
@@ -132,68 +151,57 @@ export function LandingScreen({ onLogin, onRegister }) {
           />
         </div>
 
-        {/* ═══════ CARDS - Exactement Elegostra ═══════ */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginBottom: 10 }}>
-          {/* Income Card */}
-          <div style={{
-            padding: 20, borderRadius: 16,
-            background: '#0B6B5C', color: '#fff',
-          }}>
-            <div style={{ fontSize: 10, fontWeight: 600, opacity: 0.7, textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: 6 }}>
-              Income
-            </div>
-            <div style={{ fontSize: 22, fontWeight: 800, letterSpacing: -0.5 }}>
-              13,592,000 XOF
-            </div>
+        {/* ═══════ ABOUT CARDS - Remplacent les prix ═══════ */}
+        <div style={{ marginBottom: 8 }}>
+          <div style={{ fontSize: 14, fontWeight: 700, color: isDark ? '#EDF0F2' : '#0D1A15', marginBottom: 10, letterSpacing: -0.3 }}>
+            About
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginBottom: 10 }}>
+            {[
+              { icon: <Zap size={20} color="#0B6B5C" />, title: 'Fast Transfer', sub: 'Less than 30 seconds per transaction' },
+              { icon: <Shield size={20} color="#0B6B5C" />, title: 'Secure', sub: 'End-to-end encrypted transfers' },
+              { icon: <Globe size={20} color="#0B6B5C" />, title: 'Multi-network', sub: 'MTN MoMo & Orange Money' },
+              { icon: <CheckCircle2 size={20} color="#0B6B5C" />, title: 'Reconciled', sub: '0% data loss guaranteed' },
+            ].map((item, i) => (
+              <div key={i} style={{
+                padding: 18, borderRadius: 16,
+                background: isDark ? '#14181B' : '#FFFFFF',
+                border: `1px solid ${isDark ? 'rgba(255,255,255,0.06)' : '#E8ECEA'}`,
+              }}>
+                <div style={{ marginBottom: 10 }}>{item.icon}</div>
+                <div style={{ fontSize: 13, fontWeight: 700, color: isDark ? '#EDF0F2' : '#0D1A15', marginBottom: 4 }}>{item.title}</div>
+                <div style={{ fontSize: 11, color: isDark ? '#7B8A99' : '#6B7B74', lineHeight: 1.5 }}>{item.sub}</div>
+              </div>
+            ))}
           </div>
 
-          {/* Expenses Card */}
+          {/* Mission Card */}
           <div style={{
             padding: 20, borderRadius: 16,
-            background: isDark ? '#14181B' : '#F5F7F6',
+            background: isDark ? '#14181B' : '#FFFFFF',
             border: `1px solid ${isDark ? 'rgba(255,255,255,0.06)' : '#E8ECEA'}`,
+            marginBottom: 36,
           }}>
-            <div style={{ fontSize: 10, fontWeight: 600, color: isDark ? '#7B8A99' : '#999', textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: 6 }}>
-              Expenses
-            </div>
-            <div style={{ fontSize: 22, fontWeight: 800, letterSpacing: -0.5, color: isDark ? '#EDF0F2' : '#111815' }}>
-              12,167,000 XOF
-            </div>
-          </div>
-        </div>
-
-        {/* Goal Card */}
-        <div style={{
-          padding: 20, borderRadius: 16,
-          background: isDark ? '#14181B' : '#FFFFFF',
-          border: `1px solid ${isDark ? 'rgba(255,255,255,0.06)' : '#E8ECEA'}`,
-          marginBottom: 36,
-        }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 10 }}>
-            <div>
-              <div style={{ fontSize: 10, fontWeight: 600, color: isDark ? '#7B8A99' : '#999', textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: 4 }}>
-                Goal
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 12 }}>
+              <div>
+                <div style={{ fontSize: 10, fontWeight: 600, color: isDark ? '#7B8A99' : '#999', textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: 4 }}>
+                  Our Mission
+                </div>
+                <div style={{ fontSize: 16, fontWeight: 700, color: '#0B6B5C' }}>
+                  Resume growth
+                </div>
               </div>
-              <div style={{ fontSize: 22, fontWeight: 800, color: '#0B6B5C' }}>
-                56K <span style={{ fontSize: 12, color: isDark ? '#7B8A99' : '#999', fontWeight: 500 }}>XOF</span>
+              <div style={{
+                width: 40, height: 40, borderRadius: '50%',
+                background: isDark ? 'rgba(11,107,92,0.15)' : '#EDF5F0',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+              }}>
+                <TrendingUp size={18} color="#0B6B5C" />
               </div>
             </div>
-            <div style={{
-              width: 38, height: 38, borderRadius: '50%',
-              background: isDark ? 'rgba(11,107,92,0.15)' : '#E8F0ED',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-            }}>
-              <TrendingUp size={16} color="#0B6B5C" />
-            </div>
-          </div>
-          <div style={{ height: 4, background: isDark ? 'rgba(255,255,255,0.06)' : '#E8ECEA', borderRadius: 2, marginBottom: 8, overflow: 'hidden' }}>
-            <div style={{ height: '100%', width: '68%', background: '#0B6B5C', borderRadius: 2 }} />
-          </div>
-          <div style={{ fontSize: 10, color: isDark ? '#7B8A99' : '#999' }}>
-            Resume growth
-          </div>
-          <div style={{ fontSize: 18, fontWeight: 800, color: '#0B6B5C', marginTop: 4 }}>
-            24,345 XOF
+            <p style={{ fontSize: 13, color: isDark ? '#7B8A99' : '#6B7B74', lineHeight: 1.6, margin: 0 }}>
+              We help freelancers and businesses receive and send money across Africa — fast, secure, and reconciled automatically.
+            </p>
           </div>
         </div>
 
@@ -201,12 +209,12 @@ export function LandingScreen({ onLogin, onRegister }) {
 
       {/* Footer */}
       <div style={{
-        textAlign: 'center', padding: '18px',
-        borderTop: `1px solid ${isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)'}`,
-        transition: 'all 0.3s ease',
+        textAlign: 'center', padding: '20px',
+        borderTop: `1px solid ${isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.04)'}`,
+        position: 'relative', zIndex: 1,
       }}>
         <p style={{ fontSize: 11, color: isDark ? 'rgba(255,255,255,0.25)' : '#BBB', margin: 0 }}>
-          Powered by <span style={{ fontWeight: 700, color: isDark ? 'rgba(255,255,255,0.4)' : '#999' }}>{APP.company}</span>
+          Powered by <span style={{ fontWeight: 700, color: isDark ? 'rgba(255,255,255,0.35)' : '#999' }}>{APP.company}</span>
         </p>
       </div>
 
