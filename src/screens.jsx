@@ -25,78 +25,198 @@ export function LandingScreen({ onLogin, onRegister }) {
   const { isDark, toggle } = useTheme();
 
   const s = {
-    bg: isDark ? '#0A0D0F' : '#FFFFFF',
-    text: isDark ? '#EDF0F2' : '#111111',
-    text2: isDark ? '#8A949E' : '#666666',
-    border: isDark ? '#1E2429' : '#E8E8E8',
-    card: isDark ? '#111518' : '#F5F5F5',
+    bg: isDark ? '#05080C' : '#FAFBFC',
+    text: isDark ? '#E8EDF2' : '#0A0E12',
+    text2: isDark ? '#7B8A99' : '#5D6E78',
+    border: isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)',
+    card: isDark ? 'rgba(255,255,255,0.03)' : 'rgba(255,255,255,0.8)',
+    glass: 'rgba(255,255,255,0.04)',
     green: '#0B6B5C',
+    greenLight: '#34D399',
+    sand: '#C4B49A',
   };
 
   return (
-    <div style={{ minHeight: '100dvh', background: s.bg, fontFamily: "'Inter', sans-serif" }}>
+    <div style={{
+      minHeight: '100dvh',
+      background: s.bg,
+      fontFamily: "'Inter', 'Sora', sans-serif",
+      position: 'relative',
+      overflow: 'hidden',
+    }}>
 
-      {/* NAVBAR */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '16px 24px', borderBottom: `1px solid ${s.border}` }}>
-        <div style={{ display: 'flex', gap: 28, fontSize: 14, fontWeight: 500 }}>
-          <span style={{ color: s.text }}>Home</span>
-          <span style={{ color: s.text2 }}>Platform</span>
-          <span style={{ color: s.text2 }}>Who we are</span>
-          <span style={{ color: s.text2 }}>Reviews</span>
-          <span style={{ color: s.text2 }}>Contact</span>
-        </div>
-        <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
-          <button onClick={toggle} style={{ background:'none', border:'none', color: s.text2, cursor:'pointer' }}>{isDark ? <Sun size={16} /> : <Moon size={16} />}</button>
-          <button onClick={onLogin} style={{ padding: '8px 22px', borderRadius: 6, border: `1px solid ${s.border}`, background:'none', color: s.text, fontSize: 13, fontWeight: 500, cursor:'pointer', fontFamily:'inherit' }}>Login</button>
-          <button onClick={onRegister} style={{ padding: '8px 22px', borderRadius: 6, border:'none', background: s.green, color: '#fff', fontSize: 13, fontWeight: 600, cursor:'pointer', fontFamily:'inherit' }}>Signup</button>
-        </div>
-      </div>
+      {/* ═══════════ LIQUID CRYSTAL ANIMATED GRADIENT ORB ═══════════ */}
+      <div style={{
+        position: 'absolute',
+        top: '-15%',
+        right: '-20%',
+        width: 'clamp(300px, 50vw, 700px)',
+        height: 'clamp(300px, 50vw, 700px)',
+        borderRadius: '50%',
+        background: `radial-gradient(circle at 40% 50%, ${s.greenLight}15, ${s.green}08, transparent 70%)`,
+        filter: 'blur(60px)',
+        animation: 'liquidFloat 12s ease-in-out infinite',
+        pointerEvents: 'none',
+        zIndex: 0,
+      }} />
+      
+      <div style={{
+        position: 'absolute',
+        bottom: '10%',
+        left: '-10%',
+        width: 'clamp(200px, 35vw, 500px)',
+        height: 'clamp(200px, 35vw, 500px)',
+        borderRadius: '50%',
+        background: `radial-gradient(circle at 60% 40%, ${s.sand}10, transparent 70%)`,
+        filter: 'blur(80px)',
+        animation: 'liquidFloat 14s ease-in-out infinite 3s',
+        pointerEvents: 'none',
+        zIndex: 0,
+      }} />
 
-      {/* BODY */}
-      <div style={{ maxWidth: 480, margin: '0 auto', padding: '60px 20px' }}>
+      {/* ═══════════ ABSTRACT SHAPE - Remplace le flyer ═══════════ */}
+      <div style={{
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%) rotate(45deg)',
+        width: 'clamp(200px, 40vw, 500px)',
+        height: 'clamp(200px, 40vw, 500px)',
+        borderRadius: '30% 70% 70% 30% / 30% 30% 70% 70%',
+        background: `linear-gradient(135deg, ${s.green}20, ${s.sand}15, ${s.greenLight}10)`,
+        backdropFilter: 'blur(40px)',
+        WebkitBackdropFilter: 'blur(40px)',
+        border: `1px solid ${s.border}`,
+        boxShadow: `0 0 120px ${s.green}10, inset 0 0 80px rgba(255,255,255,0.02)`,
+        animation: 'morphShape 10s ease-in-out infinite',
+        pointerEvents: 'none',
+        zIndex: 0,
+      }} />
+
+      {/* ═══════════ NAVBAR ═══════════ */}
+      <nav style={{
+        display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+        padding: 'clamp(12px, 2vw, 16px) clamp(16px, 3vw, 28px)',
+        background: isDark ? 'rgba(5,8,12,0.75)' : 'rgba(250,251,252,0.75)',
+        backdropFilter: 'blur(24px) saturate(1.8)',
+        WebkitBackdropFilter: 'blur(24px) saturate(1.8)',
+        borderBottom: `1px solid ${s.border}`,
+        position: 'relative', zIndex: 10,
+      }}>
+        <div style={{ display: 'flex', gap: 'clamp(16px, 3vw, 32px)', fontSize: 14, fontWeight: 500 }}>
+          {['Home', 'Platform', 'Who we are', 'Reviews', 'Contact'].map(link => (
+            <span key={link} style={{ color: link === 'Home' ? s.text : s.text2, cursor: 'pointer', whiteSpace: 'nowrap' }}>
+              {link}
+            </span>
+          ))}
+        </div>
+        <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+          <button onClick={toggle} style={{ background:'none', border:'none', color: s.text2, cursor:'pointer', padding: 4 }}>{isDark ? <Sun size={15} /> : <Moon size={15} />}</button>
+          <button onClick={onLogin} style={{ padding: '8px 20px', borderRadius: 8, border: `1px solid ${s.border}`, background:'none', color: s.text, fontSize: 13, fontWeight: 500, cursor:'pointer', fontFamily:'inherit' }}>Login</button>
+          <button onClick={onRegister} style={{ padding: '8px 20px', borderRadius: 8, border:'none', background: s.green, color: '#fff', fontSize: 13, fontWeight: 600, cursor:'pointer', fontFamily:'inherit' }}>Signup</button>
+        </div>
+      </nav>
+
+      {/* ═══════════ HERO ═══════════ */}
+      <div style={{ maxWidth: 'min(480px, 100%)', margin: '0 auto', padding: 'clamp(40px, 8vh, 80px) 20px', position: 'relative', zIndex: 1 }}>
         
-        <h1 style={{ fontSize: 44, fontWeight: 800, color: s.text, lineHeight: 1.1, letterSpacing: -1.5, marginBottom: 16 }}>
-          Financial intelligence<br />for modern businesses
+        <h1 style={{
+          fontSize: 'clamp(32px, 6vw, 48px)',
+          fontWeight: 800, lineHeight: 1.08,
+          color: s.text, letterSpacing: -1.5,
+          marginBottom: 16,
+        }}>
+          Pay and Receive<br />
+          <span style={{ color: s.green }}>anywhere</span> with ease
         </h1>
-        <p style={{ fontSize: 15, color: s.text2, lineHeight: 1.6, marginBottom: 28 }}>
-          NexCliq helps you transfer money, pay online, and get paid without limitation — fast, secure, and reconciled automatically.
+        
+        <p style={{
+          fontSize: 'clamp(14px, 2vw, 15px)',
+          color: s.text2, lineHeight: 1.65,
+          marginBottom: 28,
+          maxWidth: 420,
+        }}>
+          Transfer money, pay online and get paid without limitation.
+          Fast, secure, and reconciled automatically.
         </p>
 
         <div style={{ display: 'flex', gap: 10, marginBottom: 48 }}>
-          <button onClick={onRegister} style={{ padding: '13px 28px', borderRadius: 6, border: 'none', background: s.green, color: '#fff', fontSize: 14, fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit' }}>Get Started</button>
-          <button style={{ padding: '13px 28px', borderRadius: 6, border: `1px solid ${s.border}`, background: 'none', color: s.text, fontSize: 14, fontWeight: 500, cursor: 'pointer', fontFamily: 'inherit' }}>Contact a Team</button>
+          <button onClick={onRegister} style={{
+            padding: '13px 28px', borderRadius: 8, border:'none',
+            background: `linear-gradient(135deg, ${s.green}, #053D34)`,
+            color: '#fff', fontSize: 14, fontWeight: 600,
+            cursor:'pointer', fontFamily:'inherit',
+            boxShadow: `0 4px 20px ${s.green}30`,
+          }}>Get Started</button>
+          <button style={{
+            padding: '13px 28px', borderRadius: 8,
+            border: `1px solid ${s.border}`, background: s.glass,
+            backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)',
+            color: s.text, fontSize: 14, fontWeight: 500,
+            cursor:'pointer', fontFamily:'inherit',
+          }}>Contact a Team</button>
         </div>
 
-        {/* IMAGE */}
-        <img src="https://eliteprotech-url.zone.id/1778436354039dvorw8.jpg" alt="NexCliq" style={{ width: '100%', borderRadius: 12, marginBottom: 48 }} />
-
-        {/* STATS */}
+        {/* ═══════ STATS ═══════ */}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 12 }}>
-          <div style={{ padding: 24, borderRadius: 14, background: s.green, color: '#fff' }}>
-            <div style={{ fontSize: 13, opacity: 0.7 }}>Income</div>
+          <div style={{
+            padding: 24, borderRadius: 16,
+            background: `linear-gradient(135deg, ${s.green}, #053D34)`,
+            color: '#fff',
+          }}>
+            <div style={{ fontSize: 12, opacity: 0.7 }}>Income</div>
             <div style={{ fontSize: 26, fontWeight: 700, marginTop: 4 }}>$13,592.00</div>
           </div>
-          <div style={{ padding: 24, borderRadius: 14, background: s.card, border: `1px solid ${s.border}` }}>
-            <div style={{ fontSize: 13, color: s.text2 }}>Expenses</div>
+          <div style={{
+            padding: 24, borderRadius: 16,
+            background: s.glass, backdropFilter: 'blur(16px)',
+            WebkitBackdropFilter: 'blur(16px)',
+            border: `1px solid ${s.border}`,
+          }}>
+            <div style={{ fontSize: 12, color: s.text2 }}>Expenses</div>
             <div style={{ fontSize: 26, fontWeight: 700, color: s.text, marginTop: 4 }}>$12,167.00</div>
           </div>
         </div>
 
-        <div style={{ padding: 24, borderRadius: 14, background: s.card, border: `1px solid ${s.border}`, marginBottom: 48 }}>
+        <div style={{
+          padding: 24, borderRadius: 16,
+          background: s.glass, backdropFilter: 'blur(16px)',
+          WebkitBackdropFilter: 'blur(16px)',
+          border: `1px solid ${s.border}`,
+          marginBottom: 40,
+        }}>
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <span style={{ fontSize: 13, color: s.text2 }}>Goal</span>
+            <span style={{ fontSize: 12, color: s.text2 }}>Goal</span>
             <span style={{ fontSize: 22, fontWeight: 700, color: s.green }}>56K</span>
           </div>
           <div style={{ height: 3, background: s.border, borderRadius: 2, margin: '10px 0' }}>
-            <div style={{ height: '100%', width: '68%', background: s.green, borderRadius: 2 }} />
+            <div style={{ height: '100%', width: '68%', background: `linear-gradient(90deg, ${s.green}, ${s.greenLight})`, borderRadius: 2 }} />
           </div>
-          <div style={{ fontSize: 13, color: s.text2 }}>Remuneration growth</div>
-          <div style={{ fontSize: 20, fontWeight: 700, color: s.green, marginTop: 4 }}>$24,345.00</div>
+          <div style={{ fontSize: 12, color: s.text2 }}>Remuneration growth</div>
+          <div style={{ fontSize: 18, fontWeight: 700, color: s.green, marginTop: 4 }}>$24,345.00</div>
         </div>
 
-        <p style={{ fontSize: 12, color: s.text2, textAlign: 'center' }}>Powered by <span style={{ fontWeight: 600, color: isDark ? '#8A949E' : '#999' }}>{APP.company}</span></p>
+        <p style={{ fontSize: 12, color: s.text2, textAlign: 'center' }}>
+          Powered by <span style={{ fontWeight: 600 }}>{APP.company}</span>
+        </p>
 
       </div>
+
+      {/* ═══════════ ANIMATIONS ═══════════ */}
+      <style>{`
+        @keyframes liquidFloat {
+          0%, 100% { transform: translate(0, 0) scale(1); }
+          25% { transform: translate(-3%, 2%) scale(1.03); }
+          50% { transform: translate(2%, -1%) scale(0.97); }
+          75% { transform: translate(-1%, -2%) scale(1.02); }
+        }
+        @keyframes morphShape {
+          0%, 100% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
+          25% { border-radius: 58% 42% 75% 25% / 76% 46% 54% 24%; }
+          50% { border-radius: 50% 50% 33% 67% / 55% 27% 73% 45%; }
+          75% { border-radius: 33% 67% 58% 42% / 63% 68% 32% 37%; }
+        }
+      `}</style>
     </div>
   );
 }
