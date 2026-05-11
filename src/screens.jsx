@@ -30,127 +30,130 @@ export function LandingScreen({ onLogin, onRegister }) {
       background: isDark ? '#0A0D0F' : '#FFFFFF',
       fontFamily: "'Inter', 'Sora', sans-serif",
       display: 'flex', flexDirection: 'column',
+      overflowX: 'hidden',
     }}>
 
-      {/* ═══════════════ NAVBAR - IDENTIQUE ELEGOSTRA ═══════════════ */}
+      {/* ═══════════════ NAVBAR ═══════════════ */}
       <div style={{
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        padding: '16px 24px',
+        padding: '14px 20px',
         borderBottom: `1px solid ${isDark ? '#1E2429' : '#F0F0F0'}`,
+        flexShrink: 0,
       }}>
-        {/* Liens gauche */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 28 }}>
-          <span style={{ fontSize: 14, fontWeight: 600, color: isDark ? '#EDF0F2' : '#111' }}>Home</span>
-          <span style={{ fontSize: 14, fontWeight: 400, color: isDark ? '#8A949E' : '#666' }}>Platform</span>
-          <span style={{ fontSize: 14, fontWeight: 400, color: isDark ? '#8A949E' : '#666' }}>Who we are</span>
-          <span style={{ fontSize: 14, fontWeight: 400, color: isDark ? '#8A949E' : '#666' }}>Reviews</span>
-          <span style={{ fontSize: 14, fontWeight: 400, color: isDark ? '#8A949E' : '#666' }}>Contact</span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 24, fontSize: 13, color: isDark ? '#8A949E' : '#666' }}>
+          <span style={{ fontWeight: 600, color: isDark ? '#EDF0F2' : '#111' }}>Home</span>
+          <span>Platform</span>
+          <span>Who we are</span>
+          <span>Reviews</span>
+          <span>Contact</span>
         </div>
         
-        {/* Boutons droite */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
           <button onClick={toggle} style={{
             background: 'none', border: 'none', cursor: 'pointer',
-            color: isDark ? '#8A949E' : '#666',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            width: 32, height: 32,
+            color: isDark ? '#8A949E' : '#666', padding: 4,
           }}>
-            {isDark ? <Sun size={16} /> : <Moon size={16} />}
+            {isDark ? <Sun size={15} /> : <Moon size={15} />}
           </button>
           <button onClick={onLogin} style={{
-            padding: '8px 22px', borderRadius: 6,
+            padding: '7px 20px', borderRadius: 6,
             border: `1px solid ${isDark ? '#333' : '#DDD'}`,
             background: 'transparent',
             color: isDark ? '#EDF0F2' : '#333',
-            fontSize: 13, fontWeight: 500, cursor: 'pointer', fontFamily: 'inherit',
+            fontSize: 12, fontWeight: 500, cursor: 'pointer', fontFamily: 'inherit',
           }}>Login</button>
           <button onClick={onRegister} style={{
-            padding: '8px 22px', borderRadius: 6, border: 'none',
+            padding: '7px 20px', borderRadius: 6, border: 'none',
             background: '#0B6B5C', color: '#fff',
-            fontSize: 13, fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit',
+            fontSize: 12, fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit',
           }}>Signup</button>
         </div>
       </div>
 
-      {/* ═══════════════ CONTENU CENTRÉ - IDENTIQUE ═══════════════ */}
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: '60px 20px' }}>
+      {/* ═══════════════ HERO ═══════════════ */}
+      <div style={{ flex: 1, padding: '50px 20px 40px', maxWidth: 480, margin: '0 auto', width: '100%' }}>
         
-        <div style={{ maxWidth: 480, width: '100%' }}>
-          
-          {/* Titre */}
-          <h1 style={{
-            fontSize: 46, fontWeight: 800, lineHeight: 1.08,
-            color: isDark ? '#EDF0F2' : '#111',
-            letterSpacing: -2, margin: '0 0 18px 0',
-          }}>
-            Pay and Receive<br />
-            <span style={{ color: '#0B6B5C' }}>anywhere</span> with ease
-          </h1>
-          
-          {/* Sous-titre */}
-          <p style={{
-            fontSize: 15, color: isDark ? '#8A949E' : '#666',
-            lineHeight: 1.7, marginBottom: 32,
-          }}>
-            Transfer money, pay online and get paid without limitation. 
-            Fast, secure, and reconciled automatically.
-          </p>
+        <h1 style={{
+          fontSize: 42, fontWeight: 800, lineHeight: 1.1,
+          color: isDark ? '#EDF0F2' : '#111',
+          letterSpacing: -1.5, margin: '0 0 14px 0',
+        }}>
+          Pay and Receive<br />
+          <span style={{ color: '#0B6B5C' }}>anywhere</span> with ease
+        </h1>
+        
+        <p style={{
+          fontSize: 14, color: isDark ? '#8A949E' : '#666',
+          lineHeight: 1.65, marginBottom: 28,
+        }}>
+          Transfer money, pay online and get paid without limitation.
+          Fast, secure, and reconciled automatically.
+        </p>
 
-          {/* Boutons */}
-          <div style={{ display: 'flex', gap: 10, marginBottom: 48 }}>
-            <button onClick={onRegister} style={{
-              padding: '12px 28px', borderRadius: 6, border: 'none',
-              background: '#0B6B5C', color: '#fff',
-              fontSize: 14, fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit',
-            }}>Get Started</button>
-            <button style={{
-              padding: '12px 28px', borderRadius: 6,
-              border: `1px solid ${isDark ? '#333' : '#DDD'}`,
-              background: 'transparent',
-              color: isDark ? '#EDF0F2' : '#333',
-              fontSize: 14, fontWeight: 500, cursor: 'pointer', fontFamily: 'inherit',
-            }}>Contact a Team</button>
-          </div>
+        <div style={{ display: 'flex', gap: 10, marginBottom: 36 }}>
+          <button onClick={onRegister} style={{
+            padding: '12px 26px', borderRadius: 6, border: 'none',
+            background: '#0B6B5C', color: '#fff',
+            fontSize: 13, fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit',
+          }}>Get Started</button>
+          <button style={{
+            padding: '12px 26px', borderRadius: 6,
+            border: `1px solid ${isDark ? '#333' : '#DDD'}`,
+            background: 'transparent',
+            color: isDark ? '#EDF0F2' : '#333',
+            fontSize: 13, fontWeight: 500, cursor: 'pointer', fontFamily: 'inherit',
+          }}>Contact a Team</button>
+        </div>
 
-          {/* Image */}
+        {/* ═══════ IMAGE - Taille contrôlée, pas de background ═══════ */}
+        <div style={{
+          width: '100%',
+          height: 'auto',
+          aspectRatio: '16/10',
+          borderRadius: 12,
+          overflow: 'hidden',
+          marginBottom: 36,
+        }}>
           <img 
             src="https://eliteprotech-url.zone.id/1778436354039dvorw8.jpg"
             alt="NexCliq"
-            style={{ width: '100%', height: 'auto', borderRadius: 12, marginBottom: 48 }}
+            style={{ 
+              width: '100%', 
+              height: '100%', 
+              objectFit: 'contain',
+              background: 'transparent',
+            }} 
           />
-
-          {/* Stats - 2 colonnes */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 12 }}>
-            {/* Income */}
-            <div style={{ padding: '22px 20px', borderRadius: 14, background: '#0B6B5C', color: '#fff' }}>
-              <div style={{ fontSize: 12, fontWeight: 400, opacity: 0.7 }}>Income</div>
-              <div style={{ fontSize: 26, fontWeight: 700, marginTop: 4 }}>$13,592.00</div>
-            </div>
-            {/* Expenses */}
-            <div style={{ padding: '22px 20px', borderRadius: 14, background: isDark ? '#14181B' : '#F5F7F6', border: `1px solid ${isDark ? '#1E2429' : '#E8ECEA'}` }}>
-              <div style={{ fontSize: 12, fontWeight: 400, color: isDark ? '#8A949E' : '#999' }}>Expenses</div>
-              <div style={{ fontSize: 26, fontWeight: 700, color: isDark ? '#EDF0F2' : '#111', marginTop: 4 }}>$12,167.00</div>
-            </div>
-          </div>
-
-          {/* Goal */}
-          <div style={{ padding: '22px 20px', borderRadius: 14, background: isDark ? '#14181B' : '#F5F7F6', border: `1px solid ${isDark ? '#1E2429' : '#E8ECEA'}`, marginBottom: 48 }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
-              <span style={{ fontSize: 12, color: isDark ? '#8A949E' : '#999' }}>Goal</span>
-              <span style={{ fontSize: 22, fontWeight: 700, color: '#0B6B5C' }}>56K</span>
-            </div>
-            <div style={{ height: 3, background: isDark ? '#1E2429' : '#E8ECEA', borderRadius: 2, marginBottom: 8 }}>
-              <div style={{ height: '100%', width: '68%', background: '#0B6B5C', borderRadius: 2 }} />
-            </div>
-            <div style={{ fontSize: 12, color: isDark ? '#8A949E' : '#999' }}>Remuneration growth</div>
-            <div style={{ fontSize: 20, fontWeight: 700, color: '#0B6B5C', marginTop: 4 }}>$24,345.00</div>
-          </div>
-
-          <p style={{ fontSize: 12, color: isDark ? '#555' : '#CCC', textAlign: 'center' }}>
-            Powered by <span style={{ fontWeight: 600 }}>{APP.company}</span>
-          </p>
-
         </div>
+
+        {/* ═══════ STATS ═══════ */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 12 }}>
+          <div style={{ padding: '20px 18px', borderRadius: 14, background: '#0B6B5C', color: '#fff' }}>
+            <div style={{ fontSize: 11, opacity: 0.7 }}>Income</div>
+            <div style={{ fontSize: 24, fontWeight: 700, marginTop: 2 }}>$13,592.00</div>
+          </div>
+          <div style={{ padding: '20px 18px', borderRadius: 14, background: isDark ? '#14181B' : '#F5F7F6', border: `1px solid ${isDark ? '#1E2429' : '#E8ECEA'}` }}>
+            <div style={{ fontSize: 11, color: isDark ? '#8A949E' : '#999' }}>Expenses</div>
+            <div style={{ fontSize: 24, fontWeight: 700, color: isDark ? '#EDF0F2' : '#111', marginTop: 2 }}>$12,167.00</div>
+          </div>
+        </div>
+
+        <div style={{ padding: '20px 18px', borderRadius: 14, background: isDark ? '#14181B' : '#F5F7F6', border: `1px solid ${isDark ? '#1E2429' : '#E8ECEA'}`, marginBottom: 40 }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <span style={{ fontSize: 11, color: isDark ? '#8A949E' : '#999' }}>Goal</span>
+            <span style={{ fontSize: 20, fontWeight: 700, color: '#0B6B5C' }}>56K</span>
+          </div>
+          <div style={{ height: 3, background: isDark ? '#1E2429' : '#E8ECEA', borderRadius: 2, margin: '8px 0' }}>
+            <div style={{ height: '100%', width: '68%', background: '#0B6B5C', borderRadius: 2 }} />
+          </div>
+          <div style={{ fontSize: 11, color: isDark ? '#8A949E' : '#999' }}>Remuneration growth</div>
+          <div style={{ fontSize: 18, fontWeight: 700, color: '#0B6B5C', marginTop: 2 }}>$24,345.00</div>
+        </div>
+
+        <p style={{ fontSize: 12, color: isDark ? '#555' : '#CCC', textAlign: 'center' }}>
+          Powered by <span style={{ fontWeight: 600 }}>{APP.company}</span>
+        </p>
+
       </div>
 
     </div>
