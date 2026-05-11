@@ -1,483 +1,102 @@
+// ═══════════════════════════════════════════════════════════
+// SCREENS.JSX - CORRIGÉ (tous les imports + tous les écrans)
+// ═══════════════════════════════════════════════════════════
 import { useState, useEffect, useCallback } from 'react';
 import {
-  Home, ArrowUpRight, ArrowDownLeft, Clock, User, Bell, ChevronRight,
-  Eye, EyeOff, Copy, Check, RefreshCw, AlertTriangle, LogOut, Lock,
-  Wallet, Shield, Settings, Phone, Mail, CheckCircle2, Loader2,
-  Filter, Send, Download, CreditCard, X, TrendingUp, Sun, Moon,
-  Plus, Search, Star, Zap, ArrowRight, Sparkles
+  Home, ArrowUpRight, ArrowDownLeft, ArrowLeftRight, Clock,
+  User, Settings, Bell, ChevronRight, Eye, EyeOff,
+  Copy, Check, RefreshCw, AlertTriangle, LogOut, Lock,
+  Wallet, Shield, BarChart3, Layers, Phone, Mail,
+  CheckCircle2, Loader2, Filter, Activity, Zap, Send, Download,
+  CreditCard, Globe, X, Sparkles, ArrowRight, TrendingUp,
+  Sun, Moon, Plus, Star, Search
 } from 'lucide-react';
 import { api } from './api';
 import { API, APP, CURRENCY } from './config';
 import { useAuth } from './auth';
-import { useToast } from './components';
+import { useToast, Avatar, BackBtn, StatusBadge, EmptyState, Toggle } from './components';
 import { useTheme } from './theme';
-import { formatAmount, formatDate, truncate } from './utils';
+import { formatAmount, formatDate, formatTime, truncate } from './utils';
 
 // ═══════════════════════════════════════════════════════════
-// LANDING SCREEN - Elegostra Style avec About + Image
+// LANDING SCREEN
 // ═══════════════════════════════════════════════════════════
 export function LandingScreen({ onLogin, onRegister }) {
   const { theme, isDark, toggle } = useTheme();
 
   return (
-    <div style={{
-      minHeight: '100dvh',
-      background: 'linear-gradient(180deg, #060C0A 0%, #0A1814 30%, #0D201B 60%, #060C0A 100%)',
-      backgroundSize: '400% 400%',
-      animation: 'auroraShift 12s ease infinite',
-      fontFamily: "'Inter', 'Sora', sans-serif",
-      display: 'flex', flexDirection: 'column',
-      position: 'relative', overflow: 'hidden',
-    }}>
-      
-      {/* Aurora orbs */}
-      <div style={{ position: 'absolute', top: '-120px', right: '-80px', width: 320, height: 320, borderRadius: '50%', background: 'radial-gradient(circle, rgba(11,107,92,0.25) 0%, transparent 70%)', filter: 'blur(40px)', animation: 'floatSlow 8s ease-in-out infinite', pointerEvents: 'none' }} />
-      <div style={{ position: 'absolute', bottom: '100px', left: '-60px', width: 240, height: 240, borderRadius: '50%', background: 'radial-gradient(circle, rgba(196,180,154,0.1) 0%, transparent 70%)', filter: 'blur(40px)', animation: 'floatSlow 10s ease-in-out infinite 2s', pointerEvents: 'none' }} />
-
-      {/* Navbar - Glass morphism */}
+    <div style={{ minHeight: '100dvh', background: '#060C0A', display: 'flex', flexDirection: 'column' }}>
+      {/* Navbar */}
       <nav style={{
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        padding: '14px 18px',
-        background: 'rgba(6, 12, 10, 0.75)',
-        backdropFilter: 'blur(24px) saturate(1.8)',
-        WebkitBackdropFilter: 'blur(24px) saturate(1.8)',
+        padding: '14px 18px', background: 'rgba(6,12,10,0.85)',
+        backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)',
         borderBottom: '1px solid rgba(255,255,255,0.06)',
         position: 'sticky', top: 0, zIndex: 100,
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          <img src={APP.logo} alt="NexCliq" style={{ width: 28, height: 28, borderRadius: 7, objectFit: 'cover', boxShadow: '0 2px 8px rgba(11,107,92,0.3)' }} />
+          <img src={APP.logo} alt="NexCliq" style={{ width: 28, height: 28, borderRadius: 7 }} />
           <span style={{ fontSize: 17, fontWeight: 800, color: '#E8EDF2', letterSpacing: -0.5 }}>
-            nexcli<span style={{ color: '#C4B49A', fontWeight: 800 }}>q</span>
+            nexcli<span style={{ color: '#C4B49A' }}>q</span>
           </span>
         </div>
-        
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          {/* Theme Toggle */}
-          <button onClick={toggle} style={{
-            width: 34, height: 34, borderRadius: 10,
-            background: 'rgba(255,255,255,0.06)',
-            border: '1px solid rgba(255,255,255,0.08)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            cursor: 'pointer', color: 'rgba(255,255,255,0.6)',
-            transition: 'all 0.3s ease',
-          }}>
+          <button onClick={toggle} style={{ width: 34, height: 34, borderRadius: 10, background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.6)', cursor: 'pointer' }}>
             <Sun size={15} />
           </button>
-          <button onClick={onLogin} style={{
-            padding: '8px 16px', borderRadius: 10,
-            border: '1px solid rgba(255,255,255,0.12)',
-            background: 'rgba(255,255,255,0.04)',
-            color: 'rgba(255,255,255,0.75)',
-            fontSize: 13, fontWeight: 500, cursor: 'pointer',
-            fontFamily: 'inherit',
-          }}>Login</button>
-          <button onClick={onRegister} style={{
-            padding: '8px 16px', borderRadius: 10, border: 'none',
-            background: 'linear-gradient(135deg, #0B6B5C, #0D8570)',
-            color: '#fff',
-            fontSize: 13, fontWeight: 600, cursor: 'pointer',
-            fontFamily: 'inherit',
-            boxShadow: '0 4px 16px rgba(11,107,92,0.3)',
-          }}>Sign Up</button>
+          <button onClick={onLogin} style={{ padding: '8px 16px', borderRadius: 10, border: '1px solid rgba(255,255,255,0.12)', background: 'transparent', color: 'rgba(255,255,255,0.75)', fontSize: 13, fontWeight: 500, cursor: 'pointer', fontFamily: 'inherit' }}>Login</button>
+          <button onClick={onRegister} style={{ padding: '8px 16px', borderRadius: 10, border: 'none', background: '#0B6B5C', color: '#fff', fontSize: 13, fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit' }}>Sign Up</button>
         </div>
       </nav>
 
       {/* Hero */}
-      <div style={{ flex: 1, padding: '36px 18px 0', maxWidth: 480, margin: '0 auto', width: '100%' }}>
-        
-        <h1 style={{
-          fontSize: 'clamp(32px, 8vw, 40px)',
-          fontWeight: 800, lineHeight: 1.12,
-          color: '#EDF0F2', letterSpacing: -1.5,
-          margin: '0 0 14px 0'
-        }}>
+      <div style={{ flex: 1, padding: '40px 18px 0', maxWidth: 480, margin: '0 auto', width: '100%' }}>
+        <h1 style={{ fontSize: 36, fontWeight: 800, lineHeight: 1.12, color: '#EDF0F2', letterSpacing: -1.5, margin: '0 0 14px 0' }}>
           Pay and Receive<br />
-          <span style={{
-            background: 'linear-gradient(135deg, #34D399, #0D8570, #C4B49A)',
-            backgroundSize: '200% 200%',
-            animation: 'gradientText 3s ease infinite',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-          }}>anywhere</span> with ease
+          <span style={{ color: '#34D399' }}>anywhere</span> with ease
         </h1>
-        
-        <p style={{
-          fontSize: 14, color: '#7B8A99', lineHeight: 1.7,
-          marginBottom: 24, maxWidth: '90%',
-        }}>
-          {APP.description}
+        <p style={{ fontSize: 14, color: '#7B8A99', lineHeight: 1.7, marginBottom: 24 }}>
+          Transfer money, pay online and get paid without limitation. Fast, secure, and reconciled automatically.
         </p>
 
-        {/* CTA Buttons */}
-        <div style={{ display: 'flex', gap: 10, marginBottom: 32 }}>
-          <button onClick={onRegister} style={{
-            padding: '14px 24px', borderRadius: 12, border: 'none',
-            background: 'linear-gradient(135deg, #0B6B5C, #0D8570)',
-            color: '#fff',
-            fontSize: 14, fontWeight: 600, cursor: 'pointer',
-            fontFamily: 'inherit',
-            boxShadow: '0 8px 24px rgba(11,107,92,0.3)',
-          }}>
-            Get Started <ArrowRight size={15} style={{ marginLeft: 6, verticalAlign: 'middle' }} />
+        <div style={{ display: 'flex', gap: 10, marginBottom: 28 }}>
+          <button onClick={onRegister} style={{ padding: '14px 24px', borderRadius: 12, border: 'none', background: '#0B6B5C', color: '#fff', fontSize: 14, fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit', display: 'flex', alignItems: 'center', gap: 6 }}>
+            Get Started <ArrowRight size={15} />
           </button>
-          <button style={{
-            padding: '14px 24px', borderRadius: 12,
-            border: '1px solid rgba(255,255,255,0.12)',
-            background: 'rgba(255,255,255,0.03)',
-            color: 'rgba(255,255,255,0.7)',
-            fontSize: 14, fontWeight: 500, cursor: 'pointer',
-            fontFamily: 'inherit',
-          }}>Contact a Team</button>
+          <button style={{ padding: '14px 24px', borderRadius: 12, border: '1px solid rgba(255,255,255,0.12)', background: 'transparent', color: 'rgba(255,255,255,0.7)', fontSize: 14, fontWeight: 500, cursor: 'pointer', fontFamily: 'inherit' }}>Contact</button>
         </div>
 
-        {/* ═══════════════ IMAGE - Grand format comme Elegostra ═══════════════ */}
-        <div style={{
-          width: '100%', height: 200, borderRadius: 20,
-          overflow: 'hidden', marginBottom: 28,
-          border: '1px solid rgba(255,255,255,0.08)',
-          boxShadow: '0 20px 60px rgba(0,0,0,0.3)',
-        }}>
-          <img 
-            src="https://eliteprotech-url.zone.id/1778436354039dvorw8.jpg"
-            alt="NexCliq App"
-            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-          />
+        {/* Image */}
+        <div style={{ width: '100%', height: 180, borderRadius: 20, overflow: 'hidden', marginBottom: 24, border: '1px solid rgba(255,255,255,0.08)' }}>
+          <img src="https://eliteprotech-url.zone.id/1778436354039dvorw8.jpg" alt="NexCliq" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
         </div>
 
-        {/* ═══════════════ ABOUT CARDS - Remplacent les prix ═══════════════ */}
-        <div className="section-header" style={{ marginBottom: 12 }}>
-          <span style={{ fontSize: 15, fontWeight: 700, color: '#E8EDF2', letterSpacing: -0.3 }}>About</span>
-        </div>
-
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginBottom: 10 }}>
-          {[
-            { icon: <Zap size={20} color="#34D399" />, title: 'Fast Transfer', sub: '< 30 seconds per transaction' },
-            { icon: <Shield size={20} color="#C4B49A" />, title: 'Secure', sub: 'End-to-end encrypted' },
-            { icon: <CheckCircle2 size={20} color="#34D399" />, title: 'Reconciled', sub: '0% data loss guaranteed' },
-            { icon: <Globe size={20} color="#5ED5C1" />, title: 'Multi-network', sub: 'MTN MoMo & Orange Money' },
-          ].map((item, i) => (
-            <div key={i} style={{
-              padding: 18, borderRadius: 16,
-              background: 'rgba(255,255,255,0.03)',
-              backdropFilter: 'blur(16px)',
-              border: '1px solid rgba(255,255,255,0.06)',
-              transition: 'all 0.3s ease',
-            }}
-            onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.06)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.15)'; e.currentTarget.style.transform = 'translateY(-2px)'; }}
-            onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.03)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.06)'; e.currentTarget.style.transform = 'translateY(0)'; }}
-            >
-              <div style={{ marginBottom: 10 }}>{item.icon}</div>
-              <div style={{ fontSize: 13, fontWeight: 700, color: '#E8EDF2', marginBottom: 4 }}>{item.title}</div>
-              <div style={{ fontSize: 11, color: '#7B8A99', lineHeight: 1.4 }}>{item.sub}</div>
-            </div>
-          ))}
-        </div>
-
-        {/* Goal / Mission Card */}
-        <div style={{
-          padding: 20, borderRadius: 16,
-          background: 'rgba(255,255,255,0.03)',
-          backdropFilter: 'blur(16px)',
-          border: '1px solid rgba(255,255,255,0.06)',
-          marginBottom: 32,
-          transition: 'all 0.3s ease',
-        }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 12 }}>
-            <div>
-              <div style={{ fontSize: 10, fontWeight: 600, color: '#7B8A99', textTransform: 'uppercase', letterSpacing: 1, marginBottom: 4 }}>
-                Our Mission
-              </div>
-              <div style={{ fontSize: 16, fontWeight: 700, color: '#34D399', lineHeight: 1.4 }}>
-                Resume growth
-              </div>
-            </div>
-            <div style={{
-              width: 40, height: 40, borderRadius: '50%',
-              background: 'rgba(11,107,92,0.15)',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              border: '1px solid rgba(11,107,92,0.2)',
-            }}>
-              <TrendingUp size={18} color="#34D399" />
-            </div>
-          </div>
-          <div style={{ height: 4, background: 'rgba(255,255,255,0.06)', borderRadius: 2, marginBottom: 10, overflow: 'hidden' }}>
-            <div style={{ height: '100%', width: '78%', background: 'linear-gradient(90deg, #0B6B5C, #34D399)', borderRadius: 2 }} />
-          </div>
-          <p style={{ fontSize: 12, color: '#7B8A99', lineHeight: 1.6, margin: 0 }}>
-            We help freelancers and businesses receive and send money across Africa — fast, secure, and reconciled.
-          </p>
-        </div>
-
-      </div>
-
-      {/* Footer */}
-      <div style={{
-        textAlign: 'center', padding: '18px',
-        borderTop: '1px solid rgba(255,255,255,0.05)',
-        background: 'rgba(6, 12, 10, 0.5)',
-        backdropFilter: 'blur(16px)',
-      }}>
-        <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.25)', margin: 0, fontWeight: 500 }}>
-          Powered by <span style={{ fontWeight: 700, color: 'rgba(255,255,255,0.4)' }}>{APP.company}</span>
-        </p>
-      </div>
-
-      {/* Keyframe animations */}
-      <style>{`
-        @keyframes auroraShift {
-          0%, 100% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-        }
-        @keyframes gradientText {
-          0%, 100% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-        }
-        @keyframes floatSlow {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-20px); }
-        }
-      `}</style>
-    </div>
-  );
-}
-// ═══════════════════════════════════════════════════════════
-// HOME - Dashboard Style Pesse
-// ═══════════════════════════════════════════════════════════
-export function HomeScreen({ onNavigate }) {
-  const { user } = useAuth();
-  const { theme, isDark, toggle } = useTheme();
-  const [wallet, setWallet] = useState(null);
-  const [transfers, setTransfers] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [balanceVisible, setBalanceVisible] = useState(true);
-
-  useEffect(() => {
-    Promise.all([
-      api.get(API.endpoints.wallets).catch(() => null),
-      api.get(API.endpoints.transfers + '?limit=5').catch(() => null),
-    ]).then(([w, t]) => {
-      if (w?.results?.length) setWallet(w.results[0]);
-      else if (w && !w.results) setWallet(w);
-      setTransfers(t?.results || []);
-    }).finally(() => setLoading(false));
-  }, []);
-
-  const name = user?.first_name || user?.username || 'Utilisateur';
-
-  return (
-    <div style={{ minHeight: '100dvh', background: theme.bg, transition: 'all 0.3s', paddingBottom: 100 }}>
-      
-      {/* Header */}
-      <div style={{
-        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        padding: '16px 20px',
-        background: theme.navBg, backdropFilter: 'blur(20px)',
-        borderBottom: `1px solid ${theme.border}`,
-        position: 'sticky', top: 0, zIndex: 100,
-      }}>
-        <div>
-          <div style={{ fontSize: 11, color: theme.textSecondary, fontWeight: 500 }}>Good morning,</div>
-          <div style={{ fontSize: 17, fontWeight: 800, color: theme.text, letterSpacing: -0.3 }}>{name}</div>
-        </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          <button onClick={toggle} style={{
-            width: 36, height: 36, borderRadius: 10,
-            background: theme.surface, border: `1px solid ${theme.border}`,
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            cursor: 'pointer', color: theme.textSecondary,
-          }}>
-            {isDark ? <Sun size={16} /> : <Moon size={16} />}
-          </button>
-          <button onClick={() => onNavigate('notifications')} style={{
-            width: 36, height: 36, borderRadius: 10,
-            background: theme.surface, border: `1px solid ${theme.border}`,
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            cursor: 'pointer', color: theme.textSecondary,
-          }}>
-            <Bell size={16} />
-          </button>
-          <div style={{
-            width: 36, height: 36, borderRadius: '50%',
-            background: isDark ? 'rgba(11,107,92,0.2)' : '#E3F2EF',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            fontWeight: 700, fontSize: 14, color: theme.accent,
-          }}>
-            {(name || 'U')[0].toUpperCase()}
-          </div>
-        </div>
-      </div>
-
-      <div style={{ padding: '20px 16px' }}>
-        
-        {/* Balance Card - Style Pesse */}
-        <div style={{
-          background: `linear-gradient(145deg, ${isDark ? '#0B6B5C' : '#0B6B5C'}, ${isDark ? '#073D34' : '#06433C'})`,
-          borderRadius: 20, padding: '24px 20px',
-          color: '#fff', marginBottom: 16,
-          boxShadow: '0 8px 32px rgba(11,107,92,0.15)',
-        }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 }}>
-            <div style={{ fontSize: 11, opacity: 0.7, fontWeight: 500, textTransform: 'uppercase', letterSpacing: 0.5 }}>
-              {wallet?.provider || 'Main'} card balance
-            </div>
-            <button onClick={() => setBalanceVisible(v => !v)} style={{
-              background: 'none', border: 'none', color: '#fff', cursor: 'pointer', opacity: 0.6
-            }}>
-              {balanceVisible ? <EyeOff size={14} /> : <Eye size={14} />}
-            </button>
-          </div>
-          <div style={{ fontSize: 34, fontWeight: 800, letterSpacing: -1.5 }}>
-            {loading ? <Loader2 size={24} className="spin" style={{ opacity: 0.5 }} /> :
-              balanceVisible ? formatAmount(wallet?.balance) : '••••••'
-            }
-          </div>
-          <div style={{ fontSize: 11, opacity: 0.5, marginTop: 4 }}>
-            Money hold <span style={{ fontWeight: 600, opacity: 0.8 }}>2,500 XOF</span>
-          </div>
-        </div>
-
-        {/* Quick Actions - 2 boutons */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginBottom: 20 }}>
-          <button onClick={() => onNavigate('send')} style={{
-            padding: '16px', borderRadius: 16,
-            background: theme.surface, border: `1px solid ${theme.border}`,
-            color: theme.text, fontSize: 14, fontWeight: 600,
-            cursor: 'pointer', fontFamily: 'inherit',
-            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
-          }}>
-            <Send size={16} />Send
-          </button>
-          <button onClick={() => onNavigate('receive')} style={{
-            padding: '16px', borderRadius: 16,
-            background: theme.surface, border: `1px solid ${theme.border}`,
-            color: theme.text, fontSize: 14, fontWeight: 600,
-            cursor: 'pointer', fontFamily: 'inherit',
-            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
-          }}>
-            <Download size={16} />Receive
-          </button>
-        </div>
-
-        {/* Send Again - Style Pesse */}
+        {/* About Cards */}
         <div style={{ marginBottom: 20 }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
-            <span style={{ fontSize: 14, fontWeight: 700, color: theme.text }}>Send again</span>
-            <button style={{
-              display: 'flex', alignItems: 'center', gap: 4,
-              background: 'none', border: 'none', color: theme.accent,
-              fontSize: 13, fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit',
-            }}>
-              <Plus size={14} />Add
-            </button>
-          </div>
-          <div style={{ display: 'flex', gap: 10, overflowX: 'auto', scrollbarWidth: 'none', paddingBottom: 4 }}>
-            {['S Rijal', 'Ferina C', 'Daffa T', 'Bayu S', 'Christian K'].map((n, i) => (
-              <div key={i} style={{
-                display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6,
-                flexShrink: 0, cursor: 'pointer',
-              }}>
-                <div style={{
-                  width: 48, height: 48, borderRadius: '50%',
-                  background: i === 0 ? theme.accent : theme.surface,
-                  border: `1px solid ${theme.border}`,
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  fontWeight: 600, fontSize: 13,
-                  color: i === 0 ? '#fff' : theme.textSecondary,
-                }}>
-                  {n[0]}
-                </div>
-                <span style={{ fontSize: 10, color: theme.textSecondary, fontWeight: 500 }}>{n}</span>
+          <div style={{ fontSize: 14, fontWeight: 700, color: '#E8EDF2', marginBottom: 10 }}>About</div>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+            {[
+              { icon: <Zap size={18} color="#34D399" />, title: 'Fast', sub: '< 30 seconds' },
+              { icon: <Shield size={18} color="#C4B49A" />, title: 'Secure', sub: 'Encrypted' },
+              { icon: <Globe size={18} color="#5ED5C1" />, title: 'Multi-network', sub: 'MTN & Orange' },
+              { icon: <CheckCircle2 size={18} color="#34D399" />, title: 'Reconciled', sub: '0% data loss' },
+            ].map((item, i) => (
+              <div key={i} style={{ padding: 16, borderRadius: 14, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}>
+                <div style={{ marginBottom: 8 }}>{item.icon}</div>
+                <div style={{ fontSize: 13, fontWeight: 700, color: '#E8EDF2', marginBottom: 2 }}>{item.title}</div>
+                <div style={{ fontSize: 11, color: '#7B8A99' }}>{item.sub}</div>
               </div>
             ))}
           </div>
         </div>
 
-        {/* History */}
-        <div>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
-            <span style={{ fontSize: 14, fontWeight: 700, color: theme.text }}>History transaction</span>
-            <button onClick={() => onNavigate('history')} style={{
-              background: 'none', border: 'none', color: theme.accent,
-              fontSize: 12, fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit',
-            }}>
-              see more
-            </button>
-          </div>
-          
-          {loading ? (
-            <div style={{ textAlign: 'center', padding: 24 }}><Loader2 size={20} className="spin" style={{ color: theme.accent }} /></div>
-          ) : transfers.length === 0 ? (
-            <div style={{ textAlign: 'center', padding: 24, color: theme.textSecondary, fontSize: 13 }}>
-              No transactions yet
-            </div>
-          ) : (
-            <div style={{ borderRadius: 16, background: theme.surface, border: `1px solid ${theme.border}`, overflow: 'hidden' }}>
-              {transfers.map((tx, i) => (
-                <div key={tx.id || i} onClick={() => onNavigate('txDetail', tx)} style={{
-                  display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-                  padding: '14px 16px', cursor: 'pointer',
-                  borderBottom: i < transfers.length - 1 ? `1px solid ${theme.border}` : 'none',
-                  transition: 'background 0.2s',
-                }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                    <div style={{
-                      width: 38, height: 38, borderRadius: 12,
-                      background: tx.direction === 'IN' ? 'rgba(16,185,129,0.1)' : 'rgba(239,68,68,0.1)',
-                      display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    }}>
-                      {tx.direction === 'IN'
-                        ? <ArrowDownLeft size={16} color="#10B981" />
-                        : <ArrowUpRight size={16} color="#EF4444" />
-                      }
-                    </div>
-                    <div>
-                      <div style={{ fontSize: 13, fontWeight: 600, color: theme.text }}>
-                        {tx.receiver_phone || tx.sender_phone || 'Transfer'}
-                      </div>
-                      <div style={{ fontSize: 10, color: theme.textSecondary, marginTop: 1 }}>
-                        {formatDate(tx.created_at)}
-                      </div>
-                    </div>
-                  </div>
-                  <div style={{ fontSize: 13, fontWeight: 700, color: tx.direction === 'IN' ? '#10B981' : theme.text }}>
-                    {tx.direction === 'IN' ? '+' : '−'}{formatAmount(tx.amount, tx.currency)}
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
+        {/* Footer */}
+        <div style={{ textAlign: 'center', padding: '20px 0', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
+          <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.25)', margin: 0 }}>
+            Powered by <span style={{ fontWeight: 700, color: 'rgba(255,255,255,0.4)' }}>{APP.company}</span>
+          </p>
         </div>
-
       </div>
-
-      {/* Bottom Nav */}
-      <nav style={{
-        position: 'fixed', bottom: 0, left: '50%', transform: 'translateX(-50%)',
-        width: 'calc(100% - 24px)', maxWidth: 456,
-        background: theme.navBg, backdropFilter: 'blur(24px)',
-        border: `1px solid ${theme.border}`, borderRadius: 20,
-        display: 'flex', justifyContent: 'space-around',
-        padding: '10px 8px', margin: '0 12px 12px',
-        boxShadow: '0 4px 24px rgba(0,0,0,0.06)',
-      }}>
-        {[
-          { id: 'home', icon: <Home size={20} />, label: 'Home' },
-          { id: 'history', icon: <Clock size={20} />, label: 'History' },
-          { id: 'send', icon: <Send size={20} />, label: 'Send' },
-          { id: 'profile', icon: <User size={20} />, label: 'Profile' },
-        ].map(item => (
-          <button key={item.id} onClick={() => onNavigate(item.id)} style={{
-            display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3,
-            background: 'none', border: 'none',
-            color: item.id === 'home' ? theme.accent : theme.textSecondary,
-            cursor: 'pointer', fontFamily: 'inherit',
-            padding: '6px 16px', borderRadius: 12,
-          }}>
-            {item.icon}
-            <span style={{ fontSize: 10, fontWeight: 600 }}>{item.label}</span>
-          </button>
-        ))}
-      </nav>
     </div>
   );
 }
@@ -496,63 +115,45 @@ export function LoginScreen({ onBack, onSuccess, onRegister }) {
 
   const submit = async () => {
     const e = {};
-    if (!form.email) e.email = 'Email required';
-    if (!form.password) e.password = 'Password required';
+    if (!form.email) e.email = 'Email requis';
+    if (!form.password) e.password = 'Mot de passe requis';
     if (Object.keys(e).length) { setErrors(e); return; }
     setLoading(true);
-    try { await login(form.email, form.password); toast('Welcome!', 'success'); onSuccess(); }
+    try { await login(form.email, form.password); toast('Bienvenue !', 'success'); onSuccess(); }
     catch (err) { toast(err.message, 'error'); }
     finally { setLoading(false); }
   };
 
   return (
-    <div style={{ minHeight: '100dvh', background: theme.bg, transition: 'all 0.3s' }}>
-      <div style={{ padding: '16px 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <button onClick={onBack} style={{ background: 'none', border: 'none', color: theme.text, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 4 }}>
-          <ChevronRight size={20} style={{ transform: 'rotate(180deg)' }} />
-        </button>
-        <button onClick={toggle} style={{ width: 36, height: 36, borderRadius: 10, background: theme.surface, border: `1px solid ${theme.border}`, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: theme.textSecondary }}>
-          {isDark ? <Sun size={16} /> : <Moon size={16} />}
+    <div style={{ minHeight: '100dvh', background: '#060C0A' }}>
+      <div style={{ padding: '16px 18px', display: 'flex', justifyContent: 'space-between' }}>
+        <BackBtn onClick={onBack} />
+        <button onClick={toggle} style={{ width: 34, height: 34, borderRadius: 10, background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.6)', cursor: 'pointer' }}>
+          {isDark ? <Sun size={15} /> : <Moon size={15} />}
         </button>
       </div>
-      
-      <div style={{ padding: '40px 20px' }}>
-        <h1 style={{ fontSize: 28, fontWeight: 800, color: theme.text, marginBottom: 32 }}>Welcome back</h1>
-        
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+      <div style={{ padding: '40px 18px' }}>
+        <h1 style={{ fontSize: 28, fontWeight: 800, color: '#E8EDF2', marginBottom: 28 }}>Bon retour !</h1>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
           <div>
-            <label style={{ fontSize: 11, fontWeight: 700, color: theme.textSecondary, textTransform: 'uppercase', letterSpacing: 0.5, display: 'block', marginBottom: 6 }}>Email</label>
-            <input type="email" placeholder="you@example.com" value={form.email}
-              onChange={e => setForm(f => ({...f, email: e.target.value}))}
-              style={{
-                width: '100%', padding: '14px 16px', borderRadius: 12,
-                background: theme.inputBg, border: `1.5px solid ${errors.email ? '#EF4444' : theme.inputBorder}`,
-                color: theme.text, fontSize: 14, outline: 'none', fontFamily: 'inherit',
-              }} />
+            <label style={{ fontSize: 11, fontWeight: 700, color: '#7B8A99', textTransform: 'uppercase', display: 'block', marginBottom: 6 }}>Email</label>
+            <input type="email" placeholder="vous@exemple.com" value={form.email} onChange={e => setForm(f => ({...f, email: e.target.value}))} style={{ width: '100%', padding: '14px', borderRadius: 12, background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', fontSize: 14, outline: 'none', fontFamily: 'inherit' }} />
           </div>
           <div>
-            <label style={{ fontSize: 11, fontWeight: 700, color: theme.textSecondary, textTransform: 'uppercase', letterSpacing: 0.5, display: 'block', marginBottom: 6 }}>Password</label>
+            <label style={{ fontSize: 11, fontWeight: 700, color: '#7B8A99', textTransform: 'uppercase', display: 'block', marginBottom: 6 }}>Mot de passe</label>
             <div style={{ position: 'relative' }}>
-              <input type={showPwd ? 'text' : 'password'} placeholder="••••••••" value={form.password}
-                onChange={e => setForm(f => ({...f, password: e.target.value}))}
-                style={{
-                  width: '100%', padding: '14px 44px 14px 16px', borderRadius: 12,
-                  background: theme.inputBg, border: `1.5px solid ${errors.password ? '#EF4444' : theme.inputBorder}`,
-                  color: theme.text, fontSize: 14, outline: 'none', fontFamily: 'inherit',
-                }} />
-              <button onClick={() => setShowPwd(s => !s)} style={{ position: 'absolute', right: 12, top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', color: theme.textSecondary, cursor: 'pointer' }}>
+              <input type={showPwd ? 'text' : 'password'} placeholder="••••••••" value={form.password} onChange={e => setForm(f => ({...f, password: e.target.value}))} style={{ width: '100%', padding: '14px 44px 14px 14px', borderRadius: 12, background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', fontSize: 14, outline: 'none', fontFamily: 'inherit' }} />
+              <button onClick={() => setShowPwd(s => !s)} style={{ position: 'absolute', right: 12, top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', color: '#7B8A99', cursor: 'pointer' }}>
                 {showPwd ? <EyeOff size={16} /> : <Eye size={16} />}
               </button>
             </div>
           </div>
-          <button onClick={submit} disabled={loading} style={{
-            width: '100%', padding: '15px', borderRadius: 12, border: 'none',
-            background: theme.accent, color: '#fff', fontSize: 15, fontWeight: 700,
-            cursor: 'pointer', fontFamily: 'inherit', marginTop: 8,
-            opacity: loading ? 0.6 : 1,
-          }}>
-            {loading ? <Loader2 size={18} className="spin" /> : 'Sign In'}
+          <button onClick={submit} disabled={loading} style={{ width: '100%', padding: '15px', borderRadius: 12, border: 'none', background: '#0B6B5C', color: '#fff', fontSize: 15, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit', marginTop: 8 }}>
+            {loading ? <Loader2 size={18} className="spin" /> : 'Se connecter'}
           </button>
+          <p style={{ textAlign: 'center', fontSize: 13, color: '#7B8A99' }}>
+            Pas de compte ? <span onClick={onRegister} style={{ color: '#34D399', cursor: 'pointer', fontWeight: 600 }}>S'inscrire</span>
+          </p>
         </div>
       </div>
     </div>
@@ -565,29 +166,27 @@ export function LoginScreen({ onBack, onSuccess, onRegister }) {
 export function RegisterScreen({ onBack, onSuccess }) {
   const { register } = useAuth();
   const toast = useToast();
-  const { theme, isDark, toggle } = useTheme();
+  const { isDark, toggle } = useTheme();
   const [step, setStep] = useState(1);
-  const [form, setForm] = useState({
-    first_name: '', last_name: '', email: '', username: '', phone: '', password: '', password2: ''
-  });
+  const [form, setForm] = useState({ first_name: '', last_name: '', email: '', username: '', phone: '', password: '', password2: '' });
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
 
   const validate1 = () => {
     const e = {};
-    if (!form.first_name) e.first_name = 'Required';
-    if (!form.last_name) e.last_name = 'Required';
-    if (!form.email) e.email = 'Required';
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) e.email = 'Invalid email';
-    if (!form.username || form.username.length < 3) e.username = 'Min 3 characters';
+    if (!form.first_name) e.first_name = 'Requis';
+    if (!form.last_name) e.last_name = 'Requis';
+    if (!form.email) e.email = 'Requis';
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) e.email = 'Email invalide';
+    if (!form.username || form.username.length < 3) e.username = 'Min 3 caractères';
     setErrors(e);
     return !Object.keys(e).length;
   };
 
   const validate2 = () => {
     const e = {};
-    if (!form.password || form.password.length < 8) e.password = 'Min 8 characters';
-    if (form.password !== form.password2) e.password2 = 'Passwords do not match';
+    if (!form.password || form.password.length < 8) e.password = 'Min 8 caractères';
+    if (form.password !== form.password2) e.password2 = 'Ne correspondent pas';
     setErrors(e);
     return !Object.keys(e).length;
   };
@@ -601,61 +200,51 @@ export function RegisterScreen({ onBack, onSuccess }) {
   };
 
   return (
-    <div style={{ minHeight: '100dvh', background: theme.bg, transition: 'all 0.3s' }}>
-      <div style={{ padding: '16px 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <button onClick={step === 1 ? onBack : () => setStep(1)} style={{ background: 'none', border: 'none', color: theme.text, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 4 }}>
-          <ChevronRight size={20} style={{ transform: 'rotate(180deg)' }} />
-        </button>
-        <button onClick={toggle} style={{ width: 36, height: 36, borderRadius: 10, background: theme.surface, border: `1px solid ${theme.border}`, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: theme.textSecondary }}>
-          {isDark ? <Sun size={16} /> : <Moon size={16} />}
+    <div style={{ minHeight: '100dvh', background: '#060C0A' }}>
+      <div style={{ padding: '16px 18px', display: 'flex', justifyContent: 'space-between' }}>
+        <BackBtn onClick={step === 1 ? onBack : () => setStep(1)} />
+        <button onClick={toggle} style={{ width: 34, height: 34, borderRadius: 10, background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.6)', cursor: 'pointer' }}>
+          {isDark ? <Sun size={15} /> : <Moon size={15} />}
         </button>
       </div>
-      
-      <div style={{ padding: '40px 20px' }}>
+      <div style={{ padding: '40px 18px' }}>
         <div style={{ marginBottom: 24 }}>
-          <div style={{ fontSize: 11, fontWeight: 700, color: theme.textSecondary, textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: 4 }}>Step {step}/2</div>
-          <h1 style={{ fontSize: 28, fontWeight: 800, color: theme.text, margin: 0 }}>{step === 1 ? 'Create account' : 'Secure access'}</h1>
-          <div style={{ height: 3, background: isDark ? 'rgba(255,255,255,0.08)' : '#E8ECEA', borderRadius: 2, marginTop: 16, overflow: 'hidden' }}>
-            <div style={{ height: '100%', width: step === 1 ? '50%' : '100%', background: theme.accent, borderRadius: 2, transition: 'width 0.3s' }} />
+          <div style={{ fontSize: 11, fontWeight: 700, color: '#7B8A99', textTransform: 'uppercase', marginBottom: 4 }}>Étape {step}/2</div>
+          <h1 style={{ fontSize: 28, fontWeight: 800, color: '#E8EDF2', margin: 0 }}>{step === 1 ? 'Créer un compte' : 'Sécuriser l\'accès'}</h1>
+          <div style={{ height: 3, background: 'rgba(255,255,255,0.08)', borderRadius: 2, marginTop: 16, overflow: 'hidden' }}>
+            <div style={{ height: '100%', width: step === 1 ? '50%' : '100%', background: '#0B6B5C', borderRadius: 2, transition: 'width 0.3s' }} />
           </div>
         </div>
-
         {step === 1 ? (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
-              {[['first_name', 'First name'], ['last_name', 'Last name']].map(([k, l]) => (
+              {[['first_name', 'Prénom'], ['last_name', 'Nom']].map(([k, l]) => (
                 <div key={k}>
-                  <label style={{ fontSize: 11, fontWeight: 700, color: theme.textSecondary, textTransform: 'uppercase', letterSpacing: 0.5, display: 'block', marginBottom: 6 }}>{l}</label>
-                  <input type="text" placeholder={k === 'first_name' ? 'John' : 'Doe'} value={form[k]}
-                    onChange={e => setForm(f => ({...f, [k]: e.target.value}))}
-                    style={{ width: '100%', padding: '13px 14px', borderRadius: 12, background: theme.inputBg, border: `1.5px solid ${theme.inputBorder}`, color: theme.text, fontSize: 14, outline: 'none', fontFamily: 'inherit' }} />
+                  <label style={{ fontSize: 11, fontWeight: 700, color: '#7B8A99', textTransform: 'uppercase', display: 'block', marginBottom: 6 }}>{l}</label>
+                  <input placeholder={k === 'first_name' ? 'Jean' : 'Dupont'} value={form[k]} onChange={e => setForm(f => ({...f, [k]: e.target.value}))} style={{ width: '100%', padding: '13px', borderRadius: 12, background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', fontSize: 14, outline: 'none', fontFamily: 'inherit' }} />
                 </div>
               ))}
             </div>
             {['email', 'username'].map(k => (
               <div key={k}>
-                <label style={{ fontSize: 11, fontWeight: 700, color: theme.textSecondary, textTransform: 'uppercase', letterSpacing: 0.5, display: 'block', marginBottom: 6 }}>{k === 'email' ? 'Email' : 'Username'}</label>
-                <input type={k === 'email' ? 'email' : 'text'} placeholder={k === 'email' ? 'you@example.com' : '@username'} value={form[k]}
-                  onChange={e => setForm(f => ({...f, [k]: e.target.value}))}
-                  style={{ width: '100%', padding: '13px 14px', borderRadius: 12, background: theme.inputBg, border: `1.5px solid ${theme.inputBorder}`, color: theme.text, fontSize: 14, outline: 'none', fontFamily: 'inherit' }} />
+                <label style={{ fontSize: 11, fontWeight: 700, color: '#7B8A99', textTransform: 'uppercase', display: 'block', marginBottom: 6 }}>{k === 'email' ? 'Email' : 'Nom d\'utilisateur'}</label>
+                <input type={k === 'email' ? 'email' : 'text'} placeholder={k === 'email' ? 'vous@exemple.com' : '@pseudo'} value={form[k]} onChange={e => setForm(f => ({...f, [k]: e.target.value}))} style={{ width: '100%', padding: '13px', borderRadius: 12, background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', fontSize: 14, outline: 'none', fontFamily: 'inherit' }} />
               </div>
             ))}
-            <button onClick={() => validate1() && setStep(2)} style={{ width: '100%', padding: '15px', borderRadius: 12, border: 'none', background: theme.accent, color: '#fff', fontSize: 15, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit', marginTop: 8 }}>
-              Continue
+            <button onClick={() => validate1() && setStep(2)} style={{ width: '100%', padding: '15px', borderRadius: 12, border: 'none', background: '#0B6B5C', color: '#fff', fontSize: 15, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit', marginTop: 8 }}>
+              Continuer <ChevronRight size={15} style={{ marginLeft: 4 }} />
             </button>
           </div>
         ) : (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
             {['password', 'password2'].map(k => (
               <div key={k}>
-                <label style={{ fontSize: 11, fontWeight: 700, color: theme.textSecondary, textTransform: 'uppercase', letterSpacing: 0.5, display: 'block', marginBottom: 6 }}>{k === 'password' ? 'Password' : 'Confirm password'}</label>
-                <input type="password" placeholder="••••••••" value={form[k]}
-                  onChange={e => setForm(f => ({...f, [k]: e.target.value}))}
-                  style={{ width: '100%', padding: '13px 14px', borderRadius: 12, background: theme.inputBg, border: `1.5px solid ${theme.inputBorder}`, color: theme.text, fontSize: 14, outline: 'none', fontFamily: 'inherit' }} />
+                <label style={{ fontSize: 11, fontWeight: 700, color: '#7B8A99', textTransform: 'uppercase', display: 'block', marginBottom: 6 }}>{k === 'password' ? 'Mot de passe' : 'Confirmer'}</label>
+                <input type="password" placeholder="••••••••" value={form[k]} onChange={e => setForm(f => ({...f, [k]: e.target.value}))} style={{ width: '100%', padding: '13px', borderRadius: 12, background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', fontSize: 14, outline: 'none', fontFamily: 'inherit' }} />
               </div>
             ))}
-            <button onClick={submit} disabled={loading} style={{ width: '100%', padding: '15px', borderRadius: 12, border: 'none', background: theme.accent, color: '#fff', fontSize: 15, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit', marginTop: 8, opacity: loading ? 0.6 : 1 }}>
-              {loading ? <Loader2 size={18} className="spin" /> : 'Create account'}
+            <button onClick={submit} disabled={loading} style={{ width: '100%', padding: '15px', borderRadius: 12, border: 'none', background: '#0B6B5C', color: '#fff', fontSize: 15, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit', marginTop: 8 }}>
+              {loading ? <Loader2 size={18} className="spin" /> : 'Créer le compte'}
             </button>
           </div>
         )}
@@ -665,7 +254,419 @@ export function RegisterScreen({ onBack, onSuccess }) {
 }
 
 // ═══════════════════════════════════════════════════════════
-// ROUTER
+// HOME SCREEN
+// ═══════════════════════════════════════════════════════════
+export function HomeScreen({ onNavigate }) {
+  const { user } = useAuth();
+  const { isDark, toggle } = useTheme();
+  const [wallet, setWallet] = useState(null);
+  const [transfers, setTransfers] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    Promise.all([
+      api.get(API.endpoints.wallets).catch(() => null),
+      api.get(API.endpoints.transfers + '?limit=5').catch(() => null),
+    ]).then(([w, t]) => {
+      if (w?.results?.length) setWallet(w.results[0]);
+      else if (w) setWallet(w);
+      setTransfers(t?.results || []);
+    }).finally(() => setLoading(false));
+  }, []);
+
+  const name = user?.first_name || user?.username || 'Utilisateur';
+
+  return (
+    <div style={{ minHeight: '100dvh', background: '#060C0A', paddingBottom: 100 }}>
+      <div style={{ padding: '16px 18px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'rgba(6,12,10,0.85)', backdropFilter: 'blur(24px)', borderBottom: '1px solid rgba(255,255,255,0.06)', position: 'sticky', top: 0, zIndex: 100 }}>
+        <div>
+          <div style={{ fontSize: 11, color: '#7B8A99', fontWeight: 500 }}>Bonjour,</div>
+          <div style={{ fontSize: 17, fontWeight: 800, color: '#E8EDF2' }}>{name}</div>
+        </div>
+        <div style={{ display: 'flex', gap: 8 }}>
+          <button onClick={toggle} style={{ width: 34, height: 34, borderRadius: 10, background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.6)', cursor: 'pointer' }}>
+            {isDark ? <Sun size={15} /> : <Moon size={15} />}
+          </button>
+          <button onClick={() => onNavigate('notifications')} style={{ width: 34, height: 34, borderRadius: 10, background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.6)', cursor: 'pointer' }}>
+            <Bell size={15} />
+          </button>
+        </div>
+      </div>
+
+      <div style={{ padding: '20px 16px' }}>
+        {/* Balance Card */}
+        <div style={{ background: 'linear-gradient(145deg, #0B6B5C, #073D34)', borderRadius: 20, padding: '24px 20px', color: '#fff', marginBottom: 16 }}>
+          <div style={{ fontSize: 11, opacity: 0.7, textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: 4 }}>
+            {wallet?.provider || 'Main'} card balance
+          </div>
+          <div style={{ fontSize: 34, fontWeight: 800 }}>
+            {loading ? <Loader2 size={24} className="spin" /> : formatAmount(wallet?.balance) || '0 XOF'}
+          </div>
+          <div style={{ fontSize: 11, opacity: 0.5, marginTop: 4 }}>Money hold 2,500 XOF</div>
+        </div>
+
+        {/* Quick Actions */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginBottom: 20 }}>
+          <button onClick={() => onNavigate('send')} style={{ padding: '16px', borderRadius: 16, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', color: '#E8EDF2', fontSize: 14, fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
+            <Send size={16} />Send
+          </button>
+          <button onClick={() => onNavigate('receive')} style={{ padding: '16px', borderRadius: 16, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', color: '#E8EDF2', fontSize: 14, fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
+            <Download size={16} />Receive
+          </button>
+        </div>
+
+        {/* Recent */}
+        <div style={{ marginBottom: 8 }}>
+          <div style={{ fontSize: 14, fontWeight: 700, color: '#E8EDF2', marginBottom: 8 }}>Transactions récentes</div>
+          {loading ? (
+            <div style={{ textAlign: 'center', padding: 20 }}><Loader2 size={18} className="spin" style={{ color: '#0B6B5C' }} /></div>
+          ) : transfers.length === 0 ? (
+            <div style={{ textAlign: 'center', padding: 20, color: '#7B8A99', fontSize: 13 }}>Aucune transaction</div>
+          ) : (
+            <div style={{ borderRadius: 16, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)', overflow: 'hidden' }}>
+              {transfers.map((tx, i) => (
+                <div key={tx.id || i} onClick={() => onNavigate('txDetail', tx)} style={{ display: 'flex', justifyContent: 'space-between', padding: '14px 16px', cursor: 'pointer', borderBottom: i < transfers.length - 1 ? '1px solid rgba(255,255,255,0.04)' : 'none' }}>
+                  <div>
+                    <div style={{ fontSize: 13, fontWeight: 600, color: '#E8EDF2' }}>{tx.receiver_phone || tx.sender_phone || 'Transfert'}</div>
+                    <div style={{ fontSize: 10, color: '#7B8A99', marginTop: 2 }}>{formatDate(tx.created_at)}</div>
+                  </div>
+                  <div style={{ fontSize: 13, fontWeight: 700, color: tx.direction === 'IN' ? '#34D399' : '#E8EDF2' }}>
+                    {tx.direction === 'IN' ? '+' : '−'}{formatAmount(tx.amount, tx.currency)}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Bottom Nav */}
+      <nav style={{ position: 'fixed', bottom: 12, left: '50%', transform: 'translateX(-50%)', width: 'calc(100% - 24px)', maxWidth: 456, background: 'rgba(6,12,10,0.9)', backdropFilter: 'blur(24px)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 20, display: 'flex', justifyContent: 'space-around', padding: '10px 8px' }}>
+        {[
+          { id: 'home', icon: <Home size={20} />, label: 'Home' },
+          { id: 'history', icon: <Clock size={20} />, label: 'History' },
+          { id: 'send', icon: <Send size={20} />, label: 'Send' },
+          { id: 'profile', icon: <User size={20} />, label: 'Profile' },
+        ].map(item => (
+          <button key={item.id} onClick={() => onNavigate(item.id)} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3, background: 'none', border: 'none', color: '#7B8A99', cursor: 'pointer', fontFamily: 'inherit' }}>
+            {item.icon}
+            <span style={{ fontSize: 10, fontWeight: 600 }}>{item.label}</span>
+          </button>
+        ))}
+      </nav>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════
+// HISTORY SCREEN
+// ═══════════════════════════════════════════════════════════
+export function HistoryScreen({ onBack, onTxClick }) {
+  const [transfers, setTransfers] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    api.get(API.endpoints.transfers)
+      .then(d => setTransfers(d?.results || (Array.isArray(d) ? d : [])))
+      .catch(() => setTransfers([]))
+      .finally(() => setLoading(false));
+  }, []);
+
+  return (
+    <div style={{ minHeight: '100dvh', background: '#060C0A' }}>
+      <div style={{ padding: '14px 16px', display: 'flex', alignItems: 'center', gap: 12, background: 'rgba(6,12,10,0.85)', backdropFilter: 'blur(24px)', borderBottom: '1px solid rgba(255,255,255,0.06)', position: 'sticky', top: 0, zIndex: 100 }}>
+        <BackBtn onClick={onBack} />
+        <span style={{ fontSize: 16, fontWeight: 700, color: '#E8EDF2' }}>Historique</span>
+      </div>
+      <div style={{ padding: '16px' }}>
+        {loading ? (
+          <div style={{ textAlign: 'center', padding: 32 }}><Loader2 size={20} className="spin" style={{ color: '#0B6B5C' }} /></div>
+        ) : transfers.length === 0 ? (
+          <div style={{ textAlign: 'center', padding: 32, color: '#7B8A99' }}>Aucune transaction</div>
+        ) : (
+          <div style={{ borderRadius: 16, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)', overflow: 'hidden' }}>
+            {transfers.map((tx, i) => (
+              <div key={tx.id || i} onClick={() => onTxClick?.(tx)} style={{ display: 'flex', justifyContent: 'space-between', padding: '14px 16px', cursor: 'pointer', borderBottom: i < transfers.length - 1 ? '1px solid rgba(255,255,255,0.04)' : 'none' }}>
+                <div>
+                  <div style={{ fontSize: 13, fontWeight: 600, color: '#E8EDF2' }}>{tx.receiver_phone || tx.sender_phone || 'Transfert'}</div>
+                  <div style={{ fontSize: 10, color: '#7B8A99', marginTop: 2 }}>{formatDate(tx.created_at)}</div>
+                </div>
+                <div style={{ fontSize: 13, fontWeight: 700, color: tx.direction === 'IN' ? '#34D399' : '#E8EDF2' }}>
+                  {tx.direction === 'IN' ? '+' : '−'}{formatAmount(tx.amount, tx.currency)}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════
+// SEND SCREEN
+// ═══════════════════════════════════════════════════════════
+export function SendScreen({ onBack }) {
+  const toast = useToast();
+  const { isDark, toggle } = useTheme();
+  const [step, setStep] = useState(1);
+  const [provider, setProvider] = useState('');
+  const [phone, setPhone] = useState('');
+  const [amount, setAmount] = useState('');
+  const [note, setNote] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [result, setResult] = useState(null);
+
+  const providers = [
+    { id: 'MTN', label: 'MTN MoMo', sub: 'Mobile Money', color: '#D4870A', bg: 'rgba(212,135,10,0.1)' },
+    { id: 'ORANGE', label: 'Orange Money', sub: 'Orange Money', color: '#FF6600', bg: 'rgba(255,102,0,0.1)' },
+  ];
+
+  const appendDigit = (d) => {
+    if (d === 'del') { setAmount(a => a.slice(0, -1)); return; }
+    if (d === '000') { setAmount(a => a ? a + '000' : ''); return; }
+    if (amount.length >= 9) return;
+    setAmount(a => a + d);
+  };
+
+  const submit = async () => {
+    if (!phone || !amount || !provider) return;
+    setLoading(true);
+    try {
+      const data = await api.post(API.endpoints.transfers, { receiver_phone: phone, amount: Number(amount), provider_to: provider, note });
+      setResult(data); setStep(4);
+      toast('Transfert initié !', 'success');
+    } catch (err) { toast(err.message, 'error'); }
+    finally { setLoading(false); }
+  };
+
+  if (step === 4 && result) return (
+    <div style={{ minHeight: '100dvh', background: '#060C0A', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 24, gap: 20 }}>
+      <div style={{ width: 64, height: 64, borderRadius: '50%', background: 'rgba(16,185,129,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <CheckCircle2 size={32} color="#10B981" />
+      </div>
+      <div style={{ textAlign: 'center' }}>
+        <div style={{ fontSize: 32, fontWeight: 800, color: '#fff' }}>{formatAmount(result.amount || amount)}</div>
+        <div style={{ fontSize: 14, color: '#7B8A99', marginTop: 6 }}>Envoyé vers {result.receiver_phone || phone}</div>
+      </div>
+      <button onClick={onBack} style={{ padding: '15px 24px', borderRadius: 12, background: '#0B6B5C', color: '#fff', border: 'none', fontSize: 14, fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit', width: '100%' }}>Retour</button>
+    </div>
+  );
+
+  return (
+    <div style={{ minHeight: '100dvh', background: '#060C0A' }}>
+      <div style={{ padding: '14px 16px', display: 'flex', alignItems: 'center', gap: 12, background: 'rgba(6,12,10,0.85)', backdropFilter: 'blur(24px)', borderBottom: '1px solid rgba(255,255,255,0.06)', position: 'sticky', top: 0, zIndex: 100 }}>
+        <BackBtn onClick={step === 1 ? onBack : () => setStep(s => s - 1)} />
+        <span style={{ fontSize: 16, fontWeight: 700, color: '#E8EDF2' }}>Envoyer</span>
+        <button onClick={toggle} style={{ marginLeft: 'auto', width: 34, height: 34, borderRadius: 10, background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.6)', cursor: 'pointer' }}>
+          {isDark ? <Sun size={15} /> : <Moon size={15} />}
+        </button>
+      </div>
+
+      <div style={{ padding: '20px 16px' }}>
+        {step === 1 && (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+            <div>
+              <div style={{ fontSize: 14, fontWeight: 700, color: '#E8EDF2', marginBottom: 10 }}>Choisir le réseau</div>
+              {providers.map(p => (
+                <div key={p.id} onClick={() => setProvider(p.id)} style={{ padding: '14px 16px', marginBottom: 8, borderRadius: 14, background: p.bg, border: provider === p.id ? `2px solid ${p.color}` : '1px solid rgba(255,255,255,0.06)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 10 }}>
+                  <div style={{ width: 40, height: 40, borderRadius: 10, background: p.color + '20', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, color: p.color, fontSize: 16 }}>{p.id[0]}</div>
+                  <div>
+                    <div style={{ fontSize: 14, fontWeight: 600, color: '#E8EDF2' }}>{p.label}</div>
+                    <div style={{ fontSize: 11, color: '#7B8A99' }}>{p.sub}</div>
+                  </div>
+                  {provider === p.id && <Check size={16} color={p.color} style={{ marginLeft: 'auto' }} />}
+                </div>
+              ))}
+            </div>
+            <div>
+              <label style={{ fontSize: 11, fontWeight: 700, color: '#7B8A99', textTransform: 'uppercase', display: 'block', marginBottom: 6 }}>Numéro du destinataire</label>
+              <input type="tel" placeholder="+221 7X XXX XX XX" value={phone} onChange={e => setPhone(e.target.value)} style={{ width: '100%', padding: '14px', borderRadius: 12, background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', fontSize: 14, outline: 'none', fontFamily: 'inherit' }} />
+            </div>
+            <div>
+              <label style={{ fontSize: 11, fontWeight: 700, color: '#7B8A99', textTransform: 'uppercase', display: 'block', marginBottom: 6 }}>Note</label>
+              <input placeholder="Pour quoi ?" value={note} onChange={e => setNote(e.target.value)} style={{ width: '100%', padding: '14px', borderRadius: 12, background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', fontSize: 14, outline: 'none', fontFamily: 'inherit' }} />
+            </div>
+            <button onClick={() => { provider && phone ? setStep(2) : toast('Champs requis', 'error'); }} disabled={!provider || !phone} style={{ width: '100%', padding: '15px', borderRadius: 12, border: 'none', background: '#0B6B5C', color: '#fff', fontSize: 15, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit', opacity: !provider || !phone ? 0.5 : 1 }}>
+              Continuer <ChevronRight size={15} />
+            </button>
+          </div>
+        )}
+
+        {step === 2 && (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+            <div style={{ textAlign: 'center' }}>
+              <div style={{ fontSize: 13, color: '#7B8A99', marginBottom: 6 }}>Montant à envoyer</div>
+              <div style={{ fontSize: 44, fontWeight: 800, color: '#fff' }}><sup style={{ fontSize: 18 }}>XOF </sup>{amount || '0'}</div>
+              <div style={{ fontSize: 12, color: '#7B8A99', marginTop: 6 }}>→ {phone} · {provider}</div>
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 8 }}>
+              {['1','2','3','4','5','6','7','8','9','000','0','del'].map(k => (
+                <div key={k} onClick={() => appendDigit(k)} style={{ height: 56, borderRadius: 14, background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: k === 'del' ? 13 : 20, fontWeight: 700, color: '#fff', cursor: 'pointer', userSelect: 'none' }}>
+                  {k === 'del' ? '⌫' : k}
+                </div>
+              ))}
+            </div>
+            <button onClick={() => Number(amount) > 0 ? setStep(3) : toast('Saisir un montant', 'error')} disabled={!amount} style={{ width: '100%', padding: '15px', borderRadius: 12, border: 'none', background: '#0B6B5C', color: '#fff', fontSize: 15, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit', opacity: !amount ? 0.5 : 1 }}>
+              Continuer <ChevronRight size={15} />
+            </button>
+          </div>
+        )}
+
+        {step === 3 && (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+            <div style={{ background: 'linear-gradient(145deg, #0B6B5C, #073D34)', borderRadius: 20, padding: '24px 20px', color: '#fff' }}>
+              <div style={{ fontSize: 11, opacity: 0.7 }}>Vous envoyez</div>
+              <div style={{ fontSize: 34, fontWeight: 800 }}><sup style={{ fontSize: 16 }}>XOF </sup>{Number(amount).toLocaleString('fr-FR')}</div>
+            </div>
+            <div style={{ borderRadius: 16, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)', padding: '14px 16px' }}>
+              {[['Destinataire', phone], ['Réseau', provider], ['Note', note || '—']].map(([k, v]) => (
+                <div key={k} style={{ display: 'flex', justifyContent: 'space-between', padding: '10px 0', borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
+                  <span style={{ fontSize: 13, color: '#7B8A99' }}>{k}</span>
+                  <span style={{ fontSize: 13, fontWeight: 600, color: '#E8EDF2' }}>{v}</span>
+                </div>
+              ))}
+            </div>
+            <button onClick={submit} disabled={loading} style={{ width: '100%', padding: '15px', borderRadius: 12, border: 'none', background: '#0B6B5C', color: '#fff', fontSize: 15, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit' }}>
+              {loading ? <Loader2 size={18} className="spin" /> : 'Confirmer l\'envoi'}
+            </button>
+            <button onClick={() => setStep(2)} style={{ padding: '14px', borderRadius: 12, border: '1px solid rgba(255,255,255,0.1)', background: 'transparent', color: '#7B8A99', fontSize: 14, fontWeight: 500, cursor: 'pointer', fontFamily: 'inherit' }}>Modifier le montant</button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════
+// RECEIVE SCREEN
+// ═══════════════════════════════════════════════════════════
+export function ReceiveScreen({ onBack }) {
+  const { user } = useAuth();
+  const { isDark, toggle } = useTheme();
+  const [copied, setCopied] = useState(false);
+  const phone = user?.phone || 'Non renseigné';
+
+  const copy = () => {
+    navigator.clipboard.writeText(phone).then(() => { setCopied(true); setTimeout(() => setCopied(false), 2000); });
+  };
+
+  return (
+    <div style={{ minHeight: '100dvh', background: '#060C0A' }}>
+      <div style={{ padding: '14px 16px', display: 'flex', alignItems: 'center', gap: 12, background: 'rgba(6,12,10,0.85)', backdropFilter: 'blur(24px)', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+        <BackBtn onClick={onBack} />
+        <span style={{ fontSize: 16, fontWeight: 700, color: '#E8EDF2' }}>Recevoir</span>
+        <button onClick={toggle} style={{ marginLeft: 'auto', width: 34, height: 34, borderRadius: 10, background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.6)', cursor: 'pointer' }}>
+          {isDark ? <Sun size={15} /> : <Moon size={15} />}
+        </button>
+      </div>
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '40px 20px', gap: 24 }}>
+        <div style={{ fontSize: 14, color: '#7B8A99', textAlign: 'center' }}>Partagez votre numéro pour recevoir des fonds</div>
+        <div style={{ width: 140, height: 140, borderRadius: 30, background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <Phone size={48} color="#0B6B5C" />
+        </div>
+        <div style={{ width: '100%', padding: 18, borderRadius: 16, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)', textAlign: 'center' }}>
+          <div style={{ fontSize: 11, color: '#7B8A99', marginBottom: 6 }}>Votre numéro</div>
+          <div style={{ fontSize: 22, fontWeight: 800, color: '#E8EDF2', fontFamily: "'JetBrains Mono', monospace" }}>{phone}</div>
+        </div>
+        <button onClick={copy} style={{ width: '100%', padding: '15px', borderRadius: 12, border: 'none', background: '#0B6B5C', color: '#fff', fontSize: 15, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
+          {copied ? <><Check size={16} />Copié !</> : <><Copy size={16} />Copier le numéro</>}
+        </button>
+      </div>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════
+// TRANSFER DETAIL SCREEN
+// ═══════════════════════════════════════════════════════════
+export function TransferDetailScreen({ tx, onBack }) {
+  const [detail, setDetail] = useState(tx);
+  const [loading, setLoading] = useState(false);
+
+  const refresh = () => {
+    if (!tx?.id) return;
+    setLoading(true);
+    api.get(API.endpoints.transferStatus(tx.id)).then(setDetail).finally(() => setLoading(false));
+  };
+
+  return (
+    <div style={{ minHeight: '100dvh', background: '#060C0A' }}>
+      <div style={{ padding: '14px 16px', display: 'flex', alignItems: 'center', gap: 12, background: 'rgba(6,12,10,0.85)', backdropFilter: 'blur(24px)', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+        <BackBtn onClick={onBack} />
+        <span style={{ fontSize: 16, fontWeight: 700, color: '#E8EDF2' }}>Détail</span>
+        <button onClick={refresh} disabled={loading} style={{ marginLeft: 'auto', width: 34, height: 34, borderRadius: 10, background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.6)', cursor: 'pointer' }}>
+          {loading ? <Loader2 size={14} className="spin" /> : <RefreshCw size={14} />}
+        </button>
+      </div>
+      <div style={{ padding: '24px 16px' }}>
+        <div style={{ textAlign: 'center', marginBottom: 20 }}>
+          <div style={{ fontSize: 34, fontWeight: 800, color: '#fff' }}>{formatAmount(detail?.amount, detail?.currency)}</div>
+          <div style={{ marginTop: 8 }}><StatusBadge status={detail?.status || 'PENDING'} /></div>
+        </div>
+        <div style={{ borderRadius: 16, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)', padding: '0 16px' }}>
+          {[
+            ['ID', detail?.id], ['Montant', formatAmount(detail?.amount)], ['Statut', detail?.status],
+            ['Expéditeur', detail?.sender_phone], ['Destinataire', detail?.receiver_phone],
+            ['Date', detail?.created_at ? formatDate(detail.created_at) : '—'],
+          ].map(([k, v]) => (
+            <div key={k} style={{ display: 'flex', justifyContent: 'space-between', padding: '12px 0', borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
+              <span style={{ fontSize: 13, color: '#7B8A99' }}>{k}</span>
+              <span style={{ fontSize: 13, fontWeight: 600, color: '#E8EDF2' }}>{v || '—'}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════
+// PROFILE SCREEN
+// ═══════════════════════════════════════════════════════════
+export function ProfileScreen({ onNavigate }) {
+  const { user, logout } = useAuth();
+  const { isDark, toggle } = useTheme();
+  const name = `${user?.first_name || ''} ${user?.last_name || ''}`.trim() || user?.username || 'Utilisateur';
+
+  return (
+    <div style={{ minHeight: '100dvh', background: '#060C0A' }}>
+      <div style={{ padding: '14px 16px', display: 'flex', justifyContent: 'space-between', background: 'rgba(6,12,10,0.85)', backdropFilter: 'blur(24px)', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+        <span style={{ fontSize: 16, fontWeight: 700, color: '#E8EDF2' }}>Profil</span>
+        <button onClick={toggle} style={{ width: 34, height: 34, borderRadius: 10, background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.6)', cursor: 'pointer' }}>
+          {isDark ? <Sun size={15} /> : <Moon size={15} />}
+        </button>
+      </div>
+      <div style={{ padding: '20px 16px', display: 'flex', flexDirection: 'column', gap: 12 }}>
+        <div style={{ textAlign: 'center', padding: '20px 0' }}>
+          <div style={{ width: 64, height: 64, borderRadius: '50%', background: 'rgba(11,107,92,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 12px', fontWeight: 700, fontSize: 22, color: '#34D399' }}>{(name || 'U')[0]}</div>
+          <div style={{ fontSize: 18, fontWeight: 800, color: '#E8EDF2' }}>{name}</div>
+          <div style={{ fontSize: 13, color: '#7B8A99', marginTop: 2 }}>{user?.email}</div>
+        </div>
+        {[
+          { icon: <Lock size={16} />, label: 'Mot de passe', action: () => onNavigate('changePassword') },
+          { icon: <Wallet size={16} />, label: 'Portefeuilles', action: () => onNavigate('wallets') },
+          { icon: <Clock size={16} />, label: 'Historique', action: () => onNavigate('history') },
+          { icon: <Settings size={16} />, label: 'Paramètres', action: () => onNavigate('settings') },
+        ].map((item, i) => (
+          <div key={i} onClick={item.action} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 16px', borderRadius: 14, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)', cursor: 'pointer' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+              <div style={{ width: 34, height: 34, borderRadius: 10, background: 'rgba(11,107,92,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#34D399' }}>{item.icon}</div>
+              <span style={{ fontSize: 14, fontWeight: 500, color: '#E8EDF2' }}>{item.label}</span>
+            </div>
+            <ChevronRight size={16} color="#7B8A99" />
+          </div>
+        ))}
+        <button onClick={logout} style={{ width: '100%', padding: '15px', borderRadius: 12, border: '1px solid rgba(239,68,68,0.3)', background: 'rgba(239,68,68,0.05)', color: '#EF4444', fontSize: 15, fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit', marginTop: 8, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
+          <LogOut size={16} />Déconnexion
+        </button>
+      </div>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════
+// APP ROUTER
 // ═══════════════════════════════════════════════════════════
 export function AppRouter() {
   const { isAuth } = useAuth();
