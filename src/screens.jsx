@@ -24,197 +24,338 @@ import { formatAmount, formatDate, formatTime, truncate } from './utils';
 export function LandingScreen({ onLogin, onRegister }) {
   const { isDark, toggle } = useTheme();
 
-  const s = {
-    bg: isDark ? '#05080C' : '#FAFBFC',
-    text: isDark ? '#E8EDF2' : '#0A0E12',
-    text2: isDark ? '#7B8A99' : '#5D6E78',
-    border: isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)',
-    card: isDark ? 'rgba(255,255,255,0.03)' : 'rgba(255,255,255,0.8)',
-    glass: 'rgba(255,255,255,0.04)',
+  const theme = {
+    bg: isDark ? '#04080B' : '#FCFDFD',
+    surface: isDark ? '#0A1116' : '#F2F4F5',
+    text: isDark ? '#ECEEF0' : '#0B0E11',
+    text2: isDark ? '#6B7A89' : '#5A6874',
+    border: isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.04)',
+    glass: isDark ? 'rgba(255,255,255,0.03)' : 'rgba(255,255,255,0.7)',
     green: '#0B6B5C',
-    greenLight: '#34D399',
+    greenGlow: 'rgba(11,107,92,0.3)',
     sand: '#C4B49A',
+    sandGlow: 'rgba(196,180,154,0.2)',
   };
 
   return (
     <div style={{
       minHeight: '100dvh',
-      background: s.bg,
-      fontFamily: "'Inter', 'Sora', sans-serif",
+      background: theme.bg,
+      fontFamily: "'Inter', -apple-system, sans-serif",
       position: 'relative',
       overflow: 'hidden',
+      transition: 'background 0.5s cubic-bezier(0.4,0,0.2,1)',
     }}>
 
-      {/* ═══════════ LIQUID CRYSTAL ANIMATED GRADIENT ORB ═══════════ */}
-      <div style={{
-        position: 'absolute',
-        top: '-15%',
-        right: '-20%',
-        width: 'clamp(300px, 50vw, 700px)',
-        height: 'clamp(300px, 50vw, 700px)',
-        borderRadius: '50%',
-        background: `radial-gradient(circle at 40% 50%, ${s.greenLight}15, ${s.green}08, transparent 70%)`,
-        filter: 'blur(60px)',
-        animation: 'liquidFloat 12s ease-in-out infinite',
-        pointerEvents: 'none',
-        zIndex: 0,
-      }} />
-      
-      <div style={{
-        position: 'absolute',
-        bottom: '10%',
-        left: '-10%',
-        width: 'clamp(200px, 35vw, 500px)',
-        height: 'clamp(200px, 35vw, 500px)',
-        borderRadius: '50%',
-        background: `radial-gradient(circle at 60% 40%, ${s.sand}10, transparent 70%)`,
-        filter: 'blur(80px)',
-        animation: 'liquidFloat 14s ease-in-out infinite 3s',
-        pointerEvents: 'none',
-        zIndex: 0,
-      }} />
+      {/* ═══════════════ ANIMATED BACKGROUND ORBS ═══════════════ */}
+      <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 0 }}>
+        <div style={{
+          position: 'absolute', top: '-15%', right: '-10%',
+          width: 'clamp(280px, 45vw, 700px)', height: 'clamp(280px, 45vw, 700px)',
+          borderRadius: '50%',
+          background: `radial-gradient(circle, ${theme.greenGlow}15, transparent 70%)`,
+          filter: 'blur(80px)',
+          animation: 'orb1 15s ease-in-out infinite',
+        }} />
+        <div style={{
+          position: 'absolute', bottom: '-10%', left: '-5%',
+          width: 'clamp(220px, 35vw, 500px)', height: 'clamp(220px, 35vw, 500px)',
+          borderRadius: '50%',
+          background: `radial-gradient(circle, ${theme.sandGlow}10, transparent 70%)`,
+          filter: 'blur(70px)',
+          animation: 'orb2 18s ease-in-out infinite 2s',
+        }} />
+        <div style={{
+          position: 'absolute', top: '40%', left: '60%',
+          width: 'clamp(150px, 20vw, 300px)', height: 'clamp(150px, 20vw, 300px)',
+          borderRadius: '50%',
+          background: `radial-gradient(circle, ${theme.greenGlow}08, transparent 70%)`,
+          filter: 'blur(50px)',
+          animation: 'orb3 12s ease-in-out infinite 1s',
+        }} />
+      </div>
 
-      {/* ═══════════ ABSTRACT SHAPE - Remplace le flyer ═══════════ */}
+      {/* ═══════════════ ABSTRACT MORPHING SHAPE ═══════════════ */}
       <div style={{
         position: 'absolute',
-        top: '50%',
+        top: '55%',
         left: '50%',
-        transform: 'translate(-50%, -50%) rotate(45deg)',
-        width: 'clamp(200px, 40vw, 500px)',
-        height: 'clamp(200px, 40vw, 500px)',
+        transform: 'translate(-50%, -50%)',
+        width: 'clamp(250px, 50vw, 600px)',
+        height: 'clamp(250px, 50vw, 600px)',
+        background: isDark 
+          ? `radial-gradient(ellipse at 40% 40%, ${theme.green}15 0%, transparent 60%)`
+          : `radial-gradient(ellipse at 40% 40%, ${theme.green}08 0%, transparent 60%)`,
         borderRadius: '30% 70% 70% 30% / 30% 30% 70% 70%',
-        background: `linear-gradient(135deg, ${s.green}20, ${s.sand}15, ${s.greenLight}10)`,
-        backdropFilter: 'blur(40px)',
-        WebkitBackdropFilter: 'blur(40px)',
-        border: `1px solid ${s.border}`,
-        boxShadow: `0 0 120px ${s.green}10, inset 0 0 80px rgba(255,255,255,0.02)`,
-        animation: 'morphShape 10s ease-in-out infinite',
+        backdropFilter: 'blur(30px)',
+        WebkitBackdropFilter: 'blur(30px)',
+        border: `1px solid ${theme.border}`,
+        boxShadow: isDark 
+          ? `0 0 150px ${theme.greenGlow}10, inset 0 0 100px ${theme.sandGlow}05`
+          : `0 0 100px ${theme.greenGlow}05, inset 0 0 60px ${theme.sandGlow}03`,
+        animation: 'morphBlob 14s ease-in-out infinite, rotateSlow 30s linear infinite',
         pointerEvents: 'none',
         zIndex: 0,
+        transition: 'all 0.5s cubic-bezier(0.4,0,0.2,1)',
       }} />
 
-      {/* ═══════════ NAVBAR ═══════════ */}
+      {/* Second smaller abstract shape */}
+      <div style={{
+        position: 'absolute',
+        top: '25%',
+        right: '-8%',
+        width: 'clamp(120px, 18vw, 250px)',
+        height: 'clamp(120px, 18vw, 250px)',
+        background: isDark 
+          ? `radial-gradient(circle at 50% 50%, ${theme.sand}08, transparent 70%)`
+          : `radial-gradient(circle at 50% 50%, ${theme.sand}04, transparent 70%)`,
+        borderRadius: '60% 40% 30% 70% / 60% 30% 70% 40%',
+        backdropFilter: 'blur(20px)',
+        WebkitBackdropFilter: 'blur(20px)',
+        border: `1px solid ${theme.border}`,
+        animation: 'morphBlob2 10s ease-in-out infinite 3s',
+        pointerEvents: 'none',
+        zIndex: 0,
+        transition: 'all 0.5s cubic-bezier(0.4,0,0.2,1)',
+      }} />
+
+      {/* ═══════════════ NAVBAR ═══════════════ */}
       <nav style={{
         display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-        padding: 'clamp(12px, 2vw, 16px) clamp(16px, 3vw, 28px)',
-        background: isDark ? 'rgba(5,8,12,0.75)' : 'rgba(250,251,252,0.75)',
-        backdropFilter: 'blur(24px) saturate(1.8)',
-        WebkitBackdropFilter: 'blur(24px) saturate(1.8)',
-        borderBottom: `1px solid ${s.border}`,
-        position: 'relative', zIndex: 10,
+        padding: 'clamp(10px, 2vw, 14px) clamp(16px, 3vw, 28px)',
+        background: isDark ? 'rgba(4,8,11,0.8)' : 'rgba(252,253,253,0.8)',
+        backdropFilter: 'blur(20px) saturate(1.8)',
+        WebkitBackdropFilter: 'blur(20px) saturate(1.8)',
+        borderBottom: `1px solid ${theme.border}`,
+        position: 'relative', zIndex: 20,
+        transition: 'all 0.5s cubic-bezier(0.4,0,0.2,1)',
       }}>
-        <div style={{ display: 'flex', gap: 'clamp(16px, 3vw, 32px)', fontSize: 14, fontWeight: 500 }}>
-          {['Home', 'Platform', 'Who we are', 'Reviews', 'Contact'].map(link => (
-            <span key={link} style={{ color: link === 'Home' ? s.text : s.text2, cursor: 'pointer', whiteSpace: 'nowrap' }}>
+        {/* Logo NexCliq */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          <img 
+            src={APP.logo} 
+            alt="NexCliq" 
+            style={{ 
+              width: 28, height: 28, borderRadius: 7, objectFit: 'cover',
+              boxShadow: `0 2px 8px ${theme.greenGlow}20`
+            }} 
+          />
+          <span style={{ 
+            fontSize: 16, fontWeight: 800, color: theme.text, letterSpacing: -0.3,
+            transition: 'color 0.5s cubic-bezier(0.4,0,0.2,1)',
+          }}>
+            nexcli<span style={{ color: theme.sand }}>q</span>
+          </span>
+        </div>
+        
+        {/* Nav Links - Desktop */}
+        <div style={{ display: 'flex', gap: 'clamp(14px, 3vw, 28px)', fontSize: 13, fontWeight: 500 }}>
+          {['Home', 'Platform', 'Who we are', 'Reviews', 'Contact'].map((link, i) => (
+            <span key={link} style={{ 
+              color: link === 'Home' ? theme.text : theme.text2, 
+              cursor: 'pointer',
+              transition: 'color 0.3s ease',
+            }}>
               {link}
             </span>
           ))}
         </div>
+        
+        {/* Buttons */}
         <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-          <button onClick={toggle} style={{ background:'none', border:'none', color: s.text2, cursor:'pointer', padding: 4 }}>{isDark ? <Sun size={15} /> : <Moon size={15} />}</button>
-          <button onClick={onLogin} style={{ padding: '8px 20px', borderRadius: 8, border: `1px solid ${s.border}`, background:'none', color: s.text, fontSize: 13, fontWeight: 500, cursor:'pointer', fontFamily:'inherit' }}>Login</button>
-          <button onClick={onRegister} style={{ padding: '8px 20px', borderRadius: 8, border:'none', background: s.green, color: '#fff', fontSize: 13, fontWeight: 600, cursor:'pointer', fontFamily:'inherit' }}>Signup</button>
+          {/* Theme Toggle - Telegram style slide animation */}
+          <button onClick={toggle} style={{
+            width: 48, height: 26, borderRadius: 13, padding: 2,
+            background: isDark ? '#1A2329' : '#E0E5E2',
+            border: 'none', cursor: 'pointer',
+            position: 'relative',
+            transition: 'background 0.4s cubic-bezier(0.4,0,0.2,1)',
+          }}>
+            <div style={{
+              width: 22, height: 22, borderRadius: '50%',
+              background: isDark ? '#0B6B5C' : '#FFFFFF',
+              position: 'absolute',
+              top: 2,
+              left: isDark ? 24 : 2,
+              transition: 'left 0.4s cubic-bezier(0.4,0,0.2,1)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              boxShadow: '0 1px 3px rgba(0,0,0,0.2)',
+            }}>
+              {isDark ? <Moon size={12} color="#fff" /> : <Sun size={12} color="#0B6B5C" />}
+            </div>
+          </button>
+          
+          <button onClick={onLogin} style={{
+            padding: '7px 18px', borderRadius: 8,
+            border: `1px solid ${theme.border}`,
+            background: 'transparent',
+            color: theme.text, fontSize: 12, fontWeight: 500,
+            cursor: 'pointer', fontFamily: 'inherit',
+            transition: 'all 0.3s ease',
+          }}>Login</button>
+          <button onClick={onRegister} style={{
+            padding: '7px 18px', borderRadius: 8, border: 'none',
+            background: `linear-gradient(135deg, ${theme.green}, #074339)`,
+            color: '#fff', fontSize: 12, fontWeight: 600,
+            cursor: 'pointer', fontFamily: 'inherit',
+            boxShadow: `0 2px 12px ${theme.greenGlow}30`,
+            transition: 'all 0.3s ease',
+          }}>Signup</button>
         </div>
       </nav>
 
-      {/* ═══════════ HERO ═══════════ */}
-      <div style={{ maxWidth: 'min(480px, 100%)', margin: '0 auto', padding: 'clamp(40px, 8vh, 80px) 20px', position: 'relative', zIndex: 1 }}>
+      {/* ═══════════════ HERO ═══════════════ */}
+      <div style={{
+        maxWidth: 'min(500px, 100%)',
+        margin: '0 auto',
+        padding: 'clamp(36px, 8vh, 70px) 20px',
+        position: 'relative', zIndex: 10,
+      }}>
         
         <h1 style={{
-          fontSize: 'clamp(32px, 6vw, 48px)',
-          fontWeight: 800, lineHeight: 1.08,
-          color: s.text, letterSpacing: -1.5,
-          marginBottom: 16,
+          fontSize: 'clamp(30px, 7vw, 50px)',
+          fontWeight: 800, lineHeight: 1.06,
+          color: theme.text,
+          letterSpacing: -1.8,
+          marginBottom: 14,
+          transition: 'color 0.5s cubic-bezier(0.4,0,0.2,1)',
         }}>
           Pay and Receive<br />
-          <span style={{ color: s.green }}>anywhere</span> with ease
+          <span style={{ 
+            background: `linear-gradient(135deg, ${theme.green}, ${theme.sand}, ${theme.green})`,
+            backgroundSize: '200% 200%',
+            animation: 'textShimmer 4s ease infinite',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            backgroundClip: 'text',
+          }}>anywhere</span> with ease
         </h1>
         
         <p style={{
-          fontSize: 'clamp(14px, 2vw, 15px)',
-          color: s.text2, lineHeight: 1.65,
-          marginBottom: 28,
-          maxWidth: 420,
+          fontSize: 'clamp(13px, 2vw, 15px)',
+          color: theme.text2, lineHeight: 1.6,
+          marginBottom: 26, maxWidth: 420,
+          transition: 'color 0.5s cubic-bezier(0.4,0,0.2,1)',
         }}>
           Transfer money, pay online and get paid without limitation.
           Fast, secure, and reconciled automatically.
         </p>
 
-        <div style={{ display: 'flex', gap: 10, marginBottom: 48 }}>
+        <div style={{ display: 'flex', gap: 10, marginBottom: 44 }}>
           <button onClick={onRegister} style={{
-            padding: '13px 28px', borderRadius: 8, border:'none',
-            background: `linear-gradient(135deg, ${s.green}, #053D34)`,
-            color: '#fff', fontSize: 14, fontWeight: 600,
-            cursor:'pointer', fontFamily:'inherit',
-            boxShadow: `0 4px 20px ${s.green}30`,
+            padding: '12px 26px', borderRadius: 8, border: 'none',
+            background: `linear-gradient(135deg, ${theme.green}, #074339)`,
+            color: '#fff', fontSize: 13, fontWeight: 600,
+            cursor: 'pointer', fontFamily: 'inherit',
+            boxShadow: `0 4px 18px ${theme.greenGlow}35`,
+            transition: 'transform 0.2s ease, box-shadow 0.3s ease',
           }}>Get Started</button>
           <button style={{
-            padding: '13px 28px', borderRadius: 8,
-            border: `1px solid ${s.border}`, background: s.glass,
-            backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)',
-            color: s.text, fontSize: 14, fontWeight: 500,
-            cursor:'pointer', fontFamily:'inherit',
+            padding: '12px 26px', borderRadius: 8,
+            border: `1px solid ${theme.border}`,
+            background: theme.glass,
+            backdropFilter: 'blur(16px)',
+            WebkitBackdropFilter: 'blur(16px)',
+            color: theme.text, fontSize: 13, fontWeight: 500,
+            cursor: 'pointer', fontFamily: 'inherit',
+            transition: 'all 0.3s ease',
           }}>Contact a Team</button>
         </div>
 
         {/* ═══════ STATS ═══════ */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 12 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginBottom: 10 }}>
           <div style={{
-            padding: 24, borderRadius: 16,
-            background: `linear-gradient(135deg, ${s.green}, #053D34)`,
+            padding: 22, borderRadius: 14,
+            background: `linear-gradient(135deg, ${theme.green}, #074339)`,
             color: '#fff',
+            transition: 'transform 0.3s ease',
           }}>
-            <div style={{ fontSize: 12, opacity: 0.7 }}>Income</div>
-            <div style={{ fontSize: 26, fontWeight: 700, marginTop: 4 }}>$13,592.00</div>
+            <div style={{ fontSize: 11, opacity: 0.7, fontWeight: 500 }}>Income</div>
+            <div style={{ fontSize: 24, fontWeight: 700, marginTop: 2 }}>$13,592.00</div>
           </div>
           <div style={{
-            padding: 24, borderRadius: 16,
-            background: s.glass, backdropFilter: 'blur(16px)',
+            padding: 22, borderRadius: 14,
+            background: theme.glass,
+            backdropFilter: 'blur(16px)',
             WebkitBackdropFilter: 'blur(16px)',
-            border: `1px solid ${s.border}`,
+            border: `1px solid ${theme.border}`,
+            transition: 'all 0.5s cubic-bezier(0.4,0,0.2,1)',
           }}>
-            <div style={{ fontSize: 12, color: s.text2 }}>Expenses</div>
-            <div style={{ fontSize: 26, fontWeight: 700, color: s.text, marginTop: 4 }}>$12,167.00</div>
+            <div style={{ fontSize: 11, fontWeight: 500, color: theme.text2, transition: 'color 0.5s' }}>Expenses</div>
+            <div style={{ fontSize: 24, fontWeight: 700, color: theme.text, marginTop: 2, transition: 'color 0.5s' }}>$12,167.00</div>
           </div>
         </div>
 
         <div style={{
-          padding: 24, borderRadius: 16,
-          background: s.glass, backdropFilter: 'blur(16px)',
+          padding: 22, borderRadius: 14,
+          background: theme.glass,
+          backdropFilter: 'blur(16px)',
           WebkitBackdropFilter: 'blur(16px)',
-          border: `1px solid ${s.border}`,
+          border: `1px solid ${theme.border}`,
           marginBottom: 40,
+          transition: 'all 0.5s cubic-bezier(0.4,0,0.2,1)',
         }}>
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <span style={{ fontSize: 12, color: s.text2 }}>Goal</span>
-            <span style={{ fontSize: 22, fontWeight: 700, color: s.green }}>56K</span>
+            <span style={{ fontSize: 11, fontWeight: 500, color: theme.text2 }}>Goal</span>
+            <span style={{ fontSize: 20, fontWeight: 700, color: theme.green }}>56K</span>
           </div>
-          <div style={{ height: 3, background: s.border, borderRadius: 2, margin: '10px 0' }}>
-            <div style={{ height: '100%', width: '68%', background: `linear-gradient(90deg, ${s.green}, ${s.greenLight})`, borderRadius: 2 }} />
+          <div style={{ height: 3, background: theme.border, borderRadius: 2, margin: '8px 0', overflow: 'hidden' }}>
+            <div style={{ 
+              height: '100%', width: '68%', 
+              background: `linear-gradient(90deg, ${theme.green}, ${theme.sand})`,
+              borderRadius: 2,
+              animation: 'progressPulse 4s ease-in-out infinite',
+            }} />
           </div>
-          <div style={{ fontSize: 12, color: s.text2 }}>Remuneration growth</div>
-          <div style={{ fontSize: 18, fontWeight: 700, color: s.green, marginTop: 4 }}>$24,345.00</div>
+          <div style={{ fontSize: 11, color: theme.text2 }}>Remuneration growth</div>
+          <div style={{ fontSize: 18, fontWeight: 700, color: theme.green, marginTop: 2 }}>$24,345.00</div>
         </div>
 
-        <p style={{ fontSize: 12, color: s.text2, textAlign: 'center' }}>
+        <p style={{ 
+          fontSize: 11, color: theme.text2, textAlign: 'center',
+          transition: 'color 0.5s cubic-bezier(0.4,0,0.2,1)',
+        }}>
           Powered by <span style={{ fontWeight: 600 }}>{APP.company}</span>
         </p>
 
       </div>
 
-      {/* ═══════════ ANIMATIONS ═══════════ */}
+      {/* ═══════════════ ANIMATIONS ═══════════════ */}
       <style>{`
-        @keyframes liquidFloat {
-          0%, 100% { transform: translate(0, 0) scale(1); }
-          25% { transform: translate(-3%, 2%) scale(1.03); }
-          50% { transform: translate(2%, -1%) scale(0.97); }
-          75% { transform: translate(-1%, -2%) scale(1.02); }
+        @keyframes orb1 {
+          0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.6; }
+          33% { transform: translate(-5%, 3%) scale(1.05); opacity: 0.8; }
+          66% { transform: translate(3%, -2%) scale(0.95); opacity: 0.5; }
         }
-        @keyframes morphShape {
+        @keyframes orb2 {
+          0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.5; }
+          50% { transform: translate(4%, -4%) scale(1.08); opacity: 0.7; }
+        }
+        @keyframes orb3 {
+          0%, 100% { transform: translate(0, 0); opacity: 0.4; }
+          50% { transform: translate(-3%, 5%); opacity: 0.7; }
+        }
+        @keyframes morphBlob {
           0%, 100% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
-          25% { border-radius: 58% 42% 75% 25% / 76% 46% 54% 24%; }
-          50% { border-radius: 50% 50% 33% 67% / 55% 27% 73% 45%; }
-          75% { border-radius: 33% 67% 58% 42% / 63% 68% 32% 37%; }
+          25% { border-radius: 60% 40% 70% 30% / 70% 50% 50% 30%; }
+          50% { border-radius: 45% 55% 35% 65% / 50% 35% 65% 50%; }
+          75% { border-radius: 65% 35% 55% 45% / 35% 65% 45% 55%; }
+        }
+        @keyframes morphBlob2 {
+          0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+          50% { border-radius: 35% 65% 60% 40% / 40% 60% 35% 65%; }
+        }
+        @keyframes rotateSlow {
+          from { transform: translate(-50%, -50%) rotate(0deg); }
+          to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        @keyframes textShimmer {
+          0%, 100% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+        }
+        @keyframes progressPulse {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0.7; }
         }
       `}</style>
     </div>
