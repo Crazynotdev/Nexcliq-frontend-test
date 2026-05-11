@@ -24,138 +24,79 @@ import { formatAmount, formatDate, formatTime, truncate } from './utils';
 export function LandingScreen({ onLogin, onRegister }) {
   const { isDark, toggle } = useTheme();
 
+  const s = {
+    bg: isDark ? '#0A0D0F' : '#FFFFFF',
+    text: isDark ? '#EDF0F2' : '#111111',
+    text2: isDark ? '#8A949E' : '#666666',
+    border: isDark ? '#1E2429' : '#E8E8E8',
+    card: isDark ? '#111518' : '#F5F5F5',
+    green: '#0B6B5C',
+  };
+
   return (
-    <div style={{
-      minHeight: '100dvh',
-      background: isDark ? '#0A0D0F' : '#FFFFFF',
-      fontFamily: "'Inter', 'Sora', sans-serif",
-      display: 'flex', flexDirection: 'column',
-      overflowX: 'hidden',
-    }}>
+    <div style={{ minHeight: '100dvh', background: s.bg, fontFamily: "'Inter', sans-serif" }}>
 
-      {/* ═══════════════ NAVBAR ═══════════════ */}
-      <div style={{
-        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        padding: '14px 20px',
-        borderBottom: `1px solid ${isDark ? '#1E2429' : '#F0F0F0'}`,
-        flexShrink: 0,
-      }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 24, fontSize: 13, color: isDark ? '#8A949E' : '#666' }}>
-          <span style={{ fontWeight: 600, color: isDark ? '#EDF0F2' : '#111' }}>Home</span>
-          <span>Platform</span>
-          <span>Who we are</span>
-          <span>Reviews</span>
-          <span>Contact</span>
+      {/* NAVBAR */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '16px 24px', borderBottom: `1px solid ${s.border}` }}>
+        <div style={{ display: 'flex', gap: 28, fontSize: 14, fontWeight: 500 }}>
+          <span style={{ color: s.text }}>Home</span>
+          <span style={{ color: s.text2 }}>Platform</span>
+          <span style={{ color: s.text2 }}>Who we are</span>
+          <span style={{ color: s.text2 }}>Reviews</span>
+          <span style={{ color: s.text2 }}>Contact</span>
         </div>
-        
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-          <button onClick={toggle} style={{
-            background: 'none', border: 'none', cursor: 'pointer',
-            color: isDark ? '#8A949E' : '#666', padding: 4,
-          }}>
-            {isDark ? <Sun size={15} /> : <Moon size={15} />}
-          </button>
-          <button onClick={onLogin} style={{
-            padding: '7px 20px', borderRadius: 6,
-            border: `1px solid ${isDark ? '#333' : '#DDD'}`,
-            background: 'transparent',
-            color: isDark ? '#EDF0F2' : '#333',
-            fontSize: 12, fontWeight: 500, cursor: 'pointer', fontFamily: 'inherit',
-          }}>Login</button>
-          <button onClick={onRegister} style={{
-            padding: '7px 20px', borderRadius: 6, border: 'none',
-            background: '#0B6B5C', color: '#fff',
-            fontSize: 12, fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit',
-          }}>Signup</button>
+        <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
+          <button onClick={toggle} style={{ background:'none', border:'none', color: s.text2, cursor:'pointer' }}>{isDark ? <Sun size={16} /> : <Moon size={16} />}</button>
+          <button onClick={onLogin} style={{ padding: '8px 22px', borderRadius: 6, border: `1px solid ${s.border}`, background:'none', color: s.text, fontSize: 13, fontWeight: 500, cursor:'pointer', fontFamily:'inherit' }}>Login</button>
+          <button onClick={onRegister} style={{ padding: '8px 22px', borderRadius: 6, border:'none', background: s.green, color: '#fff', fontSize: 13, fontWeight: 600, cursor:'pointer', fontFamily:'inherit' }}>Signup</button>
         </div>
       </div>
 
-      {/* ═══════════════ HERO ═══════════════ */}
-      <div style={{ flex: 1, padding: '50px 20px 40px', maxWidth: 480, margin: '0 auto', width: '100%' }}>
+      {/* BODY */}
+      <div style={{ maxWidth: 480, margin: '0 auto', padding: '60px 20px' }}>
         
-        <h1 style={{
-          fontSize: 42, fontWeight: 800, lineHeight: 1.1,
-          color: isDark ? '#EDF0F2' : '#111',
-          letterSpacing: -1.5, margin: '0 0 14px 0',
-        }}>
-          Pay and Receive<br />
-          <span style={{ color: '#0B6B5C' }}>anywhere</span> with ease
+        <h1 style={{ fontSize: 44, fontWeight: 800, color: s.text, lineHeight: 1.1, letterSpacing: -1.5, marginBottom: 16 }}>
+          Financial intelligence<br />for modern businesses
         </h1>
-        
-        <p style={{
-          fontSize: 14, color: isDark ? '#8A949E' : '#666',
-          lineHeight: 1.65, marginBottom: 28,
-        }}>
-          Transfer money, pay online and get paid without limitation.
-          Fast, secure, and reconciled automatically.
+        <p style={{ fontSize: 15, color: s.text2, lineHeight: 1.6, marginBottom: 28 }}>
+          NexCliq helps you transfer money, pay online, and get paid without limitation — fast, secure, and reconciled automatically.
         </p>
 
-        <div style={{ display: 'flex', gap: 10, marginBottom: 36 }}>
-          <button onClick={onRegister} style={{
-            padding: '12px 26px', borderRadius: 6, border: 'none',
-            background: '#0B6B5C', color: '#fff',
-            fontSize: 13, fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit',
-          }}>Get Started</button>
-          <button style={{
-            padding: '12px 26px', borderRadius: 6,
-            border: `1px solid ${isDark ? '#333' : '#DDD'}`,
-            background: 'transparent',
-            color: isDark ? '#EDF0F2' : '#333',
-            fontSize: 13, fontWeight: 500, cursor: 'pointer', fontFamily: 'inherit',
-          }}>Contact a Team</button>
+        <div style={{ display: 'flex', gap: 10, marginBottom: 48 }}>
+          <button onClick={onRegister} style={{ padding: '13px 28px', borderRadius: 6, border: 'none', background: s.green, color: '#fff', fontSize: 14, fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit' }}>Get Started</button>
+          <button style={{ padding: '13px 28px', borderRadius: 6, border: `1px solid ${s.border}`, background: 'none', color: s.text, fontSize: 14, fontWeight: 500, cursor: 'pointer', fontFamily: 'inherit' }}>Contact a Team</button>
         </div>
 
-        {/* ═══════ IMAGE - Taille contrôlée, pas de background ═══════ */}
-        <div style={{
-          width: '100%',
-          height: 'auto',
-          aspectRatio: '16/10',
-          borderRadius: 12,
-          overflow: 'hidden',
-          marginBottom: 36,
-        }}>
-          <img 
-            src="https://eliteprotech-url.zone.id/1778436354039dvorw8.jpg"
-            alt="NexCliq"
-            style={{ 
-              width: '100%', 
-              height: '100%', 
-              objectFit: 'contain',
-              background: 'transparent',
-            }} 
-          />
-        </div>
+        {/* IMAGE */}
+        <img src="https://eliteprotech-url.zone.id/1778436354039dvorw8.jpg" alt="NexCliq" style={{ width: '100%', borderRadius: 12, marginBottom: 48 }} />
 
-        {/* ═══════ STATS ═══════ */}
+        {/* STATS */}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 12 }}>
-          <div style={{ padding: '20px 18px', borderRadius: 14, background: '#0B6B5C', color: '#fff' }}>
-            <div style={{ fontSize: 11, opacity: 0.7 }}>Income</div>
-            <div style={{ fontSize: 24, fontWeight: 700, marginTop: 2 }}>$13,592.00</div>
+          <div style={{ padding: 24, borderRadius: 14, background: s.green, color: '#fff' }}>
+            <div style={{ fontSize: 13, opacity: 0.7 }}>Income</div>
+            <div style={{ fontSize: 26, fontWeight: 700, marginTop: 4 }}>$13,592.00</div>
           </div>
-          <div style={{ padding: '20px 18px', borderRadius: 14, background: isDark ? '#14181B' : '#F5F7F6', border: `1px solid ${isDark ? '#1E2429' : '#E8ECEA'}` }}>
-            <div style={{ fontSize: 11, color: isDark ? '#8A949E' : '#999' }}>Expenses</div>
-            <div style={{ fontSize: 24, fontWeight: 700, color: isDark ? '#EDF0F2' : '#111', marginTop: 2 }}>$12,167.00</div>
+          <div style={{ padding: 24, borderRadius: 14, background: s.card, border: `1px solid ${s.border}` }}>
+            <div style={{ fontSize: 13, color: s.text2 }}>Expenses</div>
+            <div style={{ fontSize: 26, fontWeight: 700, color: s.text, marginTop: 4 }}>$12,167.00</div>
           </div>
         </div>
 
-        <div style={{ padding: '20px 18px', borderRadius: 14, background: isDark ? '#14181B' : '#F5F7F6', border: `1px solid ${isDark ? '#1E2429' : '#E8ECEA'}`, marginBottom: 40 }}>
+        <div style={{ padding: 24, borderRadius: 14, background: s.card, border: `1px solid ${s.border}`, marginBottom: 48 }}>
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <span style={{ fontSize: 11, color: isDark ? '#8A949E' : '#999' }}>Goal</span>
-            <span style={{ fontSize: 20, fontWeight: 700, color: '#0B6B5C' }}>56K</span>
+            <span style={{ fontSize: 13, color: s.text2 }}>Goal</span>
+            <span style={{ fontSize: 22, fontWeight: 700, color: s.green }}>56K</span>
           </div>
-          <div style={{ height: 3, background: isDark ? '#1E2429' : '#E8ECEA', borderRadius: 2, margin: '8px 0' }}>
-            <div style={{ height: '100%', width: '68%', background: '#0B6B5C', borderRadius: 2 }} />
+          <div style={{ height: 3, background: s.border, borderRadius: 2, margin: '10px 0' }}>
+            <div style={{ height: '100%', width: '68%', background: s.green, borderRadius: 2 }} />
           </div>
-          <div style={{ fontSize: 11, color: isDark ? '#8A949E' : '#999' }}>Remuneration growth</div>
-          <div style={{ fontSize: 18, fontWeight: 700, color: '#0B6B5C', marginTop: 2 }}>$24,345.00</div>
+          <div style={{ fontSize: 13, color: s.text2 }}>Remuneration growth</div>
+          <div style={{ fontSize: 20, fontWeight: 700, color: s.green, marginTop: 4 }}>$24,345.00</div>
         </div>
 
-        <p style={{ fontSize: 12, color: isDark ? '#555' : '#CCC', textAlign: 'center' }}>
-          Powered by <span style={{ fontWeight: 600 }}>{APP.company}</span>
-        </p>
+        <p style={{ fontSize: 12, color: s.text2, textAlign: 'center' }}>Powered by <span style={{ fontWeight: 600, color: isDark ? '#8A949E' : '#999' }}>{APP.company}</span></p>
 
       </div>
-
     </div>
   );
 }
